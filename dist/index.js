@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
+const userRouter_1 = __importDefault(require("./interface/router/userRouter"));
 const mongoDB_1 = __importDefault(require("./config/mongoDB"));
 dotenv.config();
 const port = process.env.PORT;
@@ -48,6 +49,7 @@ app.use((0, cors_1.default)({
     },
     credentials: true,
 }));
+app.use("/", userRouter_1.default);
 MONGO_URL ? (0, mongoDB_1.default)(MONGO_URL).then(() => {
     app.listen(port, () => console.log(`server started at http://localhost:${port}`));
 }) : console.log("Cannot access the url from env");
