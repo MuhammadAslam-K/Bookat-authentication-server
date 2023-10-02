@@ -2,6 +2,7 @@ import Express, { Request, Response } from 'express';
 import * as dotenv from "dotenv"
 import cors from 'cors'
 
+import user from "./interface/router/userRouter";
 import connect from './config/mongoDB';
 
 dotenv.config()
@@ -25,6 +26,8 @@ app.use(
         credentials: true,
     })
 );
+
+app.use("/", user)
 
 
 MONGO_URL ? connect(MONGO_URL).then(() => {
