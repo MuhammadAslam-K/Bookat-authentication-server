@@ -12,35 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userEntites_1 = __importDefault(require("../entites/userEntites"));
+const driverEntites_1 = __importDefault(require("../entites/driverEntites"));
 exports.default = {
-    getUserWithEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
+    findDriverWithEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield userEntites_1.default.find({ email: email });
+            return yield driverEntites_1.default.find({ email: email });
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    getUserWithMobile: (mobile) => __awaiter(void 0, void 0, void 0, function* () {
+    findDriverWithMobile: (mobile) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield userEntites_1.default.find({ mobile: mobile });
+            return yield driverEntites_1.default.find({ mobile: mobile });
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    getUserWithRefrelCode: (refrelCode) => __awaiter(void 0, void 0, void 0, function* () {
+    getDriverWithRefrelCode: (refrelCode) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield userEntites_1.default.find({ refrel: refrelCode });
+            return yield driverEntites_1.default.find({ refrel: refrelCode });
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    addAmountInWallet: (details, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    addAmountInWallet: (details, driverId) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield userEntites_1.default.findByIdAndUpdate(userId, {
+            return yield driverEntites_1.default.findByIdAndUpdate(driverId, {
                 $push: {
                     'wallet.transactions': details
                 },
@@ -53,10 +53,10 @@ exports.default = {
             throw new Error(error.message);
         }
     }),
-    saveUser: (data, refferalCode) => __awaiter(void 0, void 0, void 0, function* () {
+    saveDriver: (data, refferalCode) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const user = new userEntites_1.default(Object.assign(Object.assign({}, data), { refrel: refferalCode }));
-            return yield user.save();
+            const driver = new driverEntites_1.default(Object.assign(Object.assign({}, data), { refrel: refferalCode }));
+            return yield driver.save();
         }
         catch (error) {
             throw new Error(error.message);

@@ -12,23 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userRepository_1 = __importDefault(require("../../repositorys/userRepository"));
+const driverRepository_1 = __importDefault(require("../../repositorys/driverRepository"));
 const bcryptPassword_1 = __importDefault(require("../../services/bcryptPassword"));
 const refrelCode_1 = require("../../utils/refrelCode");
 exports.default = {
-    registerUser: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    signup: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const checkEmailExists = yield userRepository_1.default.getUserWithEmail(data.email);
+            const checkEmailExists = yield driverRepository_1.default.findDriverWithEmail(data.email);
             if (checkEmailExists.length != 0) {
-                throw new Error("User already exists. Please sign in.");
+                throw new Error("Driver already exists. Please sign in.");
             }
             else {
-                const checkMobileExists = yield userRepository_1.default.getUserWithMobile(data.mobile);
+                const checkMobileExists = yield driverRepository_1.default.findDriverWithMobile(data.mobile);
                 if (checkMobileExists.length != 0) {
-                    throw new Error("User with the same mobile number already exists");
+                    throw new Error("Driver with the same mobile number already exists");
                 }
                 else {
-                    const checkRefrelCodeExists = yield userRepository_1.default.getUserWithRefrelCode(data.refrelCode);
+                    const checkRefrelCodeExists = yield driverRepository_1.default.getDriverWithRefrelCode(data.refrelCode);
                     if (checkRefrelCodeExists.length != 0) {
                         const walletDetails = {
                             date: Date.now(),
@@ -36,7 +36,7 @@ exports.default = {
                             amount: 50,
                             status: "Credited"
                         };
-                        const addAmount = yield userRepository_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
+                        const addAmount = yield driverRepository_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
                         const hashPassword = yield bcryptPassword_1.default.hashPassword(data.password);
                         data.password = hashPassword;
                         const refrelCode = (0, refrelCode_1.refferalCode)();
@@ -46,35 +46,18 @@ exports.default = {
                             amount: 100,
                             status: "Credited"
                         };
-                        const saveUser = yield userRepository_1.default.saveUser(data, refrelCode);
-                        yield userRepository_1.default.addAmountInWallet(wallet, saveUser._id);
+                        const saveDriver = yield driverRepository_1.default.saveDriver(data, refrelCode);
+                        yield driverRepository_1.default.addAmountInWallet(wallet, saveDriver._id);
                         return true;
                     }
                     else {
                         const hashPassword = yield bcryptPassword_1.default.hashPassword(data.password);
                         data.password = hashPassword;
                         const refrelCode = (0, refrelCode_1.refferalCode)();
-                        const saveUser = yield userRepository_1.default.saveUser(data, refrelCode);
+                        const saveUser = yield driverRepository_1.default.saveDriver(data, refrelCode);
                         return true;
                     }
                 }
-            }
-        }
-        catch (error) {
-            console.log(error);
-            throw new Error(error.message);
-        }
-    }),
-    googleSignUp: (data) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const checkEmailExists = yield userRepository_1.default.getUserWithEmail(data.email);
-            if (checkEmailExists.length != 0) {
-                throw new Error("User already exists. Please sign in.");
-            }
-            else {
-                const refrelCode = (0, refrelCode_1.refferalCode)();
-                const saveUser = yield userRepository_1.default.saveUser(data, refrelCode);
-                return true;
             }
         }
         catch (error) {

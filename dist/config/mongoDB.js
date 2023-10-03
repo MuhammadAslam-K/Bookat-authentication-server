@@ -16,7 +16,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 function connect(mongoURL) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log(mongoURL);
             yield mongoose_1.default.connect(mongoURL);
             console.log("DB Connected Successfully");
         }
