@@ -24,13 +24,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const userSchema = new mongoose_1.Schema({
+const driverSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true
     },
     mobile: {
         type: String,
+        required: true
     },
     email: {
         type: String,
@@ -38,14 +39,14 @@ const userSchema = new mongoose_1.Schema({
     },
     password: {
         type: String,
+        required: true
     },
     refrel: {
         type: String,
         required: true
     },
     verified: {
-        type: Boolean,
-        default: false,
+        type: Boolean
     },
     joiningAt: {
         type: String,
@@ -73,16 +74,6 @@ const userSchema = new mongoose_1.Schema({
             },
         ],
     },
-    RideDetails: {
-        completedRides: {
-            default: 0,
-            type: Number,
-        },
-        cancelledRides: {
-            default: 0,
-            type: Number,
-        },
-    },
 });
-const UserSchema = mongoose_1.default.model("user", userSchema);
-exports.default = UserSchema;
+const DriverSchema = mongoose_1.default.model("driver", driverSchema);
+exports.default = DriverSchema;

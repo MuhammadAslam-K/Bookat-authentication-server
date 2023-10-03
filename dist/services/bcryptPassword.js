@@ -12,26 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const registration_1 = __importDefault(require("../../../useCase/userUseCase/registration"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 exports.default = {
-    signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    hashPassword: (password) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield registration_1.default.registerUser(req.body));
+            return yield bcrypt_1.default.hash(password, 10);
         }
         catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error(error.message);
         }
     }),
-    googleSignup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const data = {
-                userName: req.body.displayName,
-                email: req.body.email,
-            };
-            res.json(yield registration_1.default.googleSignUp(data));
-        }
-        catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    })
+    comparePassword: (passwordOne, passwordTwo) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(passwordOne, passwordTwo);
+    }),
 };

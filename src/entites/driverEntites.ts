@@ -1,12 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
-const userSchema: Schema = new Schema({
+const driverSchema: Schema = new Schema({
     name: {
         type: String,
         required: true
     },
     mobile: {
         type: String,
+        required: true
     },
     email: {
         type: String,
@@ -14,19 +15,20 @@ const userSchema: Schema = new Schema({
     },
     password: {
         type: String,
+        required: true
     },
     refrel: {
         type: String,
         required: true
     },
     verified: {
-        type: Boolean,
-        default: false,
+        type: Boolean
     },
     joiningAt: {
         type: String,
         deafult: Date.now(),
     },
+
     wallet: {
         balance: {
             type: Number,
@@ -49,19 +51,8 @@ const userSchema: Schema = new Schema({
             },
         ],
     },
-    RideDetails: {
-        completedRides: {
-            default: 0,
-            type: Number,
-        },
-        cancelledRides: {
-            default: 0,
-            type: Number,
-        },
-    },
-
 })
 
-const UserSchema = mongoose.model("user", userSchema)
+const DriverSchema = mongoose.model("driver", driverSchema)
 
-export default UserSchema
+export default DriverSchema
