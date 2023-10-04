@@ -1,5 +1,7 @@
 import { ObjectId } from 'mongoose';
-import userRepository from "../../repositorys/userRepository"
+import userRepositoryGetQuery from "../../repositorys/userRepository/userRepositoryGetQuery"
+import userRepositoryUpdateQuery from '../../repositorys/userRepository/userRepositoryUpdateQuery';
+import userRepositorySaveQuery from '../../repositorys/userRepository/userRepositorySaveQuery';
 import bcryptPassword from "../../services/bcryptPassword";
 import { refferalCode } from "../../utils/refrelCode";
 
@@ -12,7 +14,7 @@ export interface signupData {
 }
 
 export interface userGoogleSignUp {
-    userName: string,
+    name: string,
     email: string,
 }
 
@@ -26,19 +28,19 @@ export interface walletDetails {
 export default {
     registerUser: async (data: signupData) => {
         try {
-            const checkEmailExists = await userRepository.getUserWithEmail(data.email)
+            const checkEmailExists = await userRepositoryGetQuery.getUserWithEmail(data.email)
 
             if (checkEmailExists.length != 0) {
                 throw new Error("User already exists. Please sign in.");
             }
             else {
-                const checkMobileExists = await userRepository.getUserWithMobile(data.mobile)
+                const checkMobileExists = await userRepositoryGetQuery.getUserWithMobile(data.mobile)
 
                 if (checkMobileExists.length != 0) {
                     throw new Error("User with the same mobile number already exists");
                 }
                 else {
-                    const checkRefrelCodeExists = await userRepository.getUserWithRefrelCode(data.refrelCode)
+                    const checkRefrelCodeExists = await userRepositoryGetQuery.getUserWithRefrelCode(data.refrelCode)
 
                     if (checkRefrelCodeExists.length != 0) {
                         const walletDetails: walletDetails = {
@@ -47,7 +49,7 @@ export default {
                             amount: 50,
                             status: "Credited"
                         }
-                        const addAmount = await userRepository.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id as ObjectId)
+                        const addAmount = await userRepositoryUpdateQuery.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id as ObjectId)
 
                         const hashPassword = await bcryptPassword.hashPassword(data.password)
                         data.password = hashPassword
@@ -58,35 +60,34 @@ export default {
                             amount: 100,
                             status: "Credited"
                         }
-                        const saveUser = await userRepository.saveUser(data, refrelCode)
-                        await userRepository.addAmountInWallet(wallet, saveUser._id as ObjectId)
+                        const saveUser = await userRepositorySaveQuery.saveUser(data, refrelCode)
+                        await userRepositoryUpdateQuery.addAmountInWallet(wallet, saveUser._id as ObjectId)
                         return true
                     }
                     else {
                         const hashPassword = await bcryptPassword.hashPassword(data.password)
                         data.password = hashPassword
                         const refrelCode = refferalCode()
-                        const saveUser = await userRepository.saveUser(data, refrelCode)
+                        const saveUser = await userRepositorySaveQuery.saveUser(data, refrelCode)
                         return true
                     }
                 }
             }
         } catch (error) {
-            console.log(error);
             throw new Error((error as Error).message)
         }
     },
 
     googleSignUp: async (data: userGoogleSignUp) => {
         try {
-            const checkEmailExists = await userRepository.getUserWithEmail(data.email)
+            const checkEmailExists = await userRepositoryGetQuery.getUserWithEmail(data.email)
 
             if (checkEmailExists.length != 0) {
                 throw new Error("User already exists. Please sign in.");
             }
             else {
                 const refrelCode = refferalCode()
-                const saveUser = await userRepository.saveUser(data, refrelCode)
+                const saveUser = await userRepositorySaveQuery.saveUser(data, refrelCode)
                 return true
             }
 

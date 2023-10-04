@@ -13,12 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwtTokenAuth_1 = __importDefault(require("../../middlewares/jwtTokenAuth"));
-const userRepository_1 = __importDefault(require("../../repositorys/userRepository"));
+const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
 const bcryptPassword_1 = __importDefault(require("../../services/bcryptPassword"));
 exports.default = {
     validateUser: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield userRepository_1.default.getUserWithEmail(data.email);
+            const response = yield userRepositoryGetQuery_1.default.getUserWithEmail(data.email);
             if (response.length != 0) {
                 if (!response[0].password) {
                     throw new Error("please signIn with Google");
@@ -43,7 +43,7 @@ exports.default = {
     }),
     checkuserExists: (email) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield userRepository_1.default.getUserWithEmail(email);
+            const response = yield userRepositoryGetQuery_1.default.getUserWithEmail(email);
             if (response.length != 0) {
                 return jwtTokenAuth_1.default.createToken(response[0]._id);
             }

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose"
-import DriverSchema from "../entites/driverEntites"
-import { signupData, walletDetails } from "../useCase/userUseCase/registration"
+import DriverSchema from "../../entites/driverEntites"
+import { signupData, walletDetails } from "../../useCase/userUseCase/userRegistrationUseCase"
 
 export default {
     findDriverWithEmail: async (email: string) => {
@@ -24,34 +24,28 @@ export default {
             throw new Error((error as Error).message)
         }
     },
-    addAmountInWallet: async (details: walletDetails, driverId: ObjectId) => {
+    findDriverWithAadharId: async (aadharId: string) => {
         try {
-            return await DriverSchema.findByIdAndUpdate(
-                driverId,
-                {
-                    $push: {
-                        'wallet.transactions': details
-                    },
-                    $inc: {
-                        'wallet.balance': details.amount
-                    },
-                },
-                { new: true },
+            return await DriverSchema.findOne({ 'aadhar.aadharId': aadharId });
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+    findDriverWithDrivingLicenseId: async (drivingLicenseId: string) => {
+        try {
+            return await DriverSchema.findOne({ 'license.licenseId': drivingLicenseId });
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+    findVehicleWithRcNo: async (rcNo: string) => {
+        try {
+            return await DriverSchema.findOne({ 'registration.registrationId': rcNo });
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
 
-            )
-        } catch (error) {
-            throw new Error((error as Error).message)
-        }
-    },
-    saveDriver: async (data: signupData, refferalCode: string) => {
-        try {
-            const driver = new DriverSchema({
-                ...data,
-                refrel: refferalCode
-            })
-            return await driver.save()
-        } catch (error) {
-            throw new Error((error as Error).message)
-        }
-    },
+
+
 }

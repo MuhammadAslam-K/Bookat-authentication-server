@@ -12,22 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const registration_1 = __importDefault(require("../../../useCase/driverUseCase/registration"));
+const userEntites_1 = __importDefault(require("../../entites/userEntites"));
 exports.default = {
-    signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    getUserWithEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield registration_1.default.signup(req.body));
+            return yield userEntites_1.default.find({ email: email });
         }
         catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error(error.message);
         }
     }),
-    login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    getUserWithMobile: (mobile) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield registration_1.default.login(req.body));
+            return yield userEntites_1.default.find({ mobile: mobile });
         }
         catch (error) {
-            res.status(200).json({ error: error.message });
+            throw new Error(error.message);
         }
-    })
+    }),
+    getUserWithRefrelCode: (refrelCode) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            return yield userEntites_1.default.find({ refrel: refrelCode });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }),
 };

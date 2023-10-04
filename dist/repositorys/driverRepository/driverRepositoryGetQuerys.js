@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const driverEntites_1 = __importDefault(require("../entites/driverEntites"));
+const driverEntites_1 = __importDefault(require("../../entites/driverEntites"));
 exports.default = {
     findDriverWithEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -46,25 +46,17 @@ exports.default = {
             throw new Error(error.message);
         }
     }),
-    addAmountInWallet: (details, driverId) => __awaiter(void 0, void 0, void 0, function* () {
+    findDriverWithDrivingLicenseId: (drivingLicenseId) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield driverEntites_1.default.findByIdAndUpdate(driverId, {
-                $push: {
-                    'wallet.transactions': details
-                },
-                $inc: {
-                    'wallet.balance': details.amount
-                },
-            }, { new: true });
+            return yield driverEntites_1.default.findOne({ 'license.licenseId': drivingLicenseId });
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    saveDriver: (data, refferalCode) => __awaiter(void 0, void 0, void 0, function* () {
+    findVehicleWithRcNo: (rcNo) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const driver = new driverEntites_1.default(Object.assign(Object.assign({}, data), { refrel: refferalCode }));
-            return yield driver.save();
+            return yield driverEntites_1.default.findOne({ 'registration.registrationId': rcNo });
         }
         catch (error) {
             throw new Error(error.message);

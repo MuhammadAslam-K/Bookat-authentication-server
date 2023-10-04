@@ -1,5 +1,6 @@
-import auth from "../../middlewares/auth"
-import userRepository from "../../repositorys/userRepository"
+import { ObjectId } from "mongoose"
+import auth from "../../middlewares/jwtTokenAuth"
+import userRepository from "../../repositorys/userRepository/userRepositoryGetQuery"
 import bcryptPassword from "../../services/bcryptPassword"
 
 export default {
@@ -16,7 +17,7 @@ export default {
                         throw new Error("Invalid email or password")
                     }
                     else {
-                        return auth.createToken(response[0]._id)
+                        return auth.createToken(response[0]._id as ObjectId)
                     }
                 }
             }
@@ -31,7 +32,7 @@ export default {
         try {
             const response = await userRepository.getUserWithEmail(email)
             if (response.length != 0) {
-                return auth.createToken(response[0]._id)
+                return auth.createToken(response[0]._id as ObjectId)
             }
             else {
                 throw new Error("user doesn't exists please signUp")

@@ -74,6 +74,40 @@ const driverSchema = new mongoose_1.Schema({
             },
         ],
     },
+    driverImageUrl: {
+        type: String,
+    },
+    aadhar: {
+        aadharId: {
+            type: String,
+        },
+        aadharImage: {
+            type: String,
+        },
+    },
+    license: {
+        licenseId: {
+            type: String,
+        },
+        licenseImage: {
+            type: String,
+        },
+    },
+    vehicle: {
+        registration: {
+            registrationId: {
+                type: String,
+            },
+            registrationImage: {
+                type: String,
+            },
+        },
+        vehicleModel: { type: String },
+        maxPersons: { type: String },
+        vehicleType: { type: String },
+        vehicleImage1: { type: String },
+        vehicleImage2: { type: String }
+    }
 });
 const DriverSchema = mongoose_1.default.model("driver", driverSchema);
 exports.default = DriverSchema;

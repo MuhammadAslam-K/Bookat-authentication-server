@@ -17,7 +17,6 @@ exports.default = {
     createToken: (id) => __awaiter(void 0, void 0, void 0, function* () {
         // const secretKey = process.env.JWT_SECRET_KEY
         const secretKey = "JkChTjrw8N4z2D83h3geiNM7qfRtcZRU0isSgNgq";
-        console.log("type", typeof (id));
         const payload = {
             userId: id,
         };
