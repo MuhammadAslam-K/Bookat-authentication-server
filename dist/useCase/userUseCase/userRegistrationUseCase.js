@@ -12,24 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const driverRepository_1 = __importDefault(require("../../repositorys/driverRepository"));
+const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
+const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
+const userRepositorySaveQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositorySaveQuery"));
 const bcryptPassword_1 = __importDefault(require("../../services/bcryptPassword"));
 const refrelCode_1 = require("../../utils/refrelCode");
-const jwtTokenAuth_1 = __importDefault(require("../../middlewares/jwtTokenAuth"));
 exports.default = {
-    signup: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    registerUser: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const checkEmailExists = yield driverRepository_1.default.findDriverWithEmail(data.email);
+            const checkEmailExists = yield userRepositoryGetQuery_1.default.getUserWithEmail(data.email);
             if (checkEmailExists.length != 0) {
-                throw new Error("Driver already exists. Please sign in.");
+                throw new Error("User already exists. Please sign in.");
             }
             else {
-                const checkMobileExists = yield driverRepository_1.default.findDriverWithMobile(data.mobile);
+                const checkMobileExists = yield userRepositoryGetQuery_1.default.getUserWithMobile(data.mobile);
                 if (checkMobileExists.length != 0) {
-                    throw new Error("Driver with the same mobile number already exists");
+                    throw new Error("User with the same mobile number already exists");
                 }
                 else {
-                    const checkRefrelCodeExists = yield driverRepository_1.default.getDriverWithRefrelCode(data.refrelCode);
+                    const checkRefrelCodeExists = yield userRepositoryGetQuery_1.default.getUserWithRefrelCode(data.refrelCode);
                     if (checkRefrelCodeExists.length != 0) {
                         const walletDetails = {
                             date: Date.now(),
@@ -37,7 +38,7 @@ exports.default = {
                             amount: 50,
                             status: "Credited"
                         };
-                        const addAmount = yield driverRepository_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
+                        const addAmount = yield userRepositoryUpdateQuery_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
                         const hashPassword = yield bcryptPassword_1.default.hashPassword(data.password);
                         data.password = hashPassword;
                         const refrelCode = (0, refrelCode_1.refferalCode)();
@@ -47,15 +48,15 @@ exports.default = {
                             amount: 100,
                             status: "Credited"
                         };
-                        const saveDriver = yield driverRepository_1.default.saveDriver(data, refrelCode);
-                        yield driverRepository_1.default.addAmountInWallet(wallet, saveDriver._id);
+                        const saveUser = yield userRepositorySaveQuery_1.default.saveUser(data, refrelCode);
+                        yield userRepositoryUpdateQuery_1.default.addAmountInWallet(wallet, saveUser._id);
                         return true;
                     }
                     else {
                         const hashPassword = yield bcryptPassword_1.default.hashPassword(data.password);
                         data.password = hashPassword;
                         const refrelCode = (0, refrelCode_1.refferalCode)();
-                        const saveUser = yield driverRepository_1.default.saveDriver(data, refrelCode);
+                        const saveUser = yield userRepositorySaveQuery_1.default.saveUser(data, refrelCode);
                         return true;
                     }
                 }
@@ -65,20 +66,16 @@ exports.default = {
             throw new Error(error.message);
         }
     }),
-    login: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    googleSignUp: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const driverExist = yield driverRepository_1.default.findDriverWithEmail(data.email);
-            if (driverExist.length != 0) {
-                const comparePassword = yield bcryptPassword_1.default.comparePassword(driverExist[0].password, data.password);
-                if (!comparePassword) {
-                    throw new Error("Invalid email or password");
-                }
-                else {
-                    return jwtTokenAuth_1.default.createToken(driverExist[0]._id);
-                }
+            const checkEmailExists = yield userRepositoryGetQuery_1.default.getUserWithEmail(data.email);
+            if (checkEmailExists.length != 0) {
+                throw new Error("User already exists. Please sign in.");
             }
             else {
-                throw new Error("please create an account");
+                const refrelCode = (0, refrelCode_1.refferalCode)();
+                const saveUser = yield userRepositorySaveQuery_1.default.saveUser(data, refrelCode);
+                return true;
             }
         }
         catch (error) {

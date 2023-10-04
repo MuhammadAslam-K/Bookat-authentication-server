@@ -12,22 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const registration_1 = __importDefault(require("../../../useCase/driverUseCase/registration"));
+const userEntites_1 = __importDefault(require("../../entites/userEntites"));
 exports.default = {
-    signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    saveUser: (data, refferalCode) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield registration_1.default.signup(req.body));
+            const user = new userEntites_1.default(Object.assign(Object.assign({}, data), { refrel: refferalCode }));
+            return yield user.save();
         }
         catch (error) {
-            res.status(500).json({ error: error.message });
+            throw new Error(error.message);
         }
     }),
-    login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            res.json(yield registration_1.default.login(req.body));
-        }
-        catch (error) {
-            res.status(200).json({ error: error.message });
-        }
-    })
 };

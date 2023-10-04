@@ -4,6 +4,7 @@ import cors from 'cors'
 
 import user from "./interface/router/userRouter";
 import driver_router from './interface/router/driverRouter';
+import admin_router from './interface/router/adminRouter';
 import connect from './config/mongoDB';
 
 dotenv.config()
@@ -30,6 +31,7 @@ app.use(
 
 app.use("/", user)
 app.use("/driver", driver_router)
+app.use("/admin", admin_router)
 
 
 MONGO_URL ? connect(MONGO_URL).then(() => {

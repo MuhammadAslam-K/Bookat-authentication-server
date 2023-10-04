@@ -12,22 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const registration_1 = __importDefault(require("../../../useCase/driverUseCase/registration"));
+const adminAuthUseCase_1 = __importDefault(require("../../../useCase/adminUseCase/adminAuthUseCase"));
 exports.default = {
-    signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    signIn: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield registration_1.default.signup(req.body));
+            res.json(yield adminAuthUseCase_1.default.signIn(req.body));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            res.json(yield registration_1.default.login(req.body));
-        }
-        catch (error) {
-            res.status(200).json({ error: error.message });
-        }
-    })
 };

@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import registration from "../../../useCase/userUseCase/registration"
+import registration from "../../../useCase/userUseCase/userRegistrationUseCase"
 
 export default {
     signup: async (req: Request, res: Response) => {
@@ -13,7 +13,7 @@ export default {
     googleSignup: async (req: Request, res: Response) => {
         try {
             const data = {
-                userName: req.body.displayName,
+                name: req.body.displayName,
                 email: req.body.email,
             }
             res.json(await registration.googleSignUp(data))
