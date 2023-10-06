@@ -28,7 +28,7 @@ exports.default = {
     }),
     encryptData: (data, expireIn) => {
         try {
-            const secretKey = "JkChTjrw8N4z2D83h3geiNM7qfRtcZRU0isSgNgq";
+            const secretKey = process.env.SECRET_KEY || "";
             const payload = {
                 payload: data,
             };
@@ -45,8 +45,8 @@ exports.default = {
     },
     decryptdata: (data) => {
         try {
-            const decodedToken = jsonwebtoken_1.default.verify(data, "JkChTjrw8N4z2D83h3geiNM7qfRtcZRU0isSgNgq");
-            console.log("token", decodedToken);
+            const secretKey = process.env.SECRET_KEY || "";
+            const decodedToken = jsonwebtoken_1.default.verify(data, secretKey);
             return decodedToken;
         }
         catch (error) {

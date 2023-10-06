@@ -20,20 +20,19 @@ exports.default = {
             const transporter = nodemailer_1.default.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'kamuhammadaslam@gmail.com',
-                    pass: 'iwnkdbowaiicdwpf',
+                    user: process.env.NODEMAILER_USER_EMAIL,
+                    pass: process.env.NODEMAILER_PASS,
                 },
             });
             const htmlMessage = `<p>Click the following link to reset your password the link will expire in 5 min:</p>
                                  <p><a href="${message}">${message}</a></p>`;
             const mailOptions = {
-                from: 'kamuhammadaslam@gmail.com',
+                from: process.env.NODEMAILER_USER_EMAIL,
                 to: to,
                 subject: subject,
                 html: htmlMessage,
             };
-            const info = yield transporter.sendMail(mailOptions);
-            console.log('Email sent: ' + info.response);
+            yield transporter.sendMail(mailOptions);
             return true;
         }
         catch (error) {

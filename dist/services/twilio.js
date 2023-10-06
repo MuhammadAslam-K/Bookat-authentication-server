@@ -13,21 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const twilio_1 = __importDefault(require("twilio"));
-const accountSid = "AC27fb374a44e424ecfde5a06eaba2dcbe";
-const authToken = "3ebd7e990abf7bde52d3cfa081539d07";
-const verifySid = "VA36b0a90b67572c230c2b3798c0e8048b";
+const accountSid = process.env.TWILIO_ACCOUNT_SID || "";
+const authToken = process.env.TWILIO_AUTH_TOKEN || "";
+const verifySid = process.env.TWILIO_VERIFY_SID || "";
 const client = (0, twilio_1.default)(accountSid, authToken);
 exports.default = {
     sendSMS: (mobile) => __awaiter(void 0, void 0, void 0, function* () {
         const countryCode = 91;
         try {
-            const otpResponse = yield client.verify.v2
+            yield client.verify.v2
                 .services(verifySid)
                 .verifications.create({
                 to: `+${countryCode}${mobile}`,
                 channel: "sms",
             });
-            console.log("otp response = ", otpResponse);
             return true;
         }
         catch (error) {
