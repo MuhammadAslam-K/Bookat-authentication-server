@@ -12,40 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const driverEntites_1 = __importDefault(require("../../entites/driverEntites"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.default = {
-    getDriver: (field, data) => __awaiter(void 0, void 0, void 0, function* () {
+    hashPassword: (password) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const query = {};
-            query[field] = data;
-            return yield driverEntites_1.default.find(query);
+            return yield bcrypt_1.default.hash(password, 10);
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    findDriverWithAadharId: (aadharId) => __awaiter(void 0, void 0, void 0, function* () {
+    comparePassword: (passwordOne, passwordTwo) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(passwordOne, passwordTwo);
+    }),
+    encryptData: (data, expireIn) => {
         try {
-            return yield driverEntites_1.default.findOne({ 'aadhar.aadharId': aadharId });
+            const secretKey = "JkChTjrw8N4z2D83h3geiNM7qfRtcZRU0isSgNgq";
+            const payload = {
+                payload: data,
+            };
+            const options = {
+                expiresIn: expireIn,
+            };
+            const token = jsonwebtoken_1.default.sign(payload, secretKey, options);
+            return token;
+        }
+        catch (error) {
+            console.error('Encryption error:', error);
+            throw new Error(error.message);
+        }
+    },
+    decryptdata: (data) => {
+        try {
+            const decodedToken = jsonwebtoken_1.default.verify(data, "JkChTjrw8N4z2D83h3geiNM7qfRtcZRU0isSgNgq");
+            console.log("token", decodedToken);
+            return decodedToken;
         }
         catch (error) {
             throw new Error(error.message);
         }
-    }),
-    findDriverWithDrivingLicenseId: (drivingLicenseId) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            return yield driverEntites_1.default.findOne({ 'license.licenseId': drivingLicenseId });
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    }),
-    findVehicleWithRcNo: (rcNo) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            return yield driverEntites_1.default.findOne({ 'registration.registrationId': rcNo });
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    }),
+    }
 };

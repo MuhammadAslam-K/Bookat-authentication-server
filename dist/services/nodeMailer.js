@@ -12,30 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userEntites_1 = __importDefault(require("../../entites/userEntites"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
 exports.default = {
-    addAmountInWallet: (details, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    sendEmail: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield userEntites_1.default.findByIdAndUpdate(userId, {
-                $push: {
-                    'wallet.transactions': details
+            const { to, subject, message } = data;
+            const transporter = nodemailer_1.default.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'kamuhammadaslam@gmail.com',
+                    pass: 'iwnkdbowaiicdwpf',
                 },
-                $inc: {
-                    'wallet.balance': details.amount
-                },
-            }, { new: true });
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    }),
-    updatePassword: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield userEntites_1.default.findOneAndUpdate({ email }, { password }, { new: true });
+            });
+            const htmlMessage = `<p>Click the following link to reset your password the link will expire in 5 min:</p>
+                                 <p><a href="${message}">${message}</a></p>`;
+            const mailOptions = {
+                from: 'kamuhammadaslam@gmail.com',
+                to: to,
+                subject: subject,
+                html: htmlMessage,
+            };
+            const info = yield transporter.sendMail(mailOptions);
+            console.log('Email sent: ' + info.response);
             return true;
         }
         catch (error) {
-            throw new Error(error.message);
+            console.error('Error sending email: ', error);
         }
     })
 };

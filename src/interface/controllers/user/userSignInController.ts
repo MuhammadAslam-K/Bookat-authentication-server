@@ -15,5 +15,5 @@ export default {
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
-    }
+    },
 }

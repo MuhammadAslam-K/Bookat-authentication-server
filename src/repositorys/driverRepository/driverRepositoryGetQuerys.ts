@@ -3,27 +3,16 @@ import DriverSchema from "../../entites/driverEntites"
 import { signupData, walletDetails } from "../../useCase/userUseCase/userRegistrationUseCase"
 
 export default {
-    findDriverWithEmail: async (email: string) => {
+    getDriver: async (field: string, data: string) => {
         try {
-            return await DriverSchema.find({ email: email })
+            const query: { [key: string]: string } = {};
+            query[field] = data;
+            return await DriverSchema.find(query);
         } catch (error) {
-            throw new Error((error as Error).message)
+            throw new Error((error as Error).message);
         }
     },
-    findDriverWithMobile: async (mobile: string) => {
-        try {
-            return await DriverSchema.find({ mobile: mobile })
-        } catch (error) {
-            throw new Error((error as Error).message)
-        }
-    },
-    getDriverWithRefrelCode: async (refrelCode: string) => {
-        try {
-            return await DriverSchema.find({ refrel: refrelCode })
-        } catch (error) {
-            throw new Error((error as Error).message)
-        }
-    },
+
     findDriverWithAadharId: async (aadharId: string) => {
         try {
             return await DriverSchema.findOne({ 'aadhar.aadharId': aadharId });

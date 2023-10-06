@@ -22,4 +22,17 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+    updatePassword: async (email: string, password: string) => {
+        try {
+            await UserSchema.findOneAndUpdate(
+                { email },
+                { password },
+                { new: true }
+            )
+            return true
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    }
 }

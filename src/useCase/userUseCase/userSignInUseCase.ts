@@ -1,15 +1,15 @@
 import { ObjectId } from "mongoose"
-import auth from "../../middlewares/jwtTokenAuth"
 import userRepository from "../../repositorys/userRepository/userRepositoryGetQuery"
-import bcryptPassword from "../../services/bcryptPassword"
+import bcryptPassword from "../../services/encryptionDecryption"
+import encryptionDecryption from "../../services/encryptionDecryption"
 
 export default {
     validateUser: async (data: { email: string, password: string }) => {
         try {
-            const response = await userRepository.getUserWithEmail(data.email)
+            const response = await userRepository.getUser("email", data.email)
             if (response.length != 0) {
                 if (!response[0].password) {
-                    throw new Error("please signIn with Google")
+                    throw new Error("Oops! It seems you signed up with Google")
                 }
                 else {
                     const comparePassword = await bcryptPassword.comparePassword(data.password, response[0].password)
@@ -17,7 +17,7 @@ export default {
                         throw new Error("Invalid email or password")
                     }
                     else {
-                        return auth.createToken(response[0]._id as ObjectId)
+                        return encryptionDecryption.encryptData(response[0]._id as ObjectId, "1h")
                     }
                 }
             }
@@ -30,9 +30,9 @@ export default {
     },
     checkuserExists: async (email: string) => {
         try {
-            const response = await userRepository.getUserWithEmail(email)
+            const response = await userRepository.getUser("email", email)
             if (response.length != 0) {
-                return auth.createToken(response[0]._id as ObjectId)
+                return encryptionDecryption.encryptData(response[0]._id as ObjectId, "1h")
             }
             else {
                 throw new Error("user doesn't exists please signUp")
