@@ -13,43 +13,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
+const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
 const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
-const encryptionDecryption_2 = __importDefault(require("../../services/encryptionDecryption"));
+const nodeMailer_1 = __importDefault(require("../../services/nodeMailer"));
 exports.default = {
-    validateUser: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    sendRestPasswordLink: (email) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield userRepositoryGetQuery_1.default.getUser("email", data.email);
-            if (response.length != 0) {
-                if (!response[0].password) {
+            const checkUserExists = yield userRepositoryGetQuery_1.default.getUser("email", email);
+            if (checkUserExists.length != 0) {
+                if (!checkUserExists[0].password) {
                     throw new Error("Oops! It seems you signed up with Google");
                 }
-                else {
-                    const comparePassword = yield encryptionDecryption_1.default.comparePassword(data.password, response[0].password);
-                    if (!comparePassword) {
-                        throw new Error("Invalid email or password");
-                    }
-                    else {
-                        return encryptionDecryption_2.default.encryptData(response[0]._id, "1h");
-                    }
-                }
+                const encryptedEmail = encryptionDecryption_1.default.encryptData(email, "30m");
+                const data = {
+                    to: email,
+                    subject: "Password Reset Link",
+                    message: `http://localhost:5173/resetpassword/?id=${encryptedEmail}`
+                };
+                return yield nodeMailer_1.default.sendEmail(data);
             }
             else {
-                throw new Error("user doesn't exists please signUp");
+                throw new Error("Email does not Exists");
             }
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    checkuserExists: (email) => __awaiter(void 0, void 0, void 0, function* () {
+    resetPassword: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield userRepositoryGetQuery_1.default.getUser("email", email);
-            if (response.length != 0) {
-                return encryptionDecryption_2.default.encryptData(response[0]._id, "1h");
-            }
-            else {
-                throw new Error("user doesn't exists please signUp");
-            }
+            console.log("data", data);
+            const decryptedEmail = encryptionDecryption_1.default.decryptdata(data.id);
+            const hashedPassword = yield encryptionDecryption_1.default.hashPassword(data.password);
+            return userRepositoryUpdateQuery_1.default.updatePassword(decryptedEmail.payload, hashedPassword);
         }
         catch (error) {
             throw new Error(error.message);

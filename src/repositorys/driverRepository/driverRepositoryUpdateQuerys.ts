@@ -34,7 +34,8 @@ export default {
                         'license.licenseImage': data.licenseImageUrl,
                         'driverImageUrl': data.driverImageUrl,
                         'aadhar.aadharId': data.aadharId,
-                        'aadhar.aadharImage': data.aadharImageUrl
+                        'aadhar.aadharImage': data.aadharImageUrl,
+                        'driver.driverDocuments': true
                     }
                 },
                 { new: true }
@@ -57,6 +58,7 @@ export default {
                         'vehicle.vehicleType': data.vehicleType,
                         'vehicle.vehicleImage1': data.vehicleImageUrl1,
                         'vehicle.vehicleImage2': data.vehicleImageUrl2,
+                        'vehicle.vehicleDocuments': true
                     }
                 },
                 { new: true }
@@ -65,4 +67,17 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+    updatePassword: async (email: string, password: string) => {
+        try {
+            await DriverSchema.findOneAndUpdate(
+                { email },
+                { password },
+                { new: true }
+            )
+            return true
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    }
 }

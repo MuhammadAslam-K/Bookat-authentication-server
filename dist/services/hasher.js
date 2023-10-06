@@ -12,30 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userEntites_1 = __importDefault(require("../../entites/userEntites"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 exports.default = {
-    addAmountInWallet: (details, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    hashPassword: (password) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield userEntites_1.default.findByIdAndUpdate(userId, {
-                $push: {
-                    'wallet.transactions': details
-                },
-                $inc: {
-                    'wallet.balance': details.amount
-                },
-            }, { new: true });
+            return yield bcrypt_1.default.hash(password, 10);
         }
         catch (error) {
             throw new Error(error.message);
         }
     }),
-    updatePassword: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield userEntites_1.default.findOneAndUpdate({ email }, { password }, { new: true });
-            return true;
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    })
+    comparePassword: (passwordOne, passwordTwo) => __awaiter(void 0, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(passwordOne, passwordTwo);
+    }),
 };

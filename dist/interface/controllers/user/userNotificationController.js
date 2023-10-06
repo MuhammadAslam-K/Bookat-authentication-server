@@ -12,35 +12,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userRegistrationUseCase_1 = __importDefault(require("../../../useCase/userUseCase/userRegistrationUseCase"));
+const twilio_1 = __importDefault(require("../../../services/twilio"));
+const passwordRest_1 = __importDefault(require("../../../useCase/userUseCase/passwordRest"));
 exports.default = {
-    signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    sendOtp: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield userRegistrationUseCase_1.default.registerUser(req.body));
+            res.json(yield twilio_1.default.sendSMS(req.body.mobile));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    googleSignup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    verifySMS: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const data = {
-                name: req.body.displayName,
-                email: req.body.email,
-            };
-            res.json(yield userRegistrationUseCase_1.default.googleSignUp(data));
+            res.json(yield twilio_1.default.verifySMS(req.body.mobile, req.body.otp));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    checkUserExists: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    resetPasswordLink: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            console.log(req.body);
-            res.json(yield userRegistrationUseCase_1.default.checkUserExists(req.body));
+            res.json(yield passwordRest_1.default.sendRestPasswordLink(req.body.email));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
+    resetpassword: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            res.json(yield passwordRest_1.default.resetPassword(req.body));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    })
 };

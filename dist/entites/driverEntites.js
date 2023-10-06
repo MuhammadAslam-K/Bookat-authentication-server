@@ -45,8 +45,25 @@ const driverSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    verified: {
-        type: Boolean
+    driver: {
+        driverVerified: {
+            type: Boolean,
+            default: false,
+        },
+        driverDocuments: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    vehicle: {
+        vehicleVerified: {
+            type: Boolean,
+            default: false
+        },
+        vehicleDocuments: {
+            type: Boolean,
+            default: false
+        },
     },
     joiningAt: {
         type: String,
@@ -93,7 +110,7 @@ const driverSchema = new mongoose_1.Schema({
             type: String,
         },
     },
-    vehicle: {
+    vehicleDocuments: {
         registration: {
             registrationId: {
                 type: String,

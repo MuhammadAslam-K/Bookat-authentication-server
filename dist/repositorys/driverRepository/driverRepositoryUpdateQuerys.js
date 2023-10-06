@@ -37,7 +37,8 @@ exports.default = {
                     'license.licenseImage': data.licenseImageUrl,
                     'driverImageUrl': data.driverImageUrl,
                     'aadhar.aadharId': data.aadharId,
-                    'aadhar.aadharImage': data.aadharImageUrl
+                    'aadhar.aadharImage': data.aadharImageUrl,
+                    'driver.driverDocuments': true
                 }
             }, { new: true });
         }
@@ -56,6 +57,7 @@ exports.default = {
                     'vehicle.vehicleType': data.vehicleType,
                     'vehicle.vehicleImage1': data.vehicleImageUrl1,
                     'vehicle.vehicleImage2': data.vehicleImageUrl2,
+                    'vehicle.vehicleDocuments': true
                 }
             }, { new: true });
         }
@@ -63,4 +65,13 @@ exports.default = {
             throw new Error(error.message);
         }
     }),
+    updatePassword: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            yield driverEntites_1.default.findOneAndUpdate({ email }, { password }, { new: true });
+            return true;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    })
 };

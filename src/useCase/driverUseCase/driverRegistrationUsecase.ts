@@ -60,14 +60,7 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+
 }
 
-// {
-//     [1]   registrationNo: 'NY 45 C 1234',
-//     [1]   vehicleModel: 'innova',
-//     [1]   maxPersons: '7',
-//     [1]   vehicleType: '',
-//     [1]   rcImageUrl: 'https://firebasestorage.googleapis.com/v0/b/bookat-87c98.appspot.com/o/images%2Fvehicle%2Frc%2Fimage-170-1024x683.png?alt=media&token=d8f5ac0b-4419-4a1f-b963-bf37d642b90b',
-//     [1]   vehicle1ImageUrl: 'https://firebasestorage.googleapis.com/v0/b/bookat-87c98.appspot.com/o/images%2Fvehicle%2FvehicleImage1%2Fwork-1.png?alt=media&token=94fc878b-ce37-4938-b9da-d5d416e76476',
-//     [1]   vehicle2ImageUrl: 'https://firebasestorage.googleapis.com/v0/b/bookat-87c98.appspot.com/o/images%2Fvehicle%2FvehicleImage2%2Fimage-170-1024x683.png?alt=media&token=e4f57f5a-2798-4b60-a60b-954624b1cf09'
-//     [1] }
