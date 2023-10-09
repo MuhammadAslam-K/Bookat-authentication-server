@@ -52,6 +52,8 @@ exports.default = {
             else {
                 return res.status(401).json({ error: 'Unauthorized' });
             }
+            req.token = decodedToken;
+            next();
         }
         catch (error) {
             return res.status(401).json({ error: error.message });
