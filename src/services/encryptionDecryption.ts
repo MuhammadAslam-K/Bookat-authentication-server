@@ -18,6 +18,29 @@ export default {
         return await bcrypt.compare(passwordOne, passwordTwo);
     },
 
+    createToken: (data: string | ObjectId, role: string, expireIn: string): string => {
+        try {
+            const secretKey = process.env.SECRET_KEY || ""
+
+            const payload = {
+                data: data,
+                role: role,
+            };
+
+            const options: jwt.SignOptions = {
+                expiresIn: expireIn,
+            };
+            const token = jwt.sign(payload, secretKey, options);
+            return token
+
+
+        } catch (error) {
+            console.error('Encryption error:', error);
+            throw new Error((error as Error).message)
+        }
+
+    },
+
     encryptData: (data: string | ObjectId, expireIn: string): string => {
         try {
             const secretKey = process.env.SECRET_KEY || ""
@@ -44,6 +67,7 @@ export default {
             const secretKey = process.env.SECRET_KEY || ""
 
             const decodedToken = jwt.verify(data, secretKey) as JwtPayload;
+
             return decodedToken
         }
         catch (error) {

@@ -51,18 +51,20 @@ export default {
                 driverId,
                 {
                     $set: {
-                        'vehicle.registration.registrationId': data.registrationNo,
-                        'vehicle.registration.registrationImage': data.rcImageUrl,
-                        'vehicle.vehicleModel': data.vehicleModel,
-                        'vehicle.maxPersons': data.maxPersons,
-                        'vehicle.vehicleType': data.vehicleType,
-                        'vehicle.vehicleImage1': data.vehicleImageUrl1,
-                        'vehicle.vehicleImage2': data.vehicleImageUrl2,
+                        'vehicleDocuments.registration.registrationId': data.registrationNo,
+                        'vehicleDocuments.registration.registrationImage': data.rcImageUrl,
+                        'vehicleDocuments.vehicleModel': data.vehicleModel,
+                        'vehicleDocuments.maxPersons': data.maxPersons,
+                        'vehicleDocuments.vehicleType': data.vehicleType,
+                        'vehicleDocuments.vehicleImage1': data.vehicleImageUrl1,
+                        'vehicleDocuments.vehicleImage2': data.vehicleImageUrl2,
                         'vehicle.vehicleDocuments': true
                     }
                 },
                 { new: true }
             )
+
+
         } catch (error) {
             throw new Error((error as Error).message)
         }
@@ -76,6 +78,20 @@ export default {
                 { new: true }
             )
             return true
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
+    changeDriverAvailablety: async (driverId: ObjectId) => {
+        try {
+            const driver = await DriverSchema.findById(driverId);
+            if (driver) {
+                driver.isAvailable = !driver.isAvailable
+                const result = await driver.save()
+                return result.isAvailable
+            }
+
         } catch (error) {
             throw new Error((error as Error).message)
         }

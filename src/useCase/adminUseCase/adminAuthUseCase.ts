@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose"
 import auth from "../../middlewares/jwtTokenAuth"
 import adminRepository from "../../repositorys/adminRepository"
+import encryptionDecryption from "../../services/encryptionDecryption"
 
 export default {
     signIn: async (data: { email: string, password: string }) => {
@@ -8,7 +9,7 @@ export default {
             const admnExists = await adminRepository.getAdminWithEmail(data.email)
 
             if (admnExists.length != 0 && admnExists[0].password == data.password) {
-                return auth.createToken(admnExists[0]._id as ObjectId)
+                return encryptionDecryption.createToken(admnExists[0]._id as ObjectId, "admin", "1h")
             } else {
                 throw new Error("Unautherised access")
             }

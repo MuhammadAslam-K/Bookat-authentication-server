@@ -48,4 +48,12 @@ exports.default = {
             throw new Error(error.message);
         }
     }),
+    findDriverWithId: (driverId) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            return yield driverEntites_1.default.findById(driverId);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    })
 };

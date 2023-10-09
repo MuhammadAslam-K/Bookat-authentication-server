@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose"
 import DriverSchema from "../../entites/driverEntites"
-import { signupData, walletDetails } from "../../useCase/userUseCase/userRegistrationUseCase"
+
 
 export default {
     getDriver: async (field: string, data: string) => {
@@ -20,6 +20,7 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
     findDriverWithDrivingLicenseId: async (drivingLicenseId: string) => {
         try {
             return await DriverSchema.findOne({ 'license.licenseId': drivingLicenseId });
@@ -27,6 +28,7 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
     findVehicleWithRcNo: async (rcNo: string) => {
         try {
             return await DriverSchema.findOne({ 'registration.registrationId': rcNo });
@@ -35,6 +37,12 @@ export default {
         }
     },
 
-
+    findDriverWithId: async (driverId: ObjectId) => {
+        try {
+            return await DriverSchema.findById(driverId)
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    }
 
 }

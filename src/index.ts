@@ -15,7 +15,7 @@ const app = Express()
 app.use(cors())
 app.use(Express.json())
 
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = [process.env.FRONT_END];
 app.use(
     cors({
         origin: function (origin: any, callback: any) {
@@ -28,6 +28,8 @@ app.use(
         credentials: true,
     })
 );
+
+
 
 app.use("/", user)
 app.use("/driver", driver_router)

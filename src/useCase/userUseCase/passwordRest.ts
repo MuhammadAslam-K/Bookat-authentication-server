@@ -33,7 +33,7 @@ export default {
 
     resetPassword: async (data: { id: string, password: string }) => {
         try {
-            console.log("data", data);
+
             const decryptedEmail = encryptionDecryption.decryptdata(data.id)
             const hashedPassword = await encryptionDecryption.hashPassword(data.password)
             return userRepositoryUpdateQuery.updatePassword(decryptedEmail.payload, hashedPassword)

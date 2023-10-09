@@ -12,34 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userRegistrationUseCase_1 = __importDefault(require("../../../useCase/userUseCase/userRegistrationUseCase"));
+const driverProfileUseCase_1 = __importDefault(require("../../../useCase/driverUseCase/driverProfileUseCase"));
+const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 exports.default = {
-    signup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    getDriverProfile: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield userRegistrationUseCase_1.default.registerUser(req.body));
+            res.json(yield driverProfileUseCase_1.default.getDriverProfile(req.token.data));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
     }),
-    googleSignup: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    driverAvailable: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const data = {
-                name: req.body.displayName,
-                email: req.body.email,
-            };
-            res.json(yield userRegistrationUseCase_1.default.googleSignUp(data));
+            res.json(yield driverRepositoryUpdateQuerys_1.default.changeDriverAvailablety(req.token.data));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }),
-    checkUserExists: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            res.json(yield userRegistrationUseCase_1.default.checkUserExists(req.body));
-        }
-        catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }),
+    })
 };

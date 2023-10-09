@@ -29,7 +29,7 @@ exports.default = {
                         throw new Error("Invalid email or password");
                     }
                     else {
-                        return encryptionDecryption_2.default.encryptData(response[0]._id, "1h");
+                        return encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
                     }
                 }
             }
@@ -45,7 +45,7 @@ exports.default = {
         try {
             const response = yield userRepositoryGetQuery_1.default.getUser("email", email);
             if (response.length != 0) {
-                return encryptionDecryption_2.default.encryptData(response[0]._id, "1h");
+                return encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
             }
             else {
                 throw new Error("user doesn't exists please signUp");

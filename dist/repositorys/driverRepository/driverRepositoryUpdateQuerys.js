@@ -50,13 +50,13 @@ exports.default = {
         try {
             return yield driverEntites_1.default.findByIdAndUpdate(driverId, {
                 $set: {
-                    'vehicle.registration.registrationId': data.registrationNo,
-                    'vehicle.registration.registrationImage': data.rcImageUrl,
-                    'vehicle.vehicleModel': data.vehicleModel,
-                    'vehicle.maxPersons': data.maxPersons,
-                    'vehicle.vehicleType': data.vehicleType,
-                    'vehicle.vehicleImage1': data.vehicleImageUrl1,
-                    'vehicle.vehicleImage2': data.vehicleImageUrl2,
+                    'vehicleDocuments.registration.registrationId': data.registrationNo,
+                    'vehicleDocuments.registration.registrationImage': data.rcImageUrl,
+                    'vehicleDocuments.vehicleModel': data.vehicleModel,
+                    'vehicleDocuments.maxPersons': data.maxPersons,
+                    'vehicleDocuments.vehicleType': data.vehicleType,
+                    'vehicleDocuments.vehicleImage1': data.vehicleImageUrl1,
+                    'vehicleDocuments.vehicleImage2': data.vehicleImageUrl2,
                     'vehicle.vehicleDocuments': true
                 }
             }, { new: true });
@@ -69,6 +69,19 @@ exports.default = {
         try {
             yield driverEntites_1.default.findOneAndUpdate({ email }, { password }, { new: true });
             return true;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }),
+    changeDriverAvailablety: (driverId) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const driver = yield driverEntites_1.default.findById(driverId);
+            if (driver) {
+                driver.isAvailable = !driver.isAvailable;
+                const result = yield driver.save();
+                return result.isAvailable;
+            }
         }
         catch (error) {
             throw new Error(error.message);

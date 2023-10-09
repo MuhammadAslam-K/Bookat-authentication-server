@@ -13,9 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const twilio_1 = __importDefault(require("twilio"));
-const accountSid = process.env.TWILIO_ACCOUNT_SID || "";
-const authToken = process.env.TWILIO_AUTH_TOKEN || "";
-const verifySid = process.env.TWILIO_VERIFY_SID || "";
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+// const accountSid = process.env.TWILIO_ACCOUNT_SID
+const accountSid = "AC27fb374a44e424ecfde5a06eaba2dcbe";
+// const authToken = process.env.TWILIO_AUTH_TOKEN
+const authToken = "7aa06a1bdcf3ec95c1061aa51c2f3226";
+// const verifySid = process.env.TWILIO_VERIFY_SID || ""
+const verifySid = "VA36b0a90b67572c230c2b3798c0e8048b";
 const client = (0, twilio_1.default)(accountSid, authToken);
 exports.default = {
     sendSMS: (mobile) => __awaiter(void 0, void 0, void 0, function* () {
@@ -30,7 +35,7 @@ exports.default = {
             return true;
         }
         catch (error) {
-            console.log("twilio", error);
+            throw new Error(error.message);
         }
     }),
     verifySMS: (mobile, otp) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,7 +47,6 @@ exports.default = {
                 to: `+${countryCode}${mobile}`,
                 code: otp,
             });
-            console.log("verify sms", verifyResponse);
             if (verifyResponse.valid) {
                 return true;
             }
@@ -51,7 +55,6 @@ exports.default = {
             }
         }
         catch (error) {
-            console.log("verify sms", error);
             throw new Error(error.message);
         }
     })

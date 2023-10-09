@@ -47,6 +47,7 @@ exports.default = {
             return driverRepositoryUpdateQuerys_1.default.updatePassword(decryptedEmail.payload, hashedPassword);
         }
         catch (error) {
+            console.log(error);
             throw new Error(error.message);
         }
     })
