@@ -24,6 +24,7 @@ export default {
                 "/driver/check/driverExists",
                 "/driver/resetPasswordLink",
                 "/driver/resetpassword",
+
                 /**********  Admin **********/
                 "/admin/login"
             ]
