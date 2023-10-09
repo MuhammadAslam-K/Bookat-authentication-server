@@ -33,16 +33,15 @@ exports.default = {
     }),
     saveDriverInfo: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield driverRegistrationUsecase_1.default.saveDriverInfo(req.body, req.token.payload));
+            res.json(yield driverRegistrationUsecase_1.default.saveDriverInfo(req.body, req.token.data));
         }
         catch (error) {
-            console.log(error);
             res.status(500).json({ error: error.message });
         }
     }),
     saveVehicleInfo: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            res.json(yield driverRegistrationUsecase_1.default.saveVehicleInfo(req.body, req.token.payload));
+            res.json(yield driverRegistrationUsecase_1.default.saveVehicleInfo(req.body, req.token.data));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
@@ -50,7 +49,6 @@ exports.default = {
     }),
     checkExists: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            console.log(req.body);
             res.json(yield driverAuthUseCase_1.default.checkDriverExists(req.body));
         }
         catch (error) {

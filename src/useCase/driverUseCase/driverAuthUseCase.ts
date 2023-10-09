@@ -65,7 +65,7 @@ export default {
                     throw new Error("Invalid email or password")
                 }
                 else {
-                    const token = encryptionDecryption.encryptData(driverExist[0]._id as ObjectId, "1h");
+                    const token = encryptionDecryption.createToken(driverExist[0]._id as ObjectId, "driver", "1h");
                     let response: { token: string, document?: boolean, vehicle?: boolean, driver?: boolean };
 
                     if (driverExist[0].driver.driverDocuments) {

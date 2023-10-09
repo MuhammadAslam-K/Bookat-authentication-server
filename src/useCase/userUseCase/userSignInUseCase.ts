@@ -17,7 +17,7 @@ export default {
                         throw new Error("Invalid email or password")
                     }
                     else {
-                        return encryptionDecryption.encryptData(response[0]._id as ObjectId, "1h")
+                        return encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
                     }
                 }
             }
@@ -32,7 +32,7 @@ export default {
         try {
             const response = await userRepository.getUser("email", email)
             if (response.length != 0) {
-                return encryptionDecryption.encryptData(response[0]._id as ObjectId, "1h")
+                return encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
             }
             else {
                 throw new Error("user doesn't exists please signUp")

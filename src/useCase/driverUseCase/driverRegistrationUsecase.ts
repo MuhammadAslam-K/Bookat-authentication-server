@@ -25,6 +25,7 @@ export interface vehicleInfo {
 export default {
     saveDriverInfo: async (data: driverInfo, driverId: Schema.Types.ObjectId) => {
         try {
+            console.log("callled")
             const aadharidExists = await driverRepositoryGetQuerys.findDriverWithAadharId(data.aadharId)
             if (!aadharidExists) {
                 const drivingLicenseIdExists = await driverRepositoryGetQuerys.findDriverWithDrivingLicenseId(data.drivingLicenseId)

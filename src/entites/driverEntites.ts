@@ -21,6 +21,7 @@ const driverSchema: Schema = new Schema({
         type: String,
         required: true
     },
+
     driver: {
         driverVerified: {
             type: Boolean,
@@ -32,6 +33,16 @@ const driverSchema: Schema = new Schema({
         },
     },
 
+    joiningAt: {
+        type: String,
+        deafult: Date.now(),
+    },
+
+    isAvailable: {
+        type: Boolean,
+        default: false
+    },
+
     vehicle: {
         vehicleVerified: {
             type: Boolean,
@@ -41,11 +52,6 @@ const driverSchema: Schema = new Schema({
             type: Boolean,
             default: false
         },
-    },
-
-    joiningAt: {
-        type: String,
-        deafult: Date.now(),
     },
 
     wallet: {

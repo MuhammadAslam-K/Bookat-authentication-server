@@ -55,6 +55,14 @@ const driverSchema = new mongoose_1.Schema({
             default: false,
         },
     },
+    joiningAt: {
+        type: String,
+        deafult: Date.now(),
+    },
+    isAvailable: {
+        type: Boolean,
+        default: false
+    },
     vehicle: {
         vehicleVerified: {
             type: Boolean,
@@ -64,10 +72,6 @@ const driverSchema = new mongoose_1.Schema({
             type: Boolean,
             default: false
         },
-    },
-    joiningAt: {
-        type: String,
-        deafult: Date.now(),
     },
     wallet: {
         balance: {

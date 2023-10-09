@@ -12,20 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const adminRepository_1 = __importDefault(require("../../repositorys/adminRepository"));
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
+const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 exports.default = {
-    signIn: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    getDriverProfile: (driverId) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const admnExists = yield adminRepository_1.default.getAdminWithEmail(data.email);
-            if (admnExists.length != 0 && admnExists[0].password == data.password) {
-                return encryptionDecryption_1.default.createToken(admnExists[0]._id, "admin", "1h");
-            }
-            else {
-                throw new Error("Unautherised access");
-            }
+            return (yield driverRepositoryGetQuerys_1.default.findDriverWithId(driverId));
         }
         catch (error) {
+            console.log(error);
             throw new Error(error.message);
         }
     })
