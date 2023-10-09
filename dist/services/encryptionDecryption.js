@@ -26,6 +26,24 @@ exports.default = {
     comparePassword: (passwordOne, passwordTwo) => __awaiter(void 0, void 0, void 0, function* () {
         return yield bcrypt_1.default.compare(passwordOne, passwordTwo);
     }),
+    createToken: (data, role, expireIn) => {
+        try {
+            const secretKey = process.env.SECRET_KEY || "";
+            const payload = {
+                data: data,
+                role: role,
+            };
+            const options = {
+                expiresIn: expireIn,
+            };
+            const token = jsonwebtoken_1.default.sign(payload, secretKey, options);
+            return token;
+        }
+        catch (error) {
+            console.error('Encryption error:', error);
+            throw new Error(error.message);
+        }
+    },
     encryptData: (data, expireIn) => {
         try {
             const secretKey = process.env.SECRET_KEY || "";

@@ -16,7 +16,6 @@ const resetPassword_1 = __importDefault(require("../../../useCase/driverUseCase/
 exports.default = {
     resetPasswordLink: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            console.log("called", req.body);
             res.json(yield resetPassword_1.default.sendRestPasswordLink(req.body.email));
         }
         catch (error) {

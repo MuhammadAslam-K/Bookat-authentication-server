@@ -42,7 +42,6 @@ exports.default = {
     }),
     resetPassword: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            console.log("data", data);
             const decryptedEmail = encryptionDecryption_1.default.decryptdata(data.id);
             const hashedPassword = yield encryptionDecryption_1.default.hashPassword(data.password);
             return userRepositoryUpdateQuery_1.default.updatePassword(decryptedEmail.payload, hashedPassword);

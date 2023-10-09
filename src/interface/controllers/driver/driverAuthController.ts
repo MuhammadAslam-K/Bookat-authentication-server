@@ -19,15 +19,14 @@ export default {
     },
     saveDriverInfo: async (req: Request, res: Response) => {
         try {
-            res.json(await driverRegistrationUsecase.saveDriverInfo(req.body, req.token.payload))
+            res.json(await driverRegistrationUsecase.saveDriverInfo(req.body, req.token.data))
         } catch (error) {
-            console.log(error);
             res.status(500).json({ error: (error as Error).message })
         }
     },
     saveVehicleInfo: async (req: Request, res: Response) => {
         try {
-            res.json(await driverRegistrationUsecase.saveVehicleInfo(req.body, req.token.payload))
+            res.json(await driverRegistrationUsecase.saveVehicleInfo(req.body, req.token.data))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
@@ -35,8 +34,6 @@ export default {
 
     checkExists: async (req: Request, res: Response) => {
         try {
-            console.log(req.body);
-
             res.json(await driverAuthUseCase.checkDriverExists(req.body))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })

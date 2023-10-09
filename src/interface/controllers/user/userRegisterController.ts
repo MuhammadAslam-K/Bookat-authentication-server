@@ -28,8 +28,6 @@ export default {
 
     checkUserExists: async (req: Request, res: Response) => {
         try {
-            console.log(req.body);
-
             res.json(await registration.checkUserExists(req.body))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })

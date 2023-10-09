@@ -34,10 +34,13 @@ export default {
     resetPassword: async (data: { id: string, password: string }) => {
         try {
             const decryptedEmail = encryptionDecryption.decryptdata(data.id)
+
+
             const hashedPassword = await encryptionDecryption.hashPassword(data.password)
             return driverRepositoryUpdateQuerys.updatePassword(decryptedEmail.payload, hashedPassword)
 
         } catch (error) {
+            console.log(error);
             throw new Error((error as Error).message)
         }
     }
