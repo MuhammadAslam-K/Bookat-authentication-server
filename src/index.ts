@@ -6,6 +6,7 @@ import user from "./interface/router/userRouter";
 import driver_router from './interface/router/driverRouter';
 import admin_router from './interface/router/adminRouter';
 import connect from './config/mongoDB';
+import jwtTokenAuth from './middlewares/jwtTokenAuth';
 
 dotenv.config()
 
@@ -28,8 +29,7 @@ app.use(
         credentials: true,
     })
 );
-
-
+app.use(jwtTokenAuth.validateToken)
 
 app.use("/", user)
 app.use("/driver", driver_router)
