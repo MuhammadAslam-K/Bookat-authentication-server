@@ -44,7 +44,6 @@ export default {
 
 
             if (decodedToken.role === 'admin') {
-
                 req.token = decodedToken;
                 next();
             } else if (decodedToken.role === 'user') {
@@ -59,8 +58,6 @@ export default {
                 return res.status(401).json({ error: 'Unauthorized' });
             }
 
-            req.token = decodedToken;
-            next();
         }
         catch (error) {
             return res.status(401).json({ error: (error as Error).message });

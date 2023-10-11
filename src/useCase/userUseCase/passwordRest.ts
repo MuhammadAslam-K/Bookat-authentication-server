@@ -21,7 +21,7 @@ export default {
                     message: `http://localhost:5173/resetpassword/?id=${encryptedEmail}`
                 }
 
-                return await nodeMailer.sendEmail(data)
+                return await nodeMailer.sendLink(data)
             }
             else {
                 throw new Error("Email does not Exists")

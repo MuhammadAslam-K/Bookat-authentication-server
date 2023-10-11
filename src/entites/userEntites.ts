@@ -19,13 +19,17 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true
     },
-    verified: {
+    block: {
         type: Boolean,
         default: false,
     },
     joiningAt: {
         type: String,
         deafult: Date.now(),
+    },
+    totalRides: {
+        type: Number,
+        default: 0
     },
     wallet: {
         balance: {

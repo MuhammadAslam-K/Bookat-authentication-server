@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const nodemailer_1 = __importDefault(require("nodemailer"));
 exports.default = {
-    sendEmail: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    sendLink: (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { to, subject, message } = data;
             const transporter = nodemailer_1.default.createTransport({
@@ -31,6 +31,29 @@ exports.default = {
                 to: to,
                 subject: subject,
                 html: htmlMessage,
+            };
+            yield transporter.sendMail(mailOptions);
+            return true;
+        }
+        catch (error) {
+            console.error('Error sending email: ', error);
+        }
+    }),
+    sendEmail: (data) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const { to, subject, message } = data;
+            const transporter = nodemailer_1.default.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.NODEMAILER_USER_EMAIL,
+                    pass: process.env.NODEMAILER_PASS,
+                },
+            });
+            const mailOptions = {
+                from: process.env.NODEMAILER_USER_EMAIL,
+                to: to,
+                subject: subject,
+                html: `<p>${message}</p>`, // Add your HTML message here
             };
             yield transporter.sendMail(mailOptions);
             return true;

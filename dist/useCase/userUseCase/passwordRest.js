@@ -30,7 +30,7 @@ exports.default = {
                     subject: "Password Reset Link",
                     message: `http://localhost:5173/resetpassword/?id=${encryptedEmail}`
                 };
-                return yield nodeMailer_1.default.sendEmail(data);
+                return yield nodeMailer_1.default.sendLink(data);
             }
             else {
                 throw new Error("Email does not Exists");

@@ -12,21 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
-const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/admin/adminRepositoryGetQuerys"));
+const adminUserManagementUseCase_1 = __importDefault(require("../../../useCase/adminUseCase/adminUserManagementUseCase"));
 exports.default = {
-    signIn: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    getuser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const admnExists = yield adminRepositoryGetQuerys_1.default.getAdminWithEmail(data.email);
-            if (admnExists.length != 0 && admnExists[0].password == data.password) {
-                return encryptionDecryption_1.default.createToken(admnExists[0]._id, "admin", "1h");
-            }
-            else {
-                throw new Error("Unautherised access");
-            }
+            res.json(yield adminUserManagementUseCase_1.default.getUsers());
         }
         catch (error) {
-            throw new Error(error.message);
+            res.status(500).json({ error: error.message });
+        }
+    }),
+    blockUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            res.json(yield adminUserManagementUseCase_1.default.blockUser(req.body.id));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
         }
     })
 };

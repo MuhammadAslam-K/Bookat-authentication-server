@@ -17,7 +17,6 @@ const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repository
 exports.default = {
     saveDriverInfo: (data, driverId) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            console.log("callled");
             const aadharidExists = yield driverRepositoryGetQuerys_1.default.findDriverWithAadharId(data.aadharId);
             if (!aadharidExists) {
                 const drivingLicenseIdExists = yield driverRepositoryGetQuerys_1.default.findDriverWithDrivingLicenseId(data.drivingLicenseId);

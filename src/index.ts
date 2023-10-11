@@ -29,7 +29,7 @@ app.use(
         credentials: true,
     })
 );
-app.use(jwtTokenAuth.validateToken)
+// app.use(jwtTokenAuth.validateToken)
 
 app.use("/", user)
 app.use("/driver", driver_router)

@@ -45,6 +45,22 @@ const driverSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    totalRides: {
+        type: Number,
+        default: 0
+    },
+    joiningAt: {
+        type: String,
+        deafult: Date.now(),
+    },
+    block: {
+        type: Boolean,
+        default: false,
+    },
+    isAvailable: {
+        type: Boolean,
+        default: false
+    },
     driver: {
         driverVerified: {
             type: Boolean,
@@ -54,14 +70,6 @@ const driverSchema = new mongoose_1.Schema({
             type: Boolean,
             default: false,
         },
-    },
-    joiningAt: {
-        type: String,
-        deafult: Date.now(),
-    },
-    isAvailable: {
-        type: Boolean,
-        default: false
     },
     vehicle: {
         vehicleVerified: {
