@@ -12,18 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
 const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/admin/adminRepositoryGetQuerys"));
+const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
 exports.default = {
-    signIn: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    getUsers: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const admnExists = yield adminRepositoryGetQuerys_1.default.getAdminWithEmail(data.email);
-            if (admnExists.length != 0 && admnExists[0].password == data.password) {
-                return encryptionDecryption_1.default.createToken(admnExists[0]._id, "admin", "1h");
-            }
-            else {
-                throw new Error("Unautherised access");
-            }
+            return yield adminRepositoryGetQuerys_1.default.getAllUsers();
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }),
+    blockUser: (userId) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            return yield adminRepositoryUpdateQuery_1.default.blockUser(userId);
         }
         catch (error) {
             throw new Error(error.message);

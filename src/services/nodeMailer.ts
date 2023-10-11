@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 
 export default {
-    sendEmail: async (data: { to: string, subject: string, message: string }) => {
+    sendLink: async (data: { to: string, subject: string, message: string }) => {
         try {
             const { to, subject, message } = data
             const transporter = nodemailer.createTransport({
@@ -21,6 +21,32 @@ export default {
                 to: to,
                 subject: subject,
                 html: htmlMessage,
+            };
+
+            await transporter.sendMail(mailOptions);
+            return true
+        } catch (error) {
+            console.error('Error sending email: ', error);
+        }
+    },
+
+    sendEmail: async (data: { to: string, subject: string, message: string }) => {
+        try {
+            const { to, subject, message } = data
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.NODEMAILER_USER_EMAIL,
+                    pass: process.env.NODEMAILER_PASS,
+                },
+            });
+
+
+            const mailOptions = {
+                from: process.env.NODEMAILER_USER_EMAIL,
+                to: to,
+                subject: subject,
+                html: `<p>${message}</p>`, // Add your HTML message here
             };
 
             await transporter.sendMail(mailOptions);

@@ -30,7 +30,7 @@ exports.default = {
                     subject: "Password Reset Link",
                     message: `http://localhost:5173/driver/resetpassword/?id=${encryptedEmail}`
                 };
-                return yield nodeMailer_1.default.sendEmail(data);
+                return yield nodeMailer_1.default.sendLink(data);
             }
             else {
                 throw new Error("Email does not Exists");
@@ -47,7 +47,6 @@ exports.default = {
             return driverRepositoryUpdateQuerys_1.default.updatePassword(decryptedEmail.payload, hashedPassword);
         }
         catch (error) {
-            console.log(error);
             throw new Error(error.message);
         }
     })

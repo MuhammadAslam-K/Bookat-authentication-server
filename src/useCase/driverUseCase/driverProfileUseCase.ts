@@ -6,7 +6,6 @@ export default {
         try {
             return (await driverRepositoryGetQuerys.findDriverWithId(driverId))
         } catch (error) {
-            console.log(error)
             throw new Error((error as Error).message)
         }
     }

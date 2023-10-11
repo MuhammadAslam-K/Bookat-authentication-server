@@ -19,7 +19,6 @@ exports.default = {
             return (yield driverRepositoryGetQuerys_1.default.findDriverWithId(driverId));
         }
         catch (error) {
-            console.log(error);
             throw new Error(error.message);
         }
     })
