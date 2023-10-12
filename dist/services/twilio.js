@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -23,10 +14,10 @@ const authToken = "7aa06a1bdcf3ec95c1061aa51c2f3226";
 const verifySid = "VA36b0a90b67572c230c2b3798c0e8048b";
 const client = (0, twilio_1.default)(accountSid, authToken);
 exports.default = {
-    sendSMS: (mobile) => __awaiter(void 0, void 0, void 0, function* () {
+    sendSMS: async (mobile) => {
         const countryCode = 91;
         try {
-            yield client.verify.v2
+            await client.verify.v2
                 .services(verifySid)
                 .verifications.create({
                 to: `+${countryCode}${mobile}`,
@@ -37,11 +28,11 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }),
-    verifySMS: (mobile, otp) => __awaiter(void 0, void 0, void 0, function* () {
+    },
+    verifySMS: async (mobile, otp) => {
         const countryCode = 91;
         try {
-            const verifyResponse = yield client.verify.v2
+            const verifyResponse = await client.verify.v2
                 .services(verifySid)
                 .verificationChecks.create({
                 to: `+${countryCode}${mobile}`,
@@ -57,5 +48,5 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    })
+    }
 };

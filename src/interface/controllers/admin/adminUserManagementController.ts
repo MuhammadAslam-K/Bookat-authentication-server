@@ -2,6 +2,8 @@ import { Request, Response } from "express"
 import adminUserManagementUseCase from "../../../useCase/adminUseCase/adminUserManagementUseCase"
 
 
+
+
 export default {
 
     getuser: async (req: Request, res: Response) => {

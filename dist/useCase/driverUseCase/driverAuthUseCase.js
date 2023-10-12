@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -19,9 +10,9 @@ const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repository
 const driverRepositorySaveQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositorySaveQuerys"));
 const encryptionDecryption_2 = __importDefault(require("../../services/encryptionDecryption"));
 exports.default = {
-    signup: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    signup: async (data) => {
         try {
-            const checkRefrelCodeExists = yield driverRepositoryGetQuerys_1.default.getDriver("refrel", data.refrelCode);
+            const checkRefrelCodeExists = await driverRepositoryGetQuerys_1.default.getDriver("refrel", data.refrelCode);
             if (checkRefrelCodeExists.length != 0) {
                 const walletDetails = {
                     date: Date.now(),
@@ -29,8 +20,8 @@ exports.default = {
                     amount: 50,
                     status: "Credited"
                 };
-                const addAmount = yield driverRepositoryUpdateQuerys_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
-                const hashPassword = yield encryptionDecryption_1.default.hashPassword(data.password);
+                const addAmount = await driverRepositoryUpdateQuerys_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
+                const hashPassword = await encryptionDecryption_1.default.hashPassword(data.password);
                 data.password = hashPassword;
                 const refrelCode = (0, refrelCode_1.refferalCode)();
                 const wallet = {
@@ -39,27 +30,27 @@ exports.default = {
                     amount: 100,
                     status: "Credited"
                 };
-                const saveDriver = yield driverRepositorySaveQuerys_1.default.saveDriver(data, refrelCode);
-                yield driverRepositoryUpdateQuerys_1.default.addAmountInWallet(wallet, saveDriver._id);
+                const saveDriver = await driverRepositorySaveQuerys_1.default.saveDriver(data, refrelCode);
+                await driverRepositoryUpdateQuerys_1.default.addAmountInWallet(wallet, saveDriver._id);
                 return true;
             }
             else {
-                const hashPassword = yield encryptionDecryption_1.default.hashPassword(data.password);
+                const hashPassword = await encryptionDecryption_1.default.hashPassword(data.password);
                 data.password = hashPassword;
                 const refrelCode = (0, refrelCode_1.refferalCode)();
-                const saveUser = yield driverRepositorySaveQuerys_1.default.saveDriver(data, refrelCode);
+                const saveUser = await driverRepositorySaveQuerys_1.default.saveDriver(data, refrelCode);
                 return true;
             }
         }
         catch (error) {
             throw new Error(error.message);
         }
-    }),
-    login: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    },
+    login: async (data) => {
         try {
-            const driverExist = yield driverRepositoryGetQuerys_1.default.getDriver("email", data.email);
+            const driverExist = await driverRepositoryGetQuerys_1.default.getDriver("email", data.email);
             if (driverExist.length != 0) {
-                const comparePassword = yield encryptionDecryption_1.default.comparePassword(data.password, driverExist[0].password);
+                const comparePassword = await encryptionDecryption_1.default.comparePassword(data.password, driverExist[0].password);
                 if (!comparePassword) {
                     throw new Error("Invalid email or password");
                 }
@@ -87,15 +78,15 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }),
-    checkDriverExists: (data) => __awaiter(void 0, void 0, void 0, function* () {
+    },
+    checkDriverExists: async (data) => {
         try {
-            const checkEmailExists = yield driverRepositoryGetQuerys_1.default.getDriver("email", data.email);
+            const checkEmailExists = await driverRepositoryGetQuerys_1.default.getDriver("email", data.email);
             if (checkEmailExists.length != 0) {
                 throw new Error("Driver already exists. Please sign in.");
             }
             else {
-                const checkMobileExists = yield driverRepositoryGetQuerys_1.default.getDriver("mobile", data.mobile);
+                const checkMobileExists = await driverRepositoryGetQuerys_1.default.getDriver("mobile", data.mobile);
                 if (checkMobileExists.length != 0) {
                     throw new Error("Driver with the same mobile number already exists");
                 }
@@ -107,5 +98,5 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    })
+    }
 };

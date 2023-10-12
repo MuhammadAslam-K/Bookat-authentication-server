@@ -12,7 +12,7 @@ export interface driverInfo {
 }
 
 export interface vehicleInfo {
-    registrationNo: string,
+    registrationId: string,
     rcImageUrl: string,
     vehicleModel: string,
     maxPersons: string,
@@ -48,7 +48,7 @@ export default {
 
     saveVehicleInfo: async (data: vehicleInfo, driverId: Schema.Types.ObjectId) => {
         try {
-            const rcExists = await driverRepositoryGetQuerys.findVehicleWithRcNo(data.registrationNo)
+            const rcExists = await driverRepositoryGetQuerys.findVehicleWithRcNo(data.registrationId)
             if (!rcExists) {
                 return await driverRepositoryUpdateQuerys.updateVehicleInfo(data, driverId)
 

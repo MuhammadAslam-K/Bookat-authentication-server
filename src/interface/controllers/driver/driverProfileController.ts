@@ -17,6 +17,14 @@ export default {
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
-    }
+    },
+
+    updateDriverProfile: async (req: Request, res: Response) => {
+        try {
+            res.json(await driverProfileUseCase.updateProfile(req.body, req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
 
 }
