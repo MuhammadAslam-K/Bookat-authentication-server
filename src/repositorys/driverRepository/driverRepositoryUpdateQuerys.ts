@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose"
 import DriverSchema from "../../entites/driverEntites"
 import { walletDetails } from "../../useCase/userUseCase/userRegistrationUseCase"
 import { driverInfo, vehicleInfo } from "../../useCase/driverUseCase/driverRegistrationUsecase"
+import { profileUpdate } from "../../useCase/driverUseCase/driverProfileUseCase"
 
 export default {
     addAmountInWallet: async (details: walletDetails, driverId: ObjectId) => {
@@ -51,20 +52,19 @@ export default {
                 driverId,
                 {
                     $set: {
-                        'vehicleDocuments.registration.registrationId': data.registrationNo,
+                        'vehicleDocuments.registration.registrationId': data.registrationId,
                         'vehicleDocuments.registration.registrationImage': data.rcImageUrl,
                         'vehicleDocuments.vehicleModel': data.vehicleModel,
                         'vehicleDocuments.maxPersons': data.maxPersons,
                         'vehicleDocuments.vehicleType': data.vehicleType,
                         'vehicleDocuments.vehicleImage1': data.vehicleImageUrl1,
                         'vehicleDocuments.vehicleImage2': data.vehicleImageUrl2,
-                        'vehicle.vehicleDocuments': true
+                        'vehicle.vehicleDocuments': true,
+                        'vehicle.vehicleVerified': false,
                     }
                 },
                 { new: true }
             )
-
-
         } catch (error) {
             throw new Error((error as Error).message)
         }
@@ -92,6 +92,27 @@ export default {
                 return result.isAvailable
             }
 
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
+    updateDriverProfile: async (data: profileUpdate, driverId: ObjectId) => {
+        try {
+            await DriverSchema.findByIdAndUpdate(
+                driverId,
+                {
+                    $set: {
+                        ...data,
+                        'aadhar.aadharId': data.aadharId,
+                        'aadhar.aadharImage': data.aadharImageUrl,
+                        'license.licenseId': data.licenseId,
+                        'license.licenseImage': data.licenseImageUrl,
+                        'driver.driverDocuments': false
+                    }
+                },
+                { new: true }
+            )
         } catch (error) {
             throw new Error((error as Error).message)
         }

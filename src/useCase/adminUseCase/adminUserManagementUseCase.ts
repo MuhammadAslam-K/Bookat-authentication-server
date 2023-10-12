@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose"
 import adminRepositoryGetQuerys from "../../repositorys/admin/adminRepositoryGetQuerys"
 import adminRepositoryUpdateQuery from "../../repositorys/admin/adminRepositoryUpdateQuery"
 
+
 export default {
     getUsers: async () => {
         try {

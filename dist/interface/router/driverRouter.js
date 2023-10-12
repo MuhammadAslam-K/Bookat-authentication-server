@@ -8,6 +8,7 @@ const driverAuthController_1 = __importDefault(require("../controllers/driver/dr
 const jwtTokenAuth_1 = __importDefault(require("../../middlewares/jwtTokenAuth"));
 const driverNotificationController_1 = __importDefault(require("../controllers/driver/driverNotificationController"));
 const driverProfileController_1 = __importDefault(require("../controllers/driver/driverProfileController"));
+const driverVehicleController_1 = __importDefault(require("../controllers/driver/driverVehicleController"));
 const driver_router = express_1.default.Router();
 driver_router.post("/signup", driverAuthController_1.default.signup);
 driver_router.post("/login", driverAuthController_1.default.login);
@@ -16,6 +17,11 @@ driver_router.post("/info/personal", jwtTokenAuth_1.default.validateToken, drive
 driver_router.post("/info/vehicle", jwtTokenAuth_1.default.validateToken, driverAuthController_1.default.saveVehicleInfo);
 driver_router.post("/resetPasswordLink", driverNotificationController_1.default.resetPasswordLink);
 driver_router.post("/resetpassword", driverNotificationController_1.default.resetpassword);
-driver_router.post("/Profile", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.getDriverProfile);
+// Driver Profile
+driver_router.get("/Profile", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.getDriverProfile);
+driver_router.post("/update/profile", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.updateDriverProfile);
 driver_router.post("/available", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.driverAvailable);
+// Driver Vehicle
+driver_router.get("/vehicle", jwtTokenAuth_1.default.validateToken, driverVehicleController_1.default.getVehicleInfo);
+driver_router.post("/update/vehicle", jwtTokenAuth_1.default.validateToken, driverVehicleController_1.default.updateVehicleInfo);
 exports.default = driver_router;

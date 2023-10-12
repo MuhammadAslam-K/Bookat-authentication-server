@@ -3,6 +3,7 @@ import UserSchema from '../../entites/userEntites';
 import DriverSchema from '../../entites/driverEntites';
 
 
+
 export default {
     blockUser: async (userId: ObjectId) => {
         try {

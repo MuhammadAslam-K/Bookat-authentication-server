@@ -14,7 +14,7 @@ const port = process.env.PORT
 const MONGO_URL = process.env.MONGO_URL
 const app = Express()
 app.use(cors())
-app.use(Express.json())
+app.use(Express.json({ limit: '10mb' }));
 
 const allowedOrigins = [process.env.FRONT_END];
 app.use(
@@ -29,7 +29,7 @@ app.use(
         credentials: true,
     })
 );
-// app.use(jwtTokenAuth.validateToken)
+app.use(jwtTokenAuth.validateToken)
 
 app.use("/", user)
 app.use("/driver", driver_router)

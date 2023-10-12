@@ -43,6 +43,14 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message)
         }
+    },
+
+    getVehicleInfoWithDriverId: async (driverId: ObjectId) => {
+        try {
+            return await DriverSchema.findById(driverId, 'vehicleDocuments')
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
     }
 
 }

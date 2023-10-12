@@ -6,17 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 exports.default = {
-    getDriverProfile: async (driverId) => {
+    getVehicleInfo: async (driverId) => {
         try {
-            return (await driverRepositoryGetQuerys_1.default.findDriverWithId(driverId));
+            return await driverRepositoryGetQuerys_1.default.getVehicleInfoWithDriverId(driverId);
         }
         catch (error) {
             throw new Error(error.message);
         }
     },
-    updateProfile: async (data, driverId) => {
+    updateVehicleInfo: async (driverId, data) => {
         try {
-            return (await driverRepositoryUpdateQuerys_1.default.updateDriverProfile(data, driverId));
+            return await driverRepositoryUpdateQuerys_1.default.updateVehicleInfo(data, driverId);
         }
         catch (error) {
             throw new Error(error.message);

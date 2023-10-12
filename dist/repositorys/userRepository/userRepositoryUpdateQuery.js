@@ -1,22 +1,13 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userEntites_1 = __importDefault(require("../../entites/userEntites"));
 exports.default = {
-    addAmountInWallet: (details, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    addAmountInWallet: async (details, userId) => {
         try {
-            return yield userEntites_1.default.findByIdAndUpdate(userId, {
+            return await userEntites_1.default.findByIdAndUpdate(userId, {
                 $push: {
                     'wallet.transactions': details
                 },
@@ -28,14 +19,14 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }),
-    updatePassword: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+    },
+    updatePassword: async (email, password) => {
         try {
-            yield userEntites_1.default.findOneAndUpdate({ email }, { password }, { new: true });
+            await userEntites_1.default.findOneAndUpdate({ email }, { password }, { new: true });
             return true;
         }
         catch (error) {
             throw new Error(error.message);
         }
-    })
+    }
 };
