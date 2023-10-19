@@ -23,9 +23,9 @@ const userSchema: Schema = new Schema({
         type: Boolean,
         default: false,
     },
-    joiningAt: {
-        type: String,
-        deafult: Date.now(),
+    joinedAt: {
+        type: Date,
+        default: Date.now(),
     },
     totalRides: {
         type: Number,

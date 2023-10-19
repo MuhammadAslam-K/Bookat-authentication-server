@@ -24,8 +24,6 @@ export default {
         }
     },
 
-
-
     checkUserExists: async (req: Request, res: Response) => {
         try {
             res.json(await registration.checkUserExists(req.body))

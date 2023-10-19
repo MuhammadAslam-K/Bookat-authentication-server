@@ -47,9 +47,9 @@ const userSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
-    joiningAt: {
-        type: String,
-        deafult: Date.now(),
+    joinedAt: {
+        type: Date,
+        default: Date.now(),
     },
     totalRides: {
         type: Number,

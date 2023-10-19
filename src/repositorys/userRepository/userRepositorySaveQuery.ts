@@ -6,7 +6,7 @@ export default {
         try {
             const user = new UserSchema({
                 ...data,
-                refrel: refferalCode
+                refrel: refferalCode,
             })
             return await user.save()
         } catch (error) {

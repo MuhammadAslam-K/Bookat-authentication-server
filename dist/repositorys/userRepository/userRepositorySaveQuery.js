@@ -9,7 +9,7 @@ exports.default = {
         try {
             const user = new userEntites_1.default({
                 ...data,
-                refrel: refferalCode
+                refrel: refferalCode,
             });
             return await user.save();
         }

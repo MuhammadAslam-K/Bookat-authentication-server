@@ -3,11 +3,12 @@ import Express from "express";
 import signup from "../controllers/user/userRegisterController"
 import signIn from "../controllers/user/userSignInController";
 import userNotificationController from "../controllers/user/userNotificationController";
+import userProfileController from "../controllers/user/userProfileController";
 
 const userRoute = Express.Router()
 
 userRoute.post("/signup", signup.signup)
-userRoute.post("/google/signup", signup.googleSignup)
+userRoute.post("/google/signUp", signup.googleSignup)
 
 userRoute.post("/check/userExists", signup.checkUserExists)
 userRoute.post("/signin", signIn.signin)
@@ -20,6 +21,8 @@ userRoute.post("/otp/verify", userNotificationController.verifySMS)
 userRoute.post("/resetPasswordLink", userNotificationController.resetPasswordLink)
 userRoute.post("/resetpassword", userNotificationController.resetpassword)
 
+userRoute.get("/profile", userProfileController.getProfile)
+userRoute.post("/update/profile", userProfileController.updateProfile)
 
 
 

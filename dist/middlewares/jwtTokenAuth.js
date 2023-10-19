@@ -10,9 +10,9 @@ exports.default = {
             const requestedRoute = req.path;
             const publicRoutes = [
                 /**********  User **********/
-                "/signup",
-                "/google/signup",
-                "/login",
+                "/signUp",
+                "/google/signUp",
+                "/signin",
                 "/google/signin",
                 "/check/userExists",
                 "/otp",
@@ -26,7 +26,8 @@ exports.default = {
                 "/driver/resetPasswordLink",
                 "/driver/resetpassword",
                 /**********  Admin **********/
-                "/admin/login"
+                "/admin/login",
+                "/socket.io"
             ];
             if (publicRoutes.includes(requestedRoute)) {
                 return next();
