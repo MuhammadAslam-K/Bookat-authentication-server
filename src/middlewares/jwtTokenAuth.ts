@@ -8,9 +8,9 @@ export default {
             const requestedRoute = req.path;
             const publicRoutes = [
                 /**********  User **********/
-                "/signup",
-                "/google/signup",
-                "/login",
+                "/signUp",
+                "/google/signUp",
+                "/signin",
                 "/google/signin",
                 "/check/userExists",
                 "/otp",
@@ -26,12 +26,15 @@ export default {
                 "/driver/resetpassword",
 
                 /**********  Admin **********/
-                "/admin/login"
+                "/admin/login",
+
+                "/socket.io"
             ]
 
             if (publicRoutes.includes(requestedRoute)) {
                 return next();
             }
+
             const authorizationHeader = req.header('Authorization');
 
             if (!authorizationHeader) {

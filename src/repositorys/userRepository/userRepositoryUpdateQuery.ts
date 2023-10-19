@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose"
 import UserSchema from "../../entites/userEntites"
 import { walletDetails } from "../../useCase/userUseCase/userRegistrationUseCase"
+import { profileUpdate } from "../../useCase/driverUseCase/driverProfileUseCase"
 
 export default {
     addAmountInWallet: async (details: walletDetails, userId: ObjectId) => {
@@ -31,6 +32,22 @@ export default {
                 { new: true }
             )
             return true
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
+    updateUserProfile: async (data: profileUpdate, userId: ObjectId) => {
+        try {
+            await UserSchema.findByIdAndUpdate(
+                userId,
+                {
+                    $set: {
+                        ...data,
+                    }
+                },
+                { new: true }
+            )
         } catch (error) {
             throw new Error((error as Error).message)
         }

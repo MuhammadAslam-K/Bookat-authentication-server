@@ -7,7 +7,8 @@ dotenv.config();
 // const accountSid = process.env.TWILIO_ACCOUNT_SID
 const accountSid = "AC27fb374a44e424ecfde5a06eaba2dcbe"
 // const authToken = process.env.TWILIO_AUTH_TOKEN
-const authToken = "7aa06a1bdcf3ec95c1061aa51c2f3226"
+// const authToken = "7aa06a1bdcf3ec95c1061aa51c2f3226"
+const authToken = "5dea0c17eba4f8e4c5164c5bc6a1d7fa"
 // const verifySid = process.env.TWILIO_VERIFY_SID || ""
 const verifySid = "VA36b0a90b67572c230c2b3798c0e8048b"
 const client = twilio(accountSid, authToken)
@@ -25,6 +26,7 @@ export default {
                 });
             return true
         } catch (error) {
+            console.log("Error in sending SMS ", error);
             throw new Error((error as Error).message)
         }
     },
@@ -47,6 +49,7 @@ export default {
                 return ({ message: "Invalid OTP", status: 401 })
             }
         } catch (error) {
+            console.log("Error in verifying SMS ", error);
             throw new Error((error as Error).message)
         }
     }

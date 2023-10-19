@@ -54,6 +54,9 @@ exports.default = {
                 if (!comparePassword) {
                     throw new Error("Invalid email or password");
                 }
+                else if (driverExist[0].block) {
+                    throw new Error('Your account has been blocked by admin please contact bookat@gmail.com');
+                }
                 else {
                     const token = encryptionDecryption_2.default.createToken(driverExist[0]._id, "driver", "1h");
                     let response;

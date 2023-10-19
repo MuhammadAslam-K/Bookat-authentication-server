@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import UserSchema from "../../entites/userEntites"
 
 
@@ -10,6 +11,13 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message);
         }
-    }
+    },
 
+    getUserWithId: async (userId: ObjectId) => {
+        try {
+            return await UserSchema.findById(userId)
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
+    }
 }

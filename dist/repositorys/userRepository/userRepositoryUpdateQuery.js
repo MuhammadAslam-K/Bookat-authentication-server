@@ -28,5 +28,17 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    updateUserProfile: async (data, userId) => {
+        try {
+            await userEntites_1.default.findByIdAndUpdate(userId, {
+                $set: {
+                    ...data,
+                }
+            }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };

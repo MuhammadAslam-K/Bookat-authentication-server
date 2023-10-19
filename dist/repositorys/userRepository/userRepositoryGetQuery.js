@@ -14,5 +14,13 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    getUserWithId: async (userId) => {
+        try {
+            return await userEntites_1.default.findById(userId);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };
