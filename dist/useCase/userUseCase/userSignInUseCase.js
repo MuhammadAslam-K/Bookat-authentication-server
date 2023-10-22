@@ -23,7 +23,12 @@ exports.default = {
                         throw new Error("Invalid email or password");
                     }
                     else {
-                        return encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
+                        const token = encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
+                        const data = {
+                            toke: token,
+                            userId: response[0]._id
+                        };
+                        return data;
                     }
                 }
             }
@@ -42,7 +47,12 @@ exports.default = {
                 if (response[0].block) {
                     throw new Error("Oops! It seems you Account is blocked by admin please contact boookat@gmail.com");
                 }
-                return encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
+                const token = encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
+                const data = {
+                    token: token,
+                    userId: response[0]._id
+                };
+                return data;
             }
             else {
                 throw new Error("user doesn't exists please signUp");

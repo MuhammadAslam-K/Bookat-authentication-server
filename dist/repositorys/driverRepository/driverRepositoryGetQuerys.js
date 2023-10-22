@@ -54,5 +54,5 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
 };

@@ -1,5 +1,6 @@
 import { ObjectId } from "mongoose"
 import DriverSchema from "../../entites/driverEntites"
+import RideSchema from "../../entites/rideEntites";
 
 
 export default {
@@ -51,6 +52,5 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message)
         }
-    }
-
+    },
 }

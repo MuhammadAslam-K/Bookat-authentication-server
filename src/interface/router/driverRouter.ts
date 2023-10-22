@@ -4,6 +4,7 @@ import jwtTokenAuth from "../../middlewares/jwtTokenAuth";
 import driverNotificationController from "../controllers/driver/driverNotificationController";
 import driverProfileController from "../controllers/driver/driverProfileController";
 import driverVehicleController from "../controllers/driver/driverVehicleController";
+import driverRideController from "../controllers/driver/driverRideController";
 
 const driver_router = Express.Router()
 
@@ -27,6 +28,8 @@ driver_router.post("/available", jwtTokenAuth.validateToken, driverProfileContro
 driver_router.get("/vehicle", jwtTokenAuth.validateToken, driverVehicleController.getVehicleInfo)
 driver_router.post("/update/vehicle", jwtTokenAuth.validateToken, driverVehicleController.updateVehicleInfo)
 
+// Ride
+driver_router.post("/getUser", jwtTokenAuth.validateToken, driverRideController.getUserWithId)
 
 
 export default driver_router

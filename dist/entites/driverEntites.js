@@ -49,9 +49,9 @@ const driverSchema = new mongoose_1.Schema({
         type: Number,
         default: 0
     },
-    joiningAt: {
-        type: String,
-        deafult: Date.now(),
+    joinedAt: {
+        type: Date,
+        default: Date.now(),
     },
     block: {
         type: Boolean,

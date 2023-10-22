@@ -58,7 +58,7 @@ app.use((0, cors_1.default)({
 app.use('/', userRouter_1.default);
 app.use('/driver', driverRouter_1.default);
 app.use('/admin', adminRouter_1.default);
-(0, socket_io_1.setUpSocketIO)(server);
+(0, socket_io_1.setUpSocketIO)();
 if (MONGO_URL) {
     (0, mongoDB_1.default)(MONGO_URL).then(() => {
         server.listen(port, () => console.log(`Server started at http://localhost:${port}`));
