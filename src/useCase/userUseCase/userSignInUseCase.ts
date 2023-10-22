@@ -3,6 +3,7 @@ import userRepository from "../../repositorys/userRepository/userRepositoryGetQu
 import bcryptPassword from "../../services/encryptionDecryption"
 import encryptionDecryption from "../../services/encryptionDecryption"
 
+
 export default {
     validateUser: async (data: { email: string, password: string }) => {
         try {
@@ -20,7 +21,12 @@ export default {
                         throw new Error("Invalid email or password")
                     }
                     else {
-                        return encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
+                        const token = encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
+                        const data: { toke: string, userId: ObjectId } = {
+                            toke: token,
+                            userId: response[0]._id as ObjectId
+                        }
+                        return data
                     }
                 }
             }
@@ -38,7 +44,12 @@ export default {
                 if (response[0].block) {
                     throw new Error("Oops! It seems you Account is blocked by admin please contact boookat@gmail.com")
                 }
-                return encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
+                const token = encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
+                const data: { token: string, userId: ObjectId } = {
+                    token: token,
+                    userId: response[0]._id as ObjectId
+                }
+                return data
             }
             else {
                 throw new Error("user doesn't exists please signUp")

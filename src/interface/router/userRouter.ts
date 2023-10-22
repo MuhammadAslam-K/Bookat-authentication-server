@@ -4,6 +4,7 @@ import signup from "../controllers/user/userRegisterController"
 import signIn from "../controllers/user/userSignInController";
 import userNotificationController from "../controllers/user/userNotificationController";
 import userProfileController from "../controllers/user/userProfileController";
+import rideController from "../controllers/user/rideController";
 
 const userRoute = Express.Router()
 
@@ -24,6 +25,8 @@ userRoute.post("/resetpassword", userNotificationController.resetpassword)
 userRoute.get("/profile", userProfileController.getProfile)
 userRoute.post("/update/profile", userProfileController.updateProfile)
 
-
+// RIDE
+userRoute.post('/getdriver', rideController.getDriverData);
+userRoute.post('/getridedata', rideController.getRideData);
 
 export default userRoute

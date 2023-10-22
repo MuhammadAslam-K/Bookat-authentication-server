@@ -58,18 +58,19 @@ exports.default = {
                     throw new Error('Your account has been blocked by admin please contact bookat@gmail.com');
                 }
                 else {
-                    const token = encryptionDecryption_2.default.createToken(driverExist[0]._id, "driver", "1h");
+                    const token = encryptionDecryption_2.default.createToken(driverExist[0]._id, "driver", "5h");
                     let response;
+                    const vehicleType = driverExist[0].vehicleDocuments.vehicleType;
                     if (driverExist[0].driver.driverDocuments) {
                         if (driverExist[0].vehicle.vehicleDocuments) {
-                            response = { token, document: true, vehicle: true };
+                            response = { driverId: driverExist[0]._id, vehicleType: vehicleType, token, document: true, vehicle: true };
                         }
                         else {
-                            response = { token, document: true, vehicle: false };
+                            response = { driverId: driverExist[0]._id, vehicleType: vehicleType, token, document: true, vehicle: false };
                         }
                     }
                     else {
-                        response = { token, document: false, vehicle: false };
+                        response = { driverId: driverExist[0]._id, vehicleType: vehicleType, token, document: false, vehicle: false };
                     }
                     return response;
                 }

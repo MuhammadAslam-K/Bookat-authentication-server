@@ -9,6 +9,7 @@ const jwtTokenAuth_1 = __importDefault(require("../../middlewares/jwtTokenAuth")
 const driverNotificationController_1 = __importDefault(require("../controllers/driver/driverNotificationController"));
 const driverProfileController_1 = __importDefault(require("../controllers/driver/driverProfileController"));
 const driverVehicleController_1 = __importDefault(require("../controllers/driver/driverVehicleController"));
+const driverRideController_1 = __importDefault(require("../controllers/driver/driverRideController"));
 const driver_router = express_1.default.Router();
 driver_router.post("/signup", driverAuthController_1.default.signup);
 driver_router.post("/login", driverAuthController_1.default.login);
@@ -24,4 +25,6 @@ driver_router.post("/available", jwtTokenAuth_1.default.validateToken, driverPro
 // Driver Vehicle
 driver_router.get("/vehicle", jwtTokenAuth_1.default.validateToken, driverVehicleController_1.default.getVehicleInfo);
 driver_router.post("/update/vehicle", jwtTokenAuth_1.default.validateToken, driverVehicleController_1.default.updateVehicleInfo);
+// Ride
+driver_router.post("/getUser", jwtTokenAuth_1.default.validateToken, driverRideController_1.default.getUserWithId);
 exports.default = driver_router;

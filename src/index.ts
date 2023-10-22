@@ -41,7 +41,7 @@ app.use('/', user);
 app.use('/driver', driver_router);
 app.use('/admin', admin_router);
 
-setUpSocketIO(server)
+setUpSocketIO()
 
 
 
