@@ -9,6 +9,7 @@ const userSignInController_1 = __importDefault(require("../controllers/user/user
 const userNotificationController_1 = __importDefault(require("../controllers/user/userNotificationController"));
 const userProfileController_1 = __importDefault(require("../controllers/user/userProfileController"));
 const rideController_1 = __importDefault(require("../controllers/user/rideController"));
+const scheduledRideController_1 = __importDefault(require("../controllers/user/scheduledRideController"));
 const userRoute = express_1.default.Router();
 userRoute.post("/signup", userRegisterController_1.default.signup);
 userRoute.post("/google/signUp", userRegisterController_1.default.googleSignup);
@@ -24,4 +25,9 @@ userRoute.post("/update/profile", userProfileController_1.default.updateProfile)
 // RIDE
 userRoute.post('/getdriver', rideController_1.default.getDriverData);
 userRoute.post('/getridedata', rideController_1.default.getRideData);
+userRoute.post('/payment', rideController_1.default.payment);
+userRoute.get('/rideHistory', rideController_1.default.rides);
+// SCheduled Rides
+userRoute.get('/scheduleRideHistory', scheduledRideController_1.default.scheduleRideHistory);
+userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRide);
 exports.default = userRoute;

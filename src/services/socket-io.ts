@@ -1,11 +1,12 @@
 import { Server as SocketIOServer, Socket } from "socket.io";
 import { calculateDistance } from "./socket-ioHelper";
 import driverRideUseCase from "../useCase/driverUseCase/driverRideUseCase";
+import { ObjectId } from "mongoose";
 
 interface DriverData {
     latitude: string;
     longitude: string;
-    driverId: string;
+    driverId: ObjectId;
     vehicleType: string;
 }
 
@@ -18,6 +19,7 @@ let userFromLocation: string
 let userToLocation: string
 let amount: string
 let rideDistance: string
+let rideDuration: string
 let fromLocationLat: string
 let fromLocationLong: string
 let toLocationLat: string
@@ -26,7 +28,7 @@ let toLocationLong: string
 // / / / / /DRIVER / / / / / 
 let driverLatitude: string
 let driverLongitude: string
-let driverId: string
+let driverId: ObjectId
 let driverVehicleType: string
 
 export const setUpSocketIO = (): void => {
@@ -56,6 +58,7 @@ export const setUpSocketIO = (): void => {
             userToLocation = data.toLocation
             amount = data.amount
             rideDistance = data.distance
+            rideDuration = data.duration
             fromLocationLat = data.fromLocationLat
             fromLocationLong = data.fromLocationLong
             toLocationLat = data.toLocationLat
@@ -65,10 +68,9 @@ export const setUpSocketIO = (): void => {
         })
 
 
-
-        let nearbyDriver: { distance: number; driverId: string; userId: string; rideDistance: string; userFromLocation: string; userToLocation: string; amount: string; }[] = []
-        const processedDriverIds = new Set<string | undefined>();
-        socket.on('getdriverlocationUpdate', (data: DriverData) => {
+        let nearbyDriver: { distance: number; driverId: ObjectId; userId: string; rideDistance: string; userFromLocation: string; userToLocation: string; amount: string; }[] = []
+        const processedDriverIds = new Set<string | undefined | ObjectId>();
+        socket.on('getdriverlocationUpdate', async (data: DriverData) => {
             console.log(`Location update from driver (${socket.id}):`, data);
             driverLatitude = data.latitude
             driverLongitude = data.longitude
@@ -85,11 +87,15 @@ export const setUpSocketIO = (): void => {
             );
 
             console.log("distance :", distance, userVehicleType)
-            if (distance >= -10 && !processedDriverIds.has(driverId)) {
+            if (distance >= 0 && !processedDriverIds.has(driverId)) {
                 const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount }
                 console.log("driver push data :", data)
-                nearbyDriver.push(data)
-                processedDriverIds.add(driverId)
+                const available = await driverRideUseCase.checkAvailableDrivers(driverId, parseInt(rideDuration))
+                console.log("available for ride", available)
+                if (available) {
+                    nearbyDriver.push(data)
+                    processedDriverIds.add(driverId)
+                }
             }
         });
 
@@ -112,7 +118,7 @@ export const setUpSocketIO = (): void => {
             console.log("Driver approved the ride", data)
             nearbyDriver = []
             processedDriverIds.clear()
-            // const rideDetails = { userLat, userLon, userId, driverLatitude, driverLongitude, driverId }
+
             const value = {
                 toLocationLat,
                 toLocationLong,

@@ -21,9 +21,9 @@ export default {
                         throw new Error("Invalid email or password")
                     }
                     else {
-                        const token = encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "1h")
-                        const data: { toke: string, userId: ObjectId } = {
-                            toke: token,
+                        const token = encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "5h")
+                        const data: { token: string, userId: ObjectId } = {
+                            token: token,
                             userId: response[0]._id as ObjectId
                         }
                         return data
@@ -34,6 +34,7 @@ export default {
                 throw new Error("user doesn't exists please signUp")
             }
         } catch (error) {
+            console.log("error at signin", error)
             throw new Error((error as Error).message)
         }
     },

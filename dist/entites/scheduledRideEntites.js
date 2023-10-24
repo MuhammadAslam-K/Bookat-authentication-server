@@ -24,65 +24,71 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const userSchema = new mongoose_1.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    mobile: {
+const scheduleRideSchema = new mongoose_1.Schema({
+    driver_id: {
         type: String,
     },
-    email: {
+    driverAccepted: {
         type: String,
-        required: true
+        default: "Pending",
     },
-    password: {
+    user_id: {
         type: String,
     },
-    refrel: {
+    vehicleType: {
         type: String,
-        required: true
     },
-    block: {
-        type: Boolean,
-        default: false,
+    duration: {
+        type: String,
     },
-    joinedAt: {
+    pickupCoordinates: {
+        latitude: {
+            type: Number,
+        },
+        longitude: {
+            type: Number,
+        },
+    },
+    dropoffCoordinates: {
+        latitude: {
+            type: Number,
+        },
+        longitude: {
+            type: Number,
+        },
+    },
+    pickupLocation: {
+        type: String,
+    },
+    dropoffLocation: {
+        type: String,
+    },
+    distance: {
+        type: String,
+    },
+    price: {
+        type: Number,
+    },
+    date: {
         type: Date,
-        default: Date.now(),
+        default: Date.now()
     },
-    wallet: {
-        balance: {
-            type: Number,
-            default: 0,
-        },
-        transactions: [
-            {
-                date: {
-                    type: Date,
-                },
-                details: {
-                    type: String,
-                },
-                amount: {
-                    type: Number,
-                },
-                status: {
-                    type: String,
-                },
-            },
-        ],
+    pickUpDate: {
+        type: Date,
     },
-    RideDetails: {
-        completedRides: {
-            default: 0,
-            type: Number,
-        },
-        cancelledRides: {
-            default: 0,
-            type: Number,
-        },
+    paymentMode: {
+        type: String,
     },
+    status: {
+        type: String,
+        default: "Pending"
+    },
+    feedback: {
+        type: String
+    },
+    rating: {
+        type: Number
+    }
 });
-const UserSchema = mongoose_1.default.model("user", userSchema);
-exports.default = UserSchema;
+const ScheduleRideSchema = mongoose_1.default.model("scheduleRide", scheduleRideSchema);
+exports.default = ScheduleRideSchema;

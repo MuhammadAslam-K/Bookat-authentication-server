@@ -27,10 +27,6 @@ const userSchema: Schema = new Schema({
         type: Date,
         default: Date.now(),
     },
-    totalRides: {
-        type: Number,
-        default: 0
-    },
     wallet: {
         balance: {
             type: Number,

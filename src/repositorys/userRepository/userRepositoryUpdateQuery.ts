@@ -51,5 +51,18 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message)
         }
+    },
+
+    updateTotalRide: async (userId: ObjectId) => {
+        try {
+            const user = await UserSchema.findById(userId)
+            if (user) {
+                const count = user.RideDetails.completedRides
+                user.RideDetails.completedRides = count + 1
+                return await user.save()
+            }
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
     }
 }

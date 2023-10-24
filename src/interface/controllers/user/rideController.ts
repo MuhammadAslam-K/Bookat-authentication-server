@@ -18,4 +18,21 @@ export default {
             res.status(500).json({ error: (error as Error).message })
         }
     },
+
+    payment: async (req: Request, res: Response) => {
+        try {
+            res.json(await userRideUseCase.payment(req.body, req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
+
+    rides: async (req: Request, res: Response) => {
+        try {
+            res.json(await userRideUseCase.rides(req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
+
 }

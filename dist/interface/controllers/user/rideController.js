@@ -21,4 +21,20 @@ exports.default = {
             res.status(500).json({ error: error.message });
         }
     },
+    payment: async (req, res) => {
+        try {
+            res.json(await userRideUseCase_1.default.payment(req.body, req.token.data));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    rides: async (req, res) => {
+        try {
+            res.json(await userRideUseCase_1.default.rides(req.token.data));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
 };

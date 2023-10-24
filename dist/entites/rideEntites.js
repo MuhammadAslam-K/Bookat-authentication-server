@@ -64,27 +64,19 @@ const rideSchema = new mongoose_1.Schema({
     distance: {
         type: String,
     },
-    duration: {
-        type: String,
-    },
-    model: {
-        type: String,
-    },
     price: {
         type: Number,
-    },
-    paymentMode: {
-        type: String,
     },
     date: {
         type: Date,
         default: Date.now()
     },
-    status: {
+    paymentMode: {
         type: String,
     },
-    pin: {
-        type: Number,
+    status: {
+        type: String,
+        default: "Pending"
     },
     feedback: {
         type: String

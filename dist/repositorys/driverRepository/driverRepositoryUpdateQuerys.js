@@ -29,7 +29,8 @@ exports.default = {
                     'driverImageUrl': data.driverImageUrl,
                     'aadhar.aadharId': data.aadharId,
                     'aadhar.aadharImage': data.aadharImageUrl,
-                    'driver.driverDocuments': true
+                    'driver.driverDocuments': true,
+                    'driver.driverVerified': false,
                 }
             }, { new: true });
         }
@@ -39,6 +40,8 @@ exports.default = {
     },
     updateVehicleInfo: async (data, driverId) => {
         try {
+            console.log("data", data);
+            console.log("id:", driverId);
             return await driverEntites_1.default.findByIdAndUpdate(driverId, {
                 $set: {
                     'vehicleDocuments.registration.registrationId': data.registrationId,
@@ -88,9 +91,36 @@ exports.default = {
                     'aadhar.aadharImage': data.aadharImageUrl,
                     'license.licenseId': data.licenseId,
                     'license.licenseImage': data.licenseImageUrl,
-                    'driver.driverDocuments': false
+                    'driver.driverDocuments': false,
+                    'driver.driverVerified': false,
                 }
             }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    updateTotalRide: async (driverId) => {
+        try {
+            const driver = await driverEntites_1.default.findById(driverId);
+            if (driver) {
+                const count = driver.RideDetails.completedRides;
+                driver.RideDetails.completedRides = count + 1;
+                driver.isRiding = !driver.isRiding;
+                return await driver.save();
+            }
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    changeTheRideStatus: async (driverId) => {
+        try {
+            const driver = await driverEntites_1.default.findById(driverId);
+            if (driver) {
+                driver.isRiding = !driver.isRiding;
+                await driver.save();
+            }
         }
         catch (error) {
             throw new Error(error.message);

@@ -16,6 +16,7 @@ let userFromLocation;
 let userToLocation;
 let amount;
 let rideDistance;
+let rideDuration;
 let fromLocationLat;
 let fromLocationLong;
 let toLocationLat;
@@ -44,6 +45,7 @@ const setUpSocketIO = () => {
             userToLocation = data.toLocation;
             amount = data.amount;
             rideDistance = data.distance;
+            rideDuration = data.duration;
             fromLocationLat = data.fromLocationLat;
             fromLocationLong = data.fromLocationLong;
             toLocationLat = data.toLocationLat;
@@ -53,7 +55,7 @@ const setUpSocketIO = () => {
         });
         let nearbyDriver = [];
         const processedDriverIds = new Set();
-        socket.on('getdriverlocationUpdate', (data) => {
+        socket.on('getdriverlocationUpdate', async (data) => {
             console.log(`Location update from driver (${socket.id}):`, data);
             driverLatitude = data.latitude;
             driverLongitude = data.longitude;
@@ -61,11 +63,15 @@ const setUpSocketIO = () => {
             driverVehicleType = data.vehicleType;
             const distance = (0, socket_ioHelper_1.calculateDistance)(parseFloat(userLat), parseFloat(userLon), userVehicleType, parseFloat(driverLatitude), parseFloat(driverLongitude), driverVehicleType);
             console.log("distance :", distance, userVehicleType);
-            if (distance >= -10 && !processedDriverIds.has(driverId)) {
+            if (distance >= 0 && !processedDriverIds.has(driverId)) {
                 const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount };
                 console.log("driver push data :", data);
-                nearbyDriver.push(data);
-                processedDriverIds.add(driverId);
+                const available = await driverRideUseCase_1.default.checkAvailableDrivers(driverId, parseInt(rideDuration));
+                console.log("available for ride", available);
+                if (available) {
+                    nearbyDriver.push(data);
+                    processedDriverIds.add(driverId);
+                }
             }
         });
         // Emit nearby drivers one by one at regular intervals
@@ -85,7 +91,6 @@ const setUpSocketIO = () => {
             console.log("Driver approved the ride", data);
             nearbyDriver = [];
             processedDriverIds.clear();
-            // const rideDetails = { userLat, userLon, userId, driverLatitude, driverLongitude, driverId }
             const value = {
                 toLocationLat,
                 toLocationLong,

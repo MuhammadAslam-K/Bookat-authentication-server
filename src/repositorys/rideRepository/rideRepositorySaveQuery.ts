@@ -46,20 +46,3 @@ export default {
         }
     }
 }
-
-
-
-// [1] data in usecase {
-//     [1]   toLocationLat: 13.083694,
-//     [1]   toLocationLong: 80.270186,
-//     [1]   fromLocationLat: 12.992112,
-//     [1]   fromLocationLong: 77.588446,
-//     [1]   userFromLocation: 'Bengaluru, Karnataka, India',
-//     [1]   userToLocation: 'Chennai, Tamil Nadu, India',
-//     [1]   driverLatitude: 12.9003968,
-//     [1]   driverLongitude: 77.6507902,
-//     [1]   rideDistance: '291',
-//     [1]   amount: '29069'
-// userId,
-// driverId
-//     [1] }
