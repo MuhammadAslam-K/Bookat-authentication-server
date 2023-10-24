@@ -10,6 +10,7 @@ const driverNotificationController_1 = __importDefault(require("../controllers/d
 const driverProfileController_1 = __importDefault(require("../controllers/driver/driverProfileController"));
 const driverVehicleController_1 = __importDefault(require("../controllers/driver/driverVehicleController"));
 const driverRideController_1 = __importDefault(require("../controllers/driver/driverRideController"));
+const driverScheduledRideController_1 = __importDefault(require("../controllers/driver/driverScheduledRideController"));
 const driver_router = express_1.default.Router();
 driver_router.post("/signup", driverAuthController_1.default.signup);
 driver_router.post("/login", driverAuthController_1.default.login);
@@ -19,12 +20,16 @@ driver_router.post("/info/vehicle", jwtTokenAuth_1.default.validateToken, driver
 driver_router.post("/resetPasswordLink", driverNotificationController_1.default.resetPasswordLink);
 driver_router.post("/resetpassword", driverNotificationController_1.default.resetpassword);
 // Driver Profile
-driver_router.get("/Profile", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.getDriverProfile);
-driver_router.post("/update/profile", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.updateDriverProfile);
-driver_router.post("/available", jwtTokenAuth_1.default.validateToken, driverProfileController_1.default.driverAvailable);
+driver_router.get("/Profile", driverProfileController_1.default.getDriverProfile);
+driver_router.post("/update/profile", driverProfileController_1.default.updateDriverProfile);
+driver_router.post("/available", driverProfileController_1.default.driverAvailable);
 // Driver Vehicle
-driver_router.get("/vehicle", jwtTokenAuth_1.default.validateToken, driverVehicleController_1.default.getVehicleInfo);
-driver_router.post("/update/vehicle", jwtTokenAuth_1.default.validateToken, driverVehicleController_1.default.updateVehicleInfo);
+driver_router.get("/vehicle", driverVehicleController_1.default.getVehicleInfo);
+driver_router.post("/update/vehicle", driverVehicleController_1.default.updateVehicleInfo);
 // Ride
-driver_router.post("/getUser", jwtTokenAuth_1.default.validateToken, driverRideController_1.default.getUserWithId);
+driver_router.post("/getUser", driverRideController_1.default.getUserWithId);
+driver_router.get("/rideHistory", driverRideController_1.default.getRideHistory);
+driver_router.get("/scheduleRideHistory", driverScheduledRideController_1.default.getscheduleRideHistory);
+driver_router.get("/scheduleRideNotification", driverScheduledRideController_1.default.getScheduleRideNotification);
+driver_router.post("/scheduleRideConfirmation", driverScheduledRideController_1.default.confirmScheduledRide);
 exports.default = driver_router;

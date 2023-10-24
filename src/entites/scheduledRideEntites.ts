@@ -1,12 +1,23 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 
-const rideSchema: Schema = new Schema({
+const scheduleRideSchema: Schema = new Schema({
 
     driver_id: {
         type: String,
     },
+    driverAccepted: {
+        type: String,
+        default: "Pending",
+    },
     user_id: {
+        type: String,
+    },
+    vehicleType: {
+        type: String,
+
+    },
+    duration: {
         type: String,
     },
     pickupCoordinates: {
@@ -17,6 +28,7 @@ const rideSchema: Schema = new Schema({
             type: Number,
         },
     },
+
     dropoffCoordinates: {
         latitude: {
             type: Number,
@@ -31,14 +43,6 @@ const rideSchema: Schema = new Schema({
     dropoffLocation: {
         type: String,
     },
-    driverCoordinates: {
-        latitude: {
-            type: Number,
-        },
-        longitude: {
-            type: Number,
-        },
-    },
     distance: {
         type: String,
     },
@@ -48,6 +52,9 @@ const rideSchema: Schema = new Schema({
     date: {
         type: Date,
         default: Date.now()
+    },
+    pickUpDate: {
+        type: Date,
     },
     paymentMode: {
         type: String,
@@ -65,6 +72,6 @@ const rideSchema: Schema = new Schema({
 
 });
 
-const RideSchema = mongoose.model("ride", rideSchema)
+const ScheduleRideSchema = mongoose.model("scheduleRide", scheduleRideSchema)
 
-export default RideSchema
+export default ScheduleRideSchema

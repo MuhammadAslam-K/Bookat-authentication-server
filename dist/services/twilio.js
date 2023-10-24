@@ -10,7 +10,8 @@ dotenv_1.default.config();
 const accountSid = "AC27fb374a44e424ecfde5a06eaba2dcbe";
 // const authToken = process.env.TWILIO_AUTH_TOKEN
 // const authToken = "5dea0c17eba4f8e4c5164c5bc6a1d7fa"
-const authToken = "d6709e8b9803c45cc2657ff618067846";
+// const authToken = "d6709e8b9803c45cc2657ff618067846"
+const authToken = "ebcddbfe581c07a9be792c47e1b6d2d3";
 // const verifySid = process.env.TWILIO_VERIFY_SID || ""
 const verifySid = "VA36b0a90b67572c230c2b3798c0e8048b";
 const client = (0, twilio_1.default)(accountSid, authToken);

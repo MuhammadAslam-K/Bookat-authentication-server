@@ -45,7 +45,7 @@ export default {
                 const refrelCode = refferalCode()
                 const wallet: walletDetails = {
                     date: Date.now(),
-                    details: `You joined using your ${checkRefrelCodeExists[0].name}'s refrel`,
+                    details: `You joined using ${checkRefrelCodeExists[0].name}'s refrel`,
                     amount: 100,
                     status: "Credited"
                 }

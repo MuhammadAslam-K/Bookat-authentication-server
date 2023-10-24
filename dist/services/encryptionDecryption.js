@@ -19,7 +19,7 @@ exports.default = {
     },
     createToken: (data, role, expireIn) => {
         try {
-            const secretKey = process.env.SECRET_KEY || "";
+            const secretKey = process.env.SECRET_KEY;
             const payload = {
                 data: data,
                 role: role,
@@ -27,11 +27,15 @@ exports.default = {
             const options = {
                 expiresIn: expireIn,
             };
-            const token = jsonwebtoken_1.default.sign(payload, secretKey, options);
-            return token;
+            if (secretKey) {
+                const token = jsonwebtoken_1.default.sign(payload, secretKey, options);
+                return token;
+            }
+            else {
+                throw new Error("Unable to create Token please try agian later");
+            }
         }
         catch (error) {
-            console.error('Encryption error:', error);
             throw new Error(error.message);
         }
     },

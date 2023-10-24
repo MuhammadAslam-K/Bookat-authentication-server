@@ -20,7 +20,7 @@ export default {
 
     createToken: (data: string | ObjectId, role: string, expireIn: string): string => {
         try {
-            const secretKey = process.env.SECRET_KEY || ""
+            const secretKey = process.env.SECRET_KEY
 
             const payload = {
                 data: data,
@@ -30,12 +30,15 @@ export default {
             const options: jwt.SignOptions = {
                 expiresIn: expireIn,
             };
-            const token = jwt.sign(payload, secretKey, options);
-            return token
+            if (secretKey) {
+                const token = jwt.sign(payload, secretKey, options);
+                return token
+            } else {
+                throw new Error("Unable to create Token please try agian later")
+            }
 
 
         } catch (error) {
-            console.error('Encryption error:', error);
             throw new Error((error as Error).message)
         }
 

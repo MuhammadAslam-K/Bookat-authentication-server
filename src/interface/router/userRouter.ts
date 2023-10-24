@@ -5,6 +5,7 @@ import signIn from "../controllers/user/userSignInController";
 import userNotificationController from "../controllers/user/userNotificationController";
 import userProfileController from "../controllers/user/userProfileController";
 import rideController from "../controllers/user/rideController";
+import scheduledRideController from "../controllers/user/scheduledRideController";
 
 const userRoute = Express.Router()
 
@@ -28,5 +29,13 @@ userRoute.post("/update/profile", userProfileController.updateProfile)
 // RIDE
 userRoute.post('/getdriver', rideController.getDriverData);
 userRoute.post('/getridedata', rideController.getRideData);
+userRoute.post('/payment', rideController.payment);
+
+userRoute.get('/rideHistory', rideController.rides);
+
+// SCheduled Rides
+userRoute.get('/scheduleRideHistory', scheduledRideController.scheduleRideHistory);
+
+userRoute.post('/scheduleTheRide', scheduledRideController.scheduleRide);
 
 export default userRoute

@@ -8,6 +8,7 @@ exports.default = {
     validateToken: (req, res, next) => {
         try {
             const requestedRoute = req.path;
+            console.log("path :", requestedRoute);
             const publicRoutes = [
                 /**********  User **********/
                 "/signUp",
@@ -55,6 +56,7 @@ exports.default = {
             }
         }
         catch (error) {
+            console.log("error in jwt ", error);
             return res.status(401).json({ error: error.message });
         }
     },

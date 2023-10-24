@@ -23,9 +23,9 @@ exports.default = {
                         throw new Error("Invalid email or password");
                     }
                     else {
-                        const token = encryptionDecryption_2.default.createToken(response[0]._id, "user", "1h");
+                        const token = encryptionDecryption_2.default.createToken(response[0]._id, "user", "5h");
                         const data = {
-                            toke: token,
+                            token: token,
                             userId: response[0]._id
                         };
                         return data;
@@ -37,6 +37,7 @@ exports.default = {
             }
         }
         catch (error) {
+            console.log("error at signin", error);
             throw new Error(error.message);
         }
     },

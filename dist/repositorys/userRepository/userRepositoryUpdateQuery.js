@@ -40,5 +40,18 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    updateTotalRide: async (userId) => {
+        try {
+            const user = await userEntites_1.default.findById(userId);
+            if (user) {
+                const count = user.RideDetails.completedRides;
+                user.RideDetails.completedRides = count + 1;
+                return await user.save();
+            }
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };

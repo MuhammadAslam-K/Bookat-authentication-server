@@ -45,10 +45,23 @@ const driverSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    totalRides: {
-        type: Number,
-        default: 0
+    RideDetails: {
+        completedRides: {
+            default: 0,
+            type: Number,
+        },
+        cancelledRides: {
+            default: 0,
+            type: Number,
+        },
     },
+    scheduledRides: [
+        {
+            rideId: String,
+            startingTime: Date,
+            endingTime: Date,
+        },
+    ],
     joinedAt: {
         type: Date,
         default: Date.now(),
@@ -58,6 +71,10 @@ const driverSchema = new mongoose_1.Schema({
         default: false,
     },
     isAvailable: {
+        type: Boolean,
+        default: false
+    },
+    isRiding: {
         type: Boolean,
         default: false
     },
