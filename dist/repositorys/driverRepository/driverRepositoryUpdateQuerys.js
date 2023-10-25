@@ -125,5 +125,20 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    addScheduledRide: async (rideId, newRidePickupDate, duration, driverId) => {
+        try {
+            const newScheduledRide = {
+                rideId: rideId,
+                startingTime: newRidePickupDate,
+                duration: duration,
+            };
+            await driverEntites_1.default.findByIdAndUpdate(driverId, {
+                $push: { scheduledRides: newScheduledRide },
+            }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };

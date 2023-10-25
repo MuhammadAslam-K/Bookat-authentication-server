@@ -33,10 +33,14 @@ driver_router.post("/update/vehicle", driverVehicleController.updateVehicleInfo)
 driver_router.post("/getUser", driverRideController.getUserWithId)
 
 driver_router.get("/rideHistory", driverRideController.getRideHistory)
+driver_router.get("/currentRide", driverRideController.currentRide)
 
 driver_router.get("/scheduleRideHistory", driverScheduledRideController.getscheduleRideHistory)
 driver_router.get("/scheduleRideNotification", driverScheduledRideController.getScheduleRideNotification)
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController.confirmScheduledRide)
+
+
+driver_router.post("/rideOtpVerify", driverNotificationController.verifyOTP)
 
 
 export default driver_router

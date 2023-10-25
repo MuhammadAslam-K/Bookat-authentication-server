@@ -36,7 +36,7 @@ const driverSchema: Schema = new Schema({
         {
             rideId: String,
             startingTime: Date,
-            endingTime: Date,
+            duration: String,
         },
     ],
 

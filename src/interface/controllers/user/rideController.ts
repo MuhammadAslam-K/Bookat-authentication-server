@@ -35,4 +35,12 @@ export default {
         }
     },
 
+    currentRide: async (req: Request, res: Response) => {
+        try {
+            res.json(await userRideUseCase.getCurrentRide(req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    }
+
 }

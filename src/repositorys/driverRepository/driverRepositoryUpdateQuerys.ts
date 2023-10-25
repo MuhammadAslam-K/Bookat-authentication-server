@@ -147,5 +147,25 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message)
         }
+    },
+
+    addScheduledRide: async (rideId: ObjectId, newRidePickupDate: Date, duration: string, driverId: ObjectId) => {
+        try {
+            const newScheduledRide = {
+                rideId: rideId,
+                startingTime: newRidePickupDate,
+                duration: duration,
+            };
+            await DriverSchema.findByIdAndUpdate(
+                driverId,
+                {
+                    $push: { scheduledRides: newScheduledRide },
+                },
+                { new: true }
+            );
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
     }
+
 }

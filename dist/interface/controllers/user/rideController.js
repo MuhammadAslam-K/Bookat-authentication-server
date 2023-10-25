@@ -37,4 +37,12 @@ exports.default = {
             res.status(500).json({ error: error.message });
         }
     },
+    currentRide: async (req, res) => {
+        try {
+            res.json(await userRideUseCase_1.default.getCurrentRide(req.token.data));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 };

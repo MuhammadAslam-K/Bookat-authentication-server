@@ -28,5 +28,21 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
+    getCurrentRideForUser: async (userId) => {
+        try {
+            return await rideEntites_1.default.find({ user_id: userId, status: "Started" });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getCurrentRideForDriver: async (driverId) => {
+        try {
+            return await rideEntites_1.default.find({ driver_id: driverId, status: "Started" });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };

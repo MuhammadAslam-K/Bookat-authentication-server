@@ -59,7 +59,7 @@ const driverSchema = new mongoose_1.Schema({
         {
             rideId: String,
             startingTime: Date,
-            endingTime: Date,
+            duration: String,
         },
     ],
     joinedAt: {

@@ -17,5 +17,14 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    updateOtp: async (rideId) => {
+        try {
+            console.log("rideId = ", rideId);
+            return await rideEntites_1.default.findByIdAndUpdate(rideId, { otpVerifyed: true }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };

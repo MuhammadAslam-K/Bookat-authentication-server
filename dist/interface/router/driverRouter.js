@@ -29,7 +29,9 @@ driver_router.post("/update/vehicle", driverVehicleController_1.default.updateVe
 // Ride
 driver_router.post("/getUser", driverRideController_1.default.getUserWithId);
 driver_router.get("/rideHistory", driverRideController_1.default.getRideHistory);
+driver_router.get("/currentRide", driverRideController_1.default.currentRide);
 driver_router.get("/scheduleRideHistory", driverScheduledRideController_1.default.getscheduleRideHistory);
 driver_router.get("/scheduleRideNotification", driverScheduledRideController_1.default.getScheduleRideNotification);
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController_1.default.confirmScheduledRide);
+driver_router.post("/rideOtpVerify", driverNotificationController_1.default.verifyOTP);
 exports.default = driver_router;

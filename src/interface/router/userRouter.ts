@@ -32,6 +32,7 @@ userRoute.post('/getridedata', rideController.getRideData);
 userRoute.post('/payment', rideController.payment);
 
 userRoute.get('/rideHistory', rideController.rides);
+userRoute.get('/currentRide', rideController.currentRide);
 
 // SCheduled Rides
 userRoute.get('/scheduleRideHistory', scheduledRideController.scheduleRideHistory);

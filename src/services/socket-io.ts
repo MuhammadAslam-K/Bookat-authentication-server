@@ -87,7 +87,7 @@ export const setUpSocketIO = (): void => {
             );
 
             console.log("distance :", distance, userVehicleType)
-            if (distance >= 0 && !processedDriverIds.has(driverId)) {
+            if (distance >= -2 && !processedDriverIds.has(driverId)) {
                 const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount }
                 console.log("driver push data :", data)
                 const available = await driverRideUseCase.checkAvailableDrivers(driverId, parseInt(rideDuration))

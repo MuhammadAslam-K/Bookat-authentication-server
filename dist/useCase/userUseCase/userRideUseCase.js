@@ -8,6 +8,7 @@ const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/ride
 const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 const rideRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryUpdateQuery"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
 exports.default = {
     getDriverById: async (driverId) => {
         try {
@@ -45,17 +46,24 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    getCurrentRide: async (userId) => {
+        try {
+            const response = await rideRepositoryGetQuery_1.default.getCurrentRideForUser(userId);
+            if (response.length == 0) {
+                const scheduleRide = await scheduleRideGetQuery_1.default.getCurrentScheduledRideForUser(userId);
+                if (scheduleRide.length == 0) {
+                    return null;
+                }
+                else {
+                    return scheduleRide;
+                }
+            }
+            else {
+                return response;
+            }
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };
-// [1] data {
-// [1]   vehicle: 'Prime',
-// [1]   amount: '',
-// [1]   fromLocation: 'Anekal, Karnataka, India',
-// [1]   toLocation: 'Chennai, Tamil Nadu, India',
-// [1]   distance: '282',
-// [1]   duration: 7.043752888807411,
-// [1]   fromLocationLat: 12.708637,
-// [1]   fromLocationLong: 77.699397,
-// [1]   toLocationLat: 13.083694,
-// [1]   toLocationLong: 80.270186,
-// [1]   selectedDateTime: null
-// [1] }

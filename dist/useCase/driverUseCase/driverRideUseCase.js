@@ -8,6 +8,7 @@ const rideRepositorySaveQuery_1 = __importDefault(require("../../repositorys/rid
 const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryGetQuery"));
 const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
 exports.default = {
     getUser: async (userId) => {
         try {
@@ -42,26 +43,44 @@ exports.default = {
             const scheduledRides = driver?.scheduledRides;
             console.log("driver data", driver);
             if (driver) {
-                // if (driver.isRiding) {
-                //     return false
-                // }
+                if (driver.isRiding) {
+                    return false;
+                }
                 if (!driver.isAvailable) {
                     return false;
                 }
                 for (const ride of scheduledRides) {
                     const startingTime = new Date(ride.startingTime);
                     const endingTime = new Date(ride.endingTime);
-                    // Calculate the requested end time based on the current time and duration
                     const requestedEndTime = new Date(currentDateTime.getTime() + durationInMinutes * 60000);
-                    // Check if the requested ride overlaps with the scheduled ride
                     if ((currentDateTime >= startingTime && currentDateTime <= endingTime) ||
                         (currentDateTime <= startingTime && requestedEndTime >= startingTime)) {
-                        return false; // Overlapping rides
+                        return false;
                     }
                 }
-                return true; // No overlapping rides, driver is available
+                return true;
             }
-            return false; // Driver not found
+            return false;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getCurrentRide: async (driverId) => {
+        try {
+            const response = await rideRepositoryGetQuery_1.default.getCurrentRideForDriver(driverId);
+            if (response.length == 0) {
+                const scheduleRide = await scheduleRideGetQuery_1.default.getCurrentScheduledRideForDriver(driverId);
+                if (scheduleRide.length == 0) {
+                    return null;
+                }
+                else {
+                    return scheduleRide;
+                }
+            }
+            else {
+                return response;
+            }
         }
         catch (error) {
             throw new Error(error.message);

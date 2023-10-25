@@ -4,6 +4,7 @@ import rideRepositorySaveQuery from '../../repositorys/rideRepository/rideReposi
 import rideRepositoryGetQuery from '../../repositorys/rideRepository/rideRepositoryGetQuery';
 import driverRepositoryGetQuerys from '../../repositorys/driverRepository/driverRepositoryGetQuerys';
 import driverRepositoryUpdateQuerys from '../../repositorys/driverRepository/driverRepositoryUpdateQuerys';
+import scheduleRideGetQuery from '../../repositorys/scheduleRide/scheduleRideGetQuery';
 
 export default {
     getUser: async (userId: ObjectId) => {
@@ -40,9 +41,9 @@ export default {
             console.log("driver data", driver)
 
             if (driver) {
-                // if (driver.isRiding) {
-                //     return false
-                // }
+                if (driver.isRiding) {
+                    return false
+                }
                 if (!driver.isAvailable) {
                     return false;
                 }
@@ -51,24 +52,39 @@ export default {
                     const startingTime = new Date(ride.startingTime);
                     const endingTime = new Date(ride.endingTime);
 
-                    // Calculate the requested end time based on the current time and duration
                     const requestedEndTime = new Date(currentDateTime.getTime() + durationInMinutes * 60000);
 
-                    // Check if the requested ride overlaps with the scheduled ride
                     if (
                         (currentDateTime >= startingTime && currentDateTime <= endingTime) ||
                         (currentDateTime <= startingTime && requestedEndTime >= startingTime)
                     ) {
-                        return false; // Overlapping rides
+                        return false;
                     }
                 }
 
-                return true; // No overlapping rides, driver is available
+                return true;
             }
 
-            return false; // Driver not found
+            return false;
 
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
 
+    getCurrentRide: async (driverId: ObjectId) => {
+        try {
+            const response = await rideRepositoryGetQuery.getCurrentRideForDriver(driverId)
+            if (response.length == 0) {
+                const scheduleRide = await scheduleRideGetQuery.getCurrentScheduledRideForDriver(driverId)
+                if (scheduleRide.length == 0) {
+                    return null
+                } else {
+                    return scheduleRide
+                }
+            } else {
+                return response
+            }
 
         } catch (error) {
             throw new Error((error as Error).message)

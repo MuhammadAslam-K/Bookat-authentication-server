@@ -23,7 +23,7 @@ exports.default = {
     },
     getScheduledRidesByDriverId: async (driverId) => {
         try {
-            return await scheduledRideEntites_1.default.find({ driver_id: driverId });
+            return await scheduledRideEntites_1.default.find({ driver_id: driverId }).sort({ pickUpDate: 1 });
         }
         catch (error) {
             throw new Error(error.message);
@@ -31,7 +31,23 @@ exports.default = {
     },
     getNotApprovedScheduleRides: async () => {
         try {
-            return await scheduledRideEntites_1.default.find({ driverAccepted: "Pending" });
+            return await scheduledRideEntites_1.default.find({ driverAccepted: "Pending" }).sort({ pickUpDate: 1 });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getCurrentScheduledRideForUser: async (userID) => {
+        try {
+            return await scheduledRideEntites_1.default.find({ user_id: userID, status: "Started" });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getCurrentScheduledRideForDriver: async (driverId) => {
+        try {
+            return await scheduledRideEntites_1.default.find({ driver_id: driverId, status: "Started" });
         }
         catch (error) {
             throw new Error(error.message);
