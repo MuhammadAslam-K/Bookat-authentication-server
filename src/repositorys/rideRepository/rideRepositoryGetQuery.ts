@@ -25,5 +25,22 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message)
         }
-    }
+    },
+
+    getCurrentRideForUser: async (userId: ObjectId) => {
+        try {
+            return await RideSchema.find({ user_id: userId, status: "Started" })
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
+    getCurrentRideForDriver: async (driverId: ObjectId) => {
+        try {
+            return await RideSchema.find({ driver_id: driverId, status: "Started" })
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
 }

@@ -21,4 +21,13 @@ exports.default = {
             res.status(500).json({ error: error.message });
         }
     },
+    currentRide: async (req, res) => {
+        try {
+            console.log("Called");
+            res.json(await driverRideUseCase_1.default.getCurrentRide(req.token.data));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 };

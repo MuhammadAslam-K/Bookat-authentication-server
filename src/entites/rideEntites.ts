@@ -52,9 +52,13 @@ const rideSchema: Schema = new Schema({
     paymentMode: {
         type: String,
     },
+    otpVerifyed: {
+        type: Boolean,
+        default: false,
+    },
     status: {
         type: String,
-        default: "Pending"
+        default: "Started"
     },
     feedback: {
         type: String

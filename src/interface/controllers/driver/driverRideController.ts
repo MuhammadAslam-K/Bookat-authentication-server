@@ -18,4 +18,13 @@ export default {
         }
     },
 
+    currentRide: async (req: Request, res: Response) => {
+        try {
+            console.log("Called")
+            res.json(await driverRideUseCase.getCurrentRide(req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    }
+
 }

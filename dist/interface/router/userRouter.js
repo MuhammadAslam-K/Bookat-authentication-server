@@ -27,6 +27,7 @@ userRoute.post('/getdriver', rideController_1.default.getDriverData);
 userRoute.post('/getridedata', rideController_1.default.getRideData);
 userRoute.post('/payment', rideController_1.default.payment);
 userRoute.get('/rideHistory', rideController_1.default.rides);
+userRoute.get('/currentRide', rideController_1.default.currentRide);
 // SCheduled Rides
 userRoute.get('/scheduleRideHistory', scheduledRideController_1.default.scheduleRideHistory);
 userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRide);

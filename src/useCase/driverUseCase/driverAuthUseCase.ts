@@ -49,7 +49,6 @@ export default {
         }
         catch (error) {
             throw new Error((error as Error).message)
-
         }
     },
 
