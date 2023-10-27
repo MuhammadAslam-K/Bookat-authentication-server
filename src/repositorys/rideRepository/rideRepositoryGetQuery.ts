@@ -13,7 +13,7 @@ export default {
 
     getRides: async (userId: ObjectId) => {
         try {
-            return await RideSchema.find({ user_id: userId }).sort({ date: -1 })
+            return await RideSchema.find({ user_id: userId, status: "Completed" }).sort({ date: -1 })
         } catch (error) {
             throw new Error((error as Error).message)
         }
@@ -21,7 +21,7 @@ export default {
 
     getRideDetailsByDriverId: async (driverId: ObjectId) => {
         try {
-            return await RideSchema.find({ driver_id: driverId }).sort({ date: -1 })
+            return await RideSchema.find({ driver_id: driverId, status: "Completed" }).sort({ date: -1 })
         } catch (error) {
             throw new Error((error as Error).message)
         }

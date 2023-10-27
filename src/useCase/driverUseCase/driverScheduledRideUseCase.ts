@@ -22,10 +22,16 @@ export default {
         }
     },
 
-    driverAcceptScheduledRide: async (rideId: ObjectId, driverId: ObjectId) => {
+
+    //     [1] data {
+    // [1]   rideId: '653b799431b780c6d72414fc',
+    // [1]   latitude: 13.0826802,
+    // [1]   longitude: 80.2707184
+    // [1] }
+    driverAcceptScheduledRide: async (data: { rideId: ObjectId, latitude: string, longitude: string }, driverId: ObjectId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
-                scheduleRideGetQuery.getScheduledRidesById(rideId),
+                scheduleRideGetQuery.getScheduledRidesById(data.rideId),
                 driverRepositoryGetQuerys.findDriverWithId(driverId)
             ]);
 
@@ -60,11 +66,34 @@ export default {
                 }
 
                 console.log("No conflicts detected. Driver can accept the ride.");
-                await driverRepositoryUpdateQuerys.addScheduledRide(rideId, newRidePickupDate, rideInfo.duration, driverId);
-                await scheduleRideUpdateQuery.driverAcceptedRide(driverId, rideId);
+                await driverRepositoryUpdateQuerys.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId);
+                // const latNum = parseInt(data.latitude)
+                // const longNum = parseInt(data.longitude)
+                await scheduleRideUpdateQuery.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude);
             }
         } catch (error) {
             throw new Error((error as Error).message);
+        }
+    },
+
+    getPendingScheduledRides: async (driverId: ObjectId) => {
+        try {
+            return await scheduleRideGetQuery.findPendingScheduledRidesWithDriverId(driverId)
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
+    },
+
+    startScheduledRide: async (rideId: ObjectId, driverId: ObjectId) => {
+        try {
+            return await Promise.all([
+                scheduleRideUpdateQuery.startRide(rideId),
+                driverRepositoryUpdateQuerys.changeTheRideStatus(driverId)
+            ]);
+        } catch (error) {
+            throw new Error((error as Error).message);
+
         }
     }
 

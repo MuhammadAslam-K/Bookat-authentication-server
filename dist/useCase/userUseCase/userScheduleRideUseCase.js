@@ -16,8 +16,15 @@ exports.default = {
     },
     getScheduleRideHistory: async (userId) => {
         try {
-            console.log("user id", userId);
             return await scheduleRideGetQuery_1.default.getScheduledRidesByUserId(userId);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getScheduledRideOfUser: async (userId) => {
+        try {
+            return await scheduleRideGetQuery_1.default.getPendingScheduledRidesWithUserId(userId);
         }
         catch (error) {
             throw new Error(error.message);

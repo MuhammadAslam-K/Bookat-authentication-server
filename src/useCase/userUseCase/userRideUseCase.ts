@@ -5,6 +5,7 @@ import userRepositoryUpdateQuery from "../../repositorys/userRepository/userRepo
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
 import rideRepositoryUpdateQuery from "../../repositorys/rideRepository/rideRepositoryUpdateQuery"
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
+import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery"
 
 export default {
     getDriverById: async (driverId: ObjectId) => {
@@ -17,7 +18,18 @@ export default {
 
     getRideDetails: async (rideId: ObjectId) => {
         try {
-            return await rideRepositoryGetQuery.findRideWithId(rideId)
+            console.log("rideId", rideId)
+            const result = await rideRepositoryGetQuery.findRideWithId(rideId)
+            if (!result) {
+                const scheduledRide = await scheduleRideGetQuery.getScheduledRidesById(rideId)
+                if (scheduledRide) {
+                    return scheduledRide
+                } else {
+                    return null
+                }
+            } else {
+                return result
+            }
         } catch (error) {
             throw new Error((error as Error).message)
         }
@@ -25,11 +37,20 @@ export default {
 
     payment: async (data: { driverId: ObjectId, rideId: ObjectId, rating: string, review: string }, userId: ObjectId) => {
         try {
-            const [updatedUser, updatedDriver, updatedRide] = await Promise.all([
+            await Promise.all([
                 userRepositoryUpdateQuery.updateTotalRide(userId),
                 driverRepositoryUpdateQuerys.updateTotalRide(data.driverId),
-                rideRepositoryUpdateQuery.updatePaymentInfo(data)
+                driverRepositoryUpdateQuerys.changeTheRideStatus(data.driverId),
             ]);
+            const result = await rideRepositoryUpdateQuery.updatePaymentInfo(data)
+            if (!result) {
+                const scheduledRide = await scheduleRideUpdateQuery.updatePaymentInfo(data)
+                if (scheduledRide) {
+                    return scheduledRide
+                } else {
+                    return null
+                }
+            }
 
         } catch (error) {
             throw new Error((error as Error).message)

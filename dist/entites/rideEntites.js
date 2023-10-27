@@ -71,9 +71,6 @@ const rideSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now()
     },
-    paymentMode: {
-        type: String,
-    },
     otpVerifyed: {
         type: Boolean,
         default: false,

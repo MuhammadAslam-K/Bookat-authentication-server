@@ -49,9 +49,6 @@ const rideSchema: Schema = new Schema({
         type: Date,
         default: Date.now()
     },
-    paymentMode: {
-        type: String,
-    },
     otpVerifyed: {
         type: Boolean,
         default: false,

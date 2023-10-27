@@ -166,6 +166,15 @@ export const setUpSocketIO = (): void => {
             io.emit("endRideNotifyUser", data)
         })
 
+        socket.on("getDriverLocation", (data) => {
+            console.log("getDriverLocation data", data)
+            io.emit("getDriverLocation", data)
+        })
+
+        socket.on("locationUpdateFromDriver", (data) => {
+            console.log("locationUpdateFromDriver data", data)
+            io.emit("driverLoacationUpdateToUser", data)
+        })
     });
 
     io.on('error', (error) => {

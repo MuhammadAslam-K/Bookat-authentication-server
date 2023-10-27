@@ -30,5 +30,6 @@ userRoute.get('/rideHistory', rideController_1.default.rides);
 userRoute.get('/currentRide', rideController_1.default.currentRide);
 // SCheduled Rides
 userRoute.get('/scheduleRideHistory', scheduledRideController_1.default.scheduleRideHistory);
+userRoute.get('/scheduledRides', scheduledRideController_1.default.scheduledRides);
 userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRide);
 exports.default = userRoute;

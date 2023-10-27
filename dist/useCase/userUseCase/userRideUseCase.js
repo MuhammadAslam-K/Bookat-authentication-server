@@ -9,6 +9,7 @@ const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/u
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 const rideRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryUpdateQuery"));
 const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
+const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
 exports.default = {
     getDriverById: async (driverId) => {
         try {
@@ -20,7 +21,20 @@ exports.default = {
     },
     getRideDetails: async (rideId) => {
         try {
-            return await rideRepositoryGetQuery_1.default.findRideWithId(rideId);
+            console.log("rideId", rideId);
+            const result = await rideRepositoryGetQuery_1.default.findRideWithId(rideId);
+            if (!result) {
+                const scheduledRide = await scheduleRideGetQuery_1.default.getScheduledRidesById(rideId);
+                if (scheduledRide) {
+                    return scheduledRide;
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return result;
+            }
         }
         catch (error) {
             throw new Error(error.message);
@@ -28,11 +42,21 @@ exports.default = {
     },
     payment: async (data, userId) => {
         try {
-            const [updatedUser, updatedDriver, updatedRide] = await Promise.all([
+            await Promise.all([
                 userRepositoryUpdateQuery_1.default.updateTotalRide(userId),
                 driverRepositoryUpdateQuerys_1.default.updateTotalRide(data.driverId),
-                rideRepositoryUpdateQuery_1.default.updatePaymentInfo(data)
+                driverRepositoryUpdateQuerys_1.default.changeTheRideStatus(data.driverId),
             ]);
+            const result = await rideRepositoryUpdateQuery_1.default.updatePaymentInfo(data);
+            if (!result) {
+                const scheduledRide = await scheduleRideUpdateQuery_1.default.updatePaymentInfo(data);
+                if (scheduledRide) {
+                    return scheduledRide;
+                }
+                else {
+                    return null;
+                }
+            }
         }
         catch (error) {
             throw new Error(error.message);

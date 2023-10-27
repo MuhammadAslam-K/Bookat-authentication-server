@@ -24,10 +24,15 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    driverAcceptScheduledRide: async (rideId, driverId) => {
+    //     [1] data {
+    // [1]   rideId: '653b799431b780c6d72414fc',
+    // [1]   latitude: 13.0826802,
+    // [1]   longitude: 80.2707184
+    // [1] }
+    driverAcceptScheduledRide: async (data, driverId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
-                scheduleRideGetQuery_1.default.getScheduledRidesById(rideId),
+                scheduleRideGetQuery_1.default.getScheduledRidesById(data.rideId),
                 driverRepositoryGetQuerys_1.default.findDriverWithId(driverId)
             ]);
             if (rideInfo && driverInfo) {
@@ -52,9 +57,30 @@ exports.default = {
                     }
                 }
                 console.log("No conflicts detected. Driver can accept the ride.");
-                await driverRepositoryUpdateQuerys_1.default.addScheduledRide(rideId, newRidePickupDate, rideInfo.duration, driverId);
-                await scheduleRideUpdateQuery_1.default.driverAcceptedRide(driverId, rideId);
+                await driverRepositoryUpdateQuerys_1.default.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId);
+                // const latNum = parseInt(data.latitude)
+                // const longNum = parseInt(data.longitude)
+                await scheduleRideUpdateQuery_1.default.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude);
             }
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getPendingScheduledRides: async (driverId) => {
+        try {
+            return await scheduleRideGetQuery_1.default.findPendingScheduledRidesWithDriverId(driverId);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    startScheduledRide: async (rideId, driverId) => {
+        try {
+            return await Promise.all([
+                scheduleRideUpdateQuery_1.default.startRide(rideId),
+                driverRepositoryUpdateQuerys_1.default.changeTheRideStatus(driverId)
+            ]);
         }
         catch (error) {
             throw new Error(error.message);

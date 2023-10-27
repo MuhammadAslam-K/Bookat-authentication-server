@@ -35,10 +35,12 @@ driver_router.post("/getUser", driverRideController.getUserWithId)
 driver_router.get("/rideHistory", driverRideController.getRideHistory)
 driver_router.get("/currentRide", driverRideController.currentRide)
 
+driver_router.get("/scheduleRidePending", driverScheduledRideController.schedulePendingRides)
 driver_router.get("/scheduleRideHistory", driverScheduledRideController.getscheduleRideHistory)
 driver_router.get("/scheduleRideNotification", driverScheduledRideController.getScheduleRideNotification)
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController.confirmScheduledRide)
 
+driver_router.patch("/startScheduledRide", driverScheduledRideController.startScheduledRide)
 
 driver_router.post("/rideOtpVerify", driverNotificationController.verifyOTP)
 

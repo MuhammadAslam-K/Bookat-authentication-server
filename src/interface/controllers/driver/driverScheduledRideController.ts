@@ -21,9 +21,25 @@ export default {
 
     confirmScheduledRide: async (req: Request, res: Response) => {
         try {
-            res.json(await driverScheduledRideUseCase.driverAcceptScheduledRide(req.body.rideId, req.token.data))
+            res.json(await driverScheduledRideUseCase.driverAcceptScheduledRide(req.body, req.token.data))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
-    }
+    },
+
+    schedulePendingRides: async (req: Request, res: Response) => {
+        try {
+            res.json(await driverScheduledRideUseCase.getPendingScheduledRides(req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
+
+    startScheduledRide: async (req: Request, res: Response) => {
+        try {
+            res.json(await driverScheduledRideUseCase.startScheduledRide(req.body.rideId, req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
 }

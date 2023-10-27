@@ -57,6 +57,14 @@ const scheduleRideSchema = new mongoose_1.Schema({
             type: Number,
         },
     },
+    driverCoordinates: {
+        latitude: {
+            type: Number,
+        },
+        longitude: {
+            type: Number,
+        },
+    },
     pickupLocation: {
         type: String,
     },
@@ -75,9 +83,6 @@ const scheduleRideSchema = new mongoose_1.Schema({
     },
     pickUpDate: {
         type: Date,
-    },
-    paymentMode: {
-        type: String,
     },
     otpVerifyed: {
         type: Boolean,
