@@ -118,9 +118,11 @@ exports.default = {
         try {
             const driver = await driverEntites_1.default.findById(driverId);
             if (driver) {
-                driver.isRiding = !driver.isRiding;
+                const status = driver.isRiding;
+                driver.isRiding = !status;
                 await driver.save();
             }
+            return driver;
         }
         catch (error) {
             throw new Error(error.message);
@@ -140,5 +142,5 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
 };

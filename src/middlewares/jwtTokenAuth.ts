@@ -18,6 +18,7 @@ export default {
                 "/otp/verify",
                 "/resetPasswordLink",
                 "/resetpassword",
+                "/getridedata",
 
                 /**********  Driver **********/
                 "/driver/signup",

@@ -37,6 +37,14 @@ const scheduleRideSchema: Schema = new Schema({
             type: Number,
         },
     },
+    driverCoordinates: {
+        latitude: {
+            type: Number,
+        },
+        longitude: {
+            type: Number,
+        },
+    },
     pickupLocation: {
         type: String,
     },
@@ -55,9 +63,6 @@ const scheduleRideSchema: Schema = new Schema({
     },
     pickUpDate: {
         type: Date,
-    },
-    paymentMode: {
-        type: String,
     },
     otpVerifyed: {
         type: Boolean,

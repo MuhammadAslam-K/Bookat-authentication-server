@@ -4,11 +4,10 @@ import RideSchema from "../../entites/rideEntites";
 export default {
     updatePaymentInfo: async (data: { driverId: ObjectId, rideId: ObjectId, rating: string, review: string }) => {
         try {
-            await RideSchema.findByIdAndUpdate(
+            return await RideSchema.findByIdAndUpdate(
                 data.rideId,
                 {
                     status: "Completed",
-                    paymentMode: "Cash",
                     feedback: data.review,
                     rating: data.rating,
                 },
@@ -21,7 +20,6 @@ export default {
 
     updateOtp: async (rideId: ObjectId) => {
         try {
-            console.log("rideId = ", rideId)
             return await RideSchema.findByIdAndUpdate(
                 rideId,
                 { otpVerifyed: true },

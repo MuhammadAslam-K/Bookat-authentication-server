@@ -20,5 +20,13 @@ exports.default = {
         catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    },
+    scheduledRides: async (req, res) => {
+        try {
+            res.json(await userScheduleRideUseCase_1.default.getScheduledRideOfUser(req.token.data));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
 };
