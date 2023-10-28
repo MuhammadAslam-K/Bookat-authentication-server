@@ -5,11 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userRideUseCase_1 = __importDefault(require("../../../useCase/userUseCase/userRideUseCase"));
 exports.default = {
-    getDriverData: async (req, res) => {
+    getDriverDetails: async (req, res) => {
         try {
-            res.json(await userRideUseCase_1.default.getDriverById(req.body.driverId));
+            if (typeof req.query.driverId === "string") {
+                res.json(await userRideUseCase_1.default.getDriverDetailsAndFeedbacks(req.query.driverId));
+            }
+            else {
+                res.status(400).json({ error: "Invalid driverId parameter" });
+            }
         }
         catch (error) {
+            console.log(error);
             res.status(500).json({ error: error.message });
         }
     },
@@ -29,9 +35,9 @@ exports.default = {
             res.status(500).json({ error: error.message });
         }
     },
-    rides: async (req, res) => {
+    ridesHistory: async (req, res) => {
         try {
-            res.json(await userRideUseCase_1.default.rides(req.token.data));
+            res.json(await userRideUseCase_1.default.getUserRidesHistory(req.token.data));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,5 +50,5 @@ exports.default = {
         catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    },
 };

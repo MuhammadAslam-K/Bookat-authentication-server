@@ -22,9 +22,10 @@ export default {
                     }
                     else {
                         const token = encryptionDecryption.createToken(response[0]._id as ObjectId, "user", "5h")
-                        const data: { token: string, userId: ObjectId } = {
+                        const data: { token: string, userId: ObjectId, mobile: string | undefined } = {
                             token: token,
-                            userId: response[0]._id as ObjectId
+                            userId: response[0]._id as ObjectId,
+                            mobile: response[0].mobile
                         }
                         return data
                     }

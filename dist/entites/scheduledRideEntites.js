@@ -77,6 +77,12 @@ const scheduleRideSchema = new mongoose_1.Schema({
     price: {
         type: Number,
     },
+    adminRevenu: {
+        type: Number
+    },
+    driverRevenu: {
+        type: Number
+    },
     date: {
         type: Date,
         default: Date.now()

@@ -55,4 +55,12 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    getAllDrivers: async () => {
+        try {
+            return await driverEntites_1.default.find();
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };

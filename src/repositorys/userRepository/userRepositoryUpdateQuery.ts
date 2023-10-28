@@ -39,7 +39,7 @@ export default {
 
     updateUserProfile: async (data: profileUpdate, userId: ObjectId) => {
         try {
-            await UserSchema.findByIdAndUpdate(
+            return await UserSchema.findByIdAndUpdate(
                 userId,
                 {
                     $set: {
@@ -55,12 +55,21 @@ export default {
 
     updateTotalRide: async (userId: ObjectId) => {
         try {
-            const user = await UserSchema.findById(userId)
-            if (user) {
-                const count = user.RideDetails.completedRides
-                user.RideDetails.completedRides = count + 1
-                return await user.save()
-            }
+            const result = await UserSchema.findByIdAndUpdate(
+                userId,
+                { $inc: { 'RideDetails.completedRides': 1 } }
+            );
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
+    updateCancelledRides: async (userId: ObjectId) => {
+        try {
+            const result = await UserSchema.findByIdAndUpdate(
+                userId,
+                { $inc: { 'RideDetails.cancelledRides': 1 } }
+            );
         } catch (error) {
             throw new Error((error as Error).message)
         }

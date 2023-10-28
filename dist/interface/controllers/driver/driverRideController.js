@@ -15,7 +15,7 @@ exports.default = {
     },
     getRideHistory: async (req, res) => {
         try {
-            res.json(await driverRideUseCase_1.default.getRideWithDriverId(req.token.data));
+            res.json(await driverRideUseCase_1.default.getDriverRideHistory(req.token.data));
         }
         catch (error) {
             res.status(500).json({ error: error.message });

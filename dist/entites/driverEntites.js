@@ -45,6 +45,10 @@ const driverSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    revenue: {
+        type: Number,
+        default: 0
+    },
     RideDetails: {
         completedRides: {
             default: 0,

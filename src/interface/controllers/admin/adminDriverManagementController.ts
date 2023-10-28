@@ -58,4 +58,13 @@ export default {
             res.status(500).json({ error: (error as Error).message })
         }
     },
+
+
+    getDriverRideHistory: async (req: Request, res: Response) => {
+        try {
+            res.json(await adminDriverManagementUsecase.getDriverRideHistory(req.body.driverId))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
 }

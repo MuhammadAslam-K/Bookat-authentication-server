@@ -11,6 +11,7 @@ const driverProfileController_1 = __importDefault(require("../controllers/driver
 const driverVehicleController_1 = __importDefault(require("../controllers/driver/driverVehicleController"));
 const driverRideController_1 = __importDefault(require("../controllers/driver/driverRideController"));
 const driverScheduledRideController_1 = __importDefault(require("../controllers/driver/driverScheduledRideController"));
+const driverDashboardController_1 = __importDefault(require("../controllers/driver/driverDashboardController"));
 const driver_router = express_1.default.Router();
 driver_router.post("/signup", driverAuthController_1.default.signup);
 driver_router.post("/login", driverAuthController_1.default.login);
@@ -28,12 +29,15 @@ driver_router.get("/vehicle", driverVehicleController_1.default.getVehicleInfo);
 driver_router.post("/update/vehicle", driverVehicleController_1.default.updateVehicleInfo);
 // Ride
 driver_router.post("/getUser", driverRideController_1.default.getUserWithId);
-driver_router.get("/rideHistory", driverRideController_1.default.getRideHistory);
 driver_router.get("/currentRide", driverRideController_1.default.currentRide);
 driver_router.get("/scheduleRidePending", driverScheduledRideController_1.default.schedulePendingRides);
-driver_router.get("/scheduleRideHistory", driverScheduledRideController_1.default.getscheduleRideHistory);
+// driver_router.get("/scheduleRideHistory", driverScheduledRideController.getscheduleRideHistory)
 driver_router.get("/scheduleRideNotification", driverScheduledRideController_1.default.getScheduleRideNotification);
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController_1.default.confirmScheduledRide);
 driver_router.patch("/startScheduledRide", driverScheduledRideController_1.default.startScheduledRide);
 driver_router.post("/rideOtpVerify", driverNotificationController_1.default.verifyOTP);
+// DASHBOARD
+driver_router.get("/dashboard", driverDashboardController_1.default.dashboard);
+// HISTORY
+driver_router.get("/history", driverRideController_1.default.getRideHistory);
 exports.default = driver_router;

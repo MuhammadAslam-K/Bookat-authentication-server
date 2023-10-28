@@ -31,7 +31,7 @@ exports.default = {
     },
     updateUserProfile: async (data, userId) => {
         try {
-            await userEntites_1.default.findByIdAndUpdate(userId, {
+            return await userEntites_1.default.findByIdAndUpdate(userId, {
                 $set: {
                     ...data,
                 }
@@ -43,12 +43,15 @@ exports.default = {
     },
     updateTotalRide: async (userId) => {
         try {
-            const user = await userEntites_1.default.findById(userId);
-            if (user) {
-                const count = user.RideDetails.completedRides;
-                user.RideDetails.completedRides = count + 1;
-                return await user.save();
-            }
+            const result = await userEntites_1.default.findByIdAndUpdate(userId, { $inc: { 'RideDetails.completedRides': 1 } });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    updateCancelledRides: async (userId) => {
+        try {
+            const result = await userEntites_1.default.findByIdAndUpdate(userId, { $inc: { 'RideDetails.cancelledRides': 1 } });
         }
         catch (error) {
             throw new Error(error.message);

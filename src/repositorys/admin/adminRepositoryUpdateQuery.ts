@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongoose';
 import UserSchema from '../../entites/userEntites';
 import DriverSchema from '../../entites/driverEntites';
+import AdminSchema from '../../entites/adminEntites';
 
 
 
@@ -54,4 +55,17 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+    addRevenu: async (amount: number) => {
+        try {
+            const admin = await AdminSchema.findOne()
+            if (admin) {
+                const addRevenu = admin.revenue
+                admin.revenue = addRevenu + amount
+                return await admin.save()
+            }
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
+    }
 }

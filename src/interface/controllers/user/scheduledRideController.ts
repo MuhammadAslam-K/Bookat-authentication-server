@@ -10,14 +10,6 @@ export default {
         }
     },
 
-    scheduleRideHistory: async (req: Request, res: Response) => {
-        try {
-            res.json(await userScheduleRideUseCase.getScheduleRideHistory(req.token.data))
-        } catch (error) {
-            res.status(500).json({ error: (error as Error).message })
-        }
-    },
-
     scheduledRides: async (req: Request, res: Response) => {
         try {
             res.json(await userScheduleRideUseCase.getScheduledRideOfUser(req.token.data))
@@ -25,4 +17,13 @@ export default {
             res.status(500).json({ error: (error as Error).message })
         }
     },
+
+
+    cancelride: async (req: Request, res: Response) => {
+        try {
+            res.json(await userScheduleRideUseCase.cancelTheRide(req.body, req.token.data))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    }
 }

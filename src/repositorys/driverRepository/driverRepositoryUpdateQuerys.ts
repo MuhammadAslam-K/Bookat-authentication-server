@@ -49,8 +49,6 @@ export default {
 
     updateVehicleInfo: async (data: vehicleInfo, driverId: ObjectId) => {
         try {
-            console.log("data", data)
-            console.log("id:", driverId)
             return await DriverSchema.findByIdAndUpdate(
                 driverId,
                 {
@@ -106,7 +104,9 @@ export default {
                 driverId,
                 {
                     $set: {
-                        ...data,
+                        name: data.name,
+                        email: data.email,
+                        mobile: data.mobile,
                         'aadhar.aadharId': data.aadharId,
                         'aadhar.aadharImage': data.aadharImageUrl,
                         'license.licenseId': data.licenseId,
@@ -122,15 +122,23 @@ export default {
         }
     },
 
-    updateTotalRide: async (driverId: ObjectId) => {
+    updateTotalRideAndRevenu: async (driverId: ObjectId, driverAmount: number, rideId: ObjectId) => {
         try {
-            const driver = await DriverSchema.findById(driverId)
-            if (driver) {
-                const count = driver.RideDetails.completedRides
-                driver.RideDetails.completedRides = count + 1
-                driver.isRiding = !driver.isRiding
-                return await driver.save()
-            }
+            return await DriverSchema.findByIdAndUpdate(
+                driverId,
+                {
+                    $inc: {
+                        'RideDetails.completedRides': 1,
+                        'revenue': driverAmount,
+                    },
+                    $pull: {
+                        scheduledRides: {
+                            rideId: rideId,
+                        },
+                    },
+                },
+                { new: true }
+            )
         } catch (error) {
             throw new Error((error as Error).message)
         }
@@ -169,4 +177,19 @@ export default {
         }
     },
 
+    popUpTheScheduledRide: async (driverId: ObjectId, rideId: ObjectId) => {
+        try {
+            const filter = { _id: driverId };
+            const update = {
+                $pull: {
+                    scheduledRides: {
+                        rideId: rideId
+                    }
+                }
+            };
+            await DriverSchema.updateOne(filter, update);
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
+    }
 }

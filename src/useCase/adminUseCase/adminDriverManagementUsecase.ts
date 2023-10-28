@@ -2,6 +2,8 @@ import { ObjectId } from "mongoose"
 import adminRepositoryGetQuerys from "../../repositorys/admin/adminRepositoryGetQuerys"
 import adminRepositoryUpdateQuery from "../../repositorys/admin/adminRepositoryUpdateQuery"
 import nodeMailer from "../../services/nodeMailer"
+import rideRepositoryGetQuery from "../../repositorys/rideRepository/rideRepositoryGetQuery"
+import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
 
 export default {
     getDrivers: async () => {
@@ -84,4 +86,18 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+
+    getDriverRideHistory: async (driverId: string) => {
+        try {
+            const [quickRides, scheduleRides] = await Promise.all([
+                rideRepositoryGetQuery.getRidesWithDriverId(driverId),
+                scheduleRideGetQuery.getScheduledRidesWithDriverId(driverId),
+            ])
+            return { quickRides, scheduleRides }
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
+    }
 }

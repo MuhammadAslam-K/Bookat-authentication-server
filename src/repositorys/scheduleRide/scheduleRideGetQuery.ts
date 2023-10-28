@@ -13,19 +13,21 @@ export default {
 
     getScheduledRidesByUserId: async (userID: ObjectId) => {
         try {
-            return await ScheduleRideSchema.find({ user_id: userID, status: "Completed" })
+            return await ScheduleRideSchema.find({
+                user_id: userID, status: { $in: ["Completed", "Cancelled"] }
+            })
         } catch (error) {
             throw new Error((error as Error).message);
         }
     },
 
-    getScheduledRidesByDriverId: async (driverId: ObjectId) => {
-        try {
-            return await ScheduleRideSchema.find({ driver_id: driverId, status: "Completed" }).sort({ pickUpDate: 1 })
-        } catch (error) {
-            throw new Error((error as Error).message);
-        }
-    },
+    // getScheduledRidesByDriverId: async (driverId: ObjectId) => {
+    //     try {
+    //         return await ScheduleRideSchema.find({ driver_id: driverId, status: "Completed" }).sort({ pickUpDate: 1 })
+    //     } catch (error) {
+    //         throw new Error((error as Error).message);
+    //     }
+    // },
 
     getNotApprovedScheduleRides: async () => {
         try {
@@ -66,4 +68,37 @@ export default {
             throw new Error((error as Error).message);
         }
     },
+
+    getFeedbacksWithDriverId: async (driverId: string) => {
+        try {
+            const feedbacksAndRatings = await ScheduleRideSchema.find({
+                driver_id: driverId,
+                feedback: { $ne: null },
+                rating: { $ne: null }
+            }).select('feedback rating');
+
+            return feedbacksAndRatings;
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
+
+    getScheduledRidesWithDriverId: async (driverId: string) => {
+        try {
+            return await ScheduleRideSchema.find({ driver_id: driverId, status: { $in: ["Completed", "Cancelled"] } }).sort({ date: -1 })
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
+    },
+
+    getAllScheduledRides: async () => {
+        try {
+            return await ScheduleRideSchema.find()
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
+    }
+
 }

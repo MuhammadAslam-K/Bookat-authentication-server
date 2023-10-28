@@ -20,6 +20,10 @@ exports.default = {
     },
     saveNewRide: async (data) => {
         try {
+            const result = await driverRepositoryGetQuerys_1.default.findDriverWithId(data.driverId);
+            if (!result?.driver.driverVerified && !result?.vehicle.vehicleVerified) {
+                throw new Error("Driver is not verified");
+            }
             const response = await rideRepositorySaveQuery_1.default.saveRideInfo(data);
             const driver = await driverRepositoryUpdateQuerys_1.default.changeTheRideStatus(response.driver_id);
             return response._id;
@@ -28,9 +32,13 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    getRideWithDriverId: async (driverId) => {
+    getDriverRideHistory: async (driverId) => {
         try {
-            return await rideRepositoryGetQuery_1.default.getRideDetailsByDriverId(driverId);
+            const [quickRides, scheduledRides] = await Promise.all([
+                rideRepositoryGetQuery_1.default.getRideDetailsByDriverId(driverId),
+                scheduleRideGetQuery_1.default.getScheduledRidesWithDriverId(driverId)
+            ]);
+            return { quickRides, scheduledRides };
         }
         catch (error) {
             throw new Error(error.message);

@@ -1,6 +1,5 @@
 import { ObjectId } from "mongoose"
 import DriverSchema from "../../entites/driverEntites"
-import RideSchema from "../../entites/rideEntites";
 
 
 export default {
@@ -38,7 +37,7 @@ export default {
         }
     },
 
-    findDriverWithId: async (driverId: ObjectId) => {
+    findDriverWithId: async (driverId: ObjectId | string) => {
         try {
             return await DriverSchema.findById(driverId)
         } catch (error) {
@@ -53,4 +52,13 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+    getAllDrivers: async () => {
+        try {
+            return await DriverSchema.find()
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
+    }
 }

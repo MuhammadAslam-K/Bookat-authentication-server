@@ -45,6 +45,12 @@ const rideSchema: Schema = new Schema({
     price: {
         type: Number,
     },
+    adminRevenu: {
+        type: Number
+    },
+    driverRevenu: {
+        type: Number
+    },
     date: {
         type: Date,
         default: Date.now()
