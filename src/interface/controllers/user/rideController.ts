@@ -1,12 +1,18 @@
 import { Request, Response } from "express"
 import userRideUseCase from "../../../useCase/userUseCase/userRideUseCase"
-
+import { ObjectId } from "mongoose"
+import mongoose from "mongoose";
 
 export default {
-    getDriverData: async (req: Request, res: Response) => {
+    getDriverDetails: async (req: Request, res: Response) => {
         try {
-            res.json(await userRideUseCase.getDriverById(req.body.driverId))
+            if (typeof req.query.driverId === "string") {
+                res.json(await userRideUseCase.getDriverDetailsAndFeedbacks(req.query.driverId))
+            } else {
+                res.status(400).json({ error: "Invalid driverId parameter" });
+            }
         } catch (error) {
+            console.log(error)
             res.status(500).json({ error: (error as Error).message })
         }
     },
@@ -27,9 +33,9 @@ export default {
         }
     },
 
-    rides: async (req: Request, res: Response) => {
+    ridesHistory: async (req: Request, res: Response) => {
         try {
-            res.json(await userRideUseCase.rides(req.token.data))
+            res.json(await userRideUseCase.getUserRidesHistory(req.token.data))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
@@ -41,6 +47,6 @@ export default {
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
-    }
+    },
 
 }

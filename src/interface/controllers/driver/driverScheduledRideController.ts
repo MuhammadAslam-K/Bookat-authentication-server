@@ -3,13 +3,13 @@ import driverScheduledRideUseCase from "../../../useCase/driverUseCase/driverSch
 
 
 export default {
-    getscheduleRideHistory: async (req: Request, res: Response) => {
-        try {
-            res.json(await driverScheduledRideUseCase.getScheduledRideHistoryByDriverId(req.token.data))
-        } catch (error) {
-            res.status(500).json({ error: (error as Error).message })
-        }
-    },
+    // getscheduleRideHistory: async (req: Request, res: Response) => {
+    //     try {
+    //         res.json(await driverScheduledRideUseCase.getScheduledRideHistoryByDriverId(req.token.data))
+    //     } catch (error) {
+    //         res.status(500).json({ error: (error as Error).message })
+    //     }
+    // },
 
     getScheduleRideNotification: async (req: Request, res: Response) => {
         try {

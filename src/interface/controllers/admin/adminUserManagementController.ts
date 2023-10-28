@@ -20,5 +20,14 @@ export default {
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
+    },
+
+
+    getUserRideHistory: async (req: Request, res: Response) => {
+        try {
+            res.json(await adminUserManagementUseCase.getRideHistoryWithUserId(req.body.userId))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
     }
 }

@@ -6,6 +6,7 @@ import driverProfileController from "../controllers/driver/driverProfileControll
 import driverVehicleController from "../controllers/driver/driverVehicleController";
 import driverRideController from "../controllers/driver/driverRideController";
 import driverScheduledRideController from "../controllers/driver/driverScheduledRideController";
+import driverDashboardController from "../controllers/driver/driverDashboardController";
 
 const driver_router = Express.Router()
 
@@ -32,11 +33,10 @@ driver_router.post("/update/vehicle", driverVehicleController.updateVehicleInfo)
 // Ride
 driver_router.post("/getUser", driverRideController.getUserWithId)
 
-driver_router.get("/rideHistory", driverRideController.getRideHistory)
 driver_router.get("/currentRide", driverRideController.currentRide)
 
 driver_router.get("/scheduleRidePending", driverScheduledRideController.schedulePendingRides)
-driver_router.get("/scheduleRideHistory", driverScheduledRideController.getscheduleRideHistory)
+// driver_router.get("/scheduleRideHistory", driverScheduledRideController.getscheduleRideHistory)
 driver_router.get("/scheduleRideNotification", driverScheduledRideController.getScheduleRideNotification)
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController.confirmScheduledRide)
 
@@ -44,5 +44,10 @@ driver_router.patch("/startScheduledRide", driverScheduledRideController.startSc
 
 driver_router.post("/rideOtpVerify", driverNotificationController.verifyOTP)
 
+// DASHBOARD
+driver_router.get("/dashboard", driverDashboardController.dashboard)
+
+// HISTORY
+driver_router.get("/history", driverRideController.getRideHistory)
 
 export default driver_router

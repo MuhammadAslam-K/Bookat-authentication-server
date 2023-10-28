@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const adminAuthController_1 = __importDefault(require("../controllers/admin/adminAuthController"));
 const adminUserManagementController_1 = __importDefault(require("../controllers/admin/adminUserManagementController"));
 const adminDriverManagementController_1 = __importDefault(require("../controllers/admin/adminDriverManagementController"));
+const adminDashboardController_1 = __importDefault(require("../controllers/admin/adminDashboardController"));
 const admin_router = express_1.default.Router();
 admin_router.post("/login", adminAuthController_1.default.signIn);
 // USER
@@ -20,4 +21,9 @@ admin_router.post("/reject/driver", adminDriverManagementController_1.default.re
 admin_router.post("/approve/driver", adminDriverManagementController_1.default.approveDriver);
 admin_router.post("/reject/vehicle", adminDriverManagementController_1.default.rejectVehicle);
 admin_router.post("/approve/vehicle", adminDriverManagementController_1.default.approveVehicle);
+// DASHBOARD
+admin_router.get("/dashboard", adminDashboardController_1.default.dashboard);
+// HISTORY
+admin_router.post("/history/user", adminUserManagementController_1.default.getUserRideHistory);
+admin_router.post("/history/driver", adminDriverManagementController_1.default.getDriverRideHistory);
 exports.default = admin_router;

@@ -20,5 +20,13 @@ exports.default = {
         catch (error) {
             res.status(500).json({ error: error.message });
         }
+    },
+    getUserRideHistory: async (req, res) => {
+        try {
+            res.json(await adminUserManagementUseCase_1.default.getRideHistoryWithUserId(req.body.userId));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     }
 };

@@ -21,6 +21,10 @@ const driverSchema: Schema = new Schema({
         type: String,
         required: true
     },
+    revenue: {
+        type: Number,
+        default: 0
+    },
 
     RideDetails: {
         completedRides: {

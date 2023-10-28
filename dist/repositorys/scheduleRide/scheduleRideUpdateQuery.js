@@ -35,13 +35,23 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    updatePaymentInfo: async (data) => {
+    updatePaymentInfo: async (data, adminAmount, driverAmount) => {
         try {
             return await scheduledRideEntites_1.default.findByIdAndUpdate(data.rideId, {
                 status: "Completed",
                 feedback: data.review,
                 rating: data.rating,
+                adminRevenu: adminAmount,
+                driverRevenu: driverAmount,
             }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    cancelTheBookedRide: async (rideId) => {
+        try {
+            return await scheduledRideEntites_1.default.findByIdAndUpdate(rideId, { status: "Cancelled" }, { new: true });
         }
         catch (error) {
             throw new Error(error.message);

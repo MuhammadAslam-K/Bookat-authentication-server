@@ -15,20 +15,21 @@ exports.default = {
     },
     getScheduledRidesByUserId: async (userID) => {
         try {
-            return await scheduledRideEntites_1.default.find({ user_id: userID, status: "Completed" });
+            return await scheduledRideEntites_1.default.find({
+                user_id: userID, status: { $in: ["Completed", "Cancelled"] }
+            });
         }
         catch (error) {
             throw new Error(error.message);
         }
     },
-    getScheduledRidesByDriverId: async (driverId) => {
-        try {
-            return await scheduledRideEntites_1.default.find({ driver_id: driverId, status: "Completed" }).sort({ pickUpDate: 1 });
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    },
+    // getScheduledRidesByDriverId: async (driverId: ObjectId) => {
+    //     try {
+    //         return await ScheduleRideSchema.find({ driver_id: driverId, status: "Completed" }).sort({ pickUpDate: 1 })
+    //     } catch (error) {
+    //         throw new Error((error as Error).message);
+    //     }
+    // },
     getNotApprovedScheduleRides: async () => {
         try {
             return await scheduledRideEntites_1.default.find({ driverAccepted: "Pending" }).sort({ pickUpDate: 1 });
@@ -69,4 +70,33 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    getFeedbacksWithDriverId: async (driverId) => {
+        try {
+            const feedbacksAndRatings = await scheduledRideEntites_1.default.find({
+                driver_id: driverId,
+                feedback: { $ne: null },
+                rating: { $ne: null }
+            }).select('feedback rating');
+            return feedbacksAndRatings;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getScheduledRidesWithDriverId: async (driverId) => {
+        try {
+            return await scheduledRideEntites_1.default.find({ driver_id: driverId, status: { $in: ["Completed", "Cancelled"] } }).sort({ date: -1 });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getAllScheduledRides: async () => {
+        try {
+            return await scheduledRideEntites_1.default.find();
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };

@@ -10,10 +10,25 @@ const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repository
 const rideRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryUpdateQuery"));
 const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
 const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
+const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
 exports.default = {
     getDriverById: async (driverId) => {
         try {
             return await driverRepositoryGetQuerys_1.default.findDriverWithId(driverId);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getDriverDetailsAndFeedbacks: async (driverId) => {
+        try {
+            const [driverData, feedBacksOfQuickRide, feedBacksOfScheduledRides] = await Promise.all([
+                driverRepositoryGetQuerys_1.default.findDriverWithId(driverId),
+                rideRepositoryGetQuery_1.default.getFeedbacksWithDriverId(driverId),
+                scheduleRideGetQuery_1.default.getFeedbacksWithDriverId(driverId),
+            ]);
+            const feedBacks = [...feedBacksOfQuickRide, ...feedBacksOfScheduledRides];
+            return { driverData, feedBacks };
         }
         catch (error) {
             throw new Error(error.message);
@@ -42,14 +57,17 @@ exports.default = {
     },
     payment: async (data, userId) => {
         try {
+            const priceInt = parseInt(data.price);
+            const adminAmount = priceInt * 0.1;
+            const driverAmount = priceInt * 0.9;
             await Promise.all([
                 userRepositoryUpdateQuery_1.default.updateTotalRide(userId),
-                driverRepositoryUpdateQuerys_1.default.updateTotalRide(data.driverId),
-                driverRepositoryUpdateQuerys_1.default.changeTheRideStatus(data.driverId),
+                driverRepositoryUpdateQuerys_1.default.updateTotalRideAndRevenu(data.driverId, driverAmount, data.rideId),
+                adminRepositoryUpdateQuery_1.default.addRevenu(adminAmount)
             ]);
-            const result = await rideRepositoryUpdateQuery_1.default.updatePaymentInfo(data);
+            const result = await rideRepositoryUpdateQuery_1.default.updatePaymentInfo(data, adminAmount, driverAmount);
             if (!result) {
-                const scheduledRide = await scheduleRideUpdateQuery_1.default.updatePaymentInfo(data);
+                const scheduledRide = await scheduleRideUpdateQuery_1.default.updatePaymentInfo(data, adminAmount, driverAmount);
                 if (scheduledRide) {
                     return scheduledRide;
                 }
@@ -62,9 +80,13 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    rides: async (userId) => {
+    getUserRidesHistory: async (userId) => {
         try {
-            return await rideRepositoryGetQuery_1.default.getRides(userId);
+            const [quickRides, scheduledRides] = await Promise.all([
+                rideRepositoryGetQuery_1.default.getRideWithUserId(userId),
+                scheduleRideGetQuery_1.default.getScheduledRidesByUserId(userId)
+            ]);
+            return { quickRides, scheduledRides };
         }
         catch (error) {
             throw new Error(error.message);
@@ -89,5 +111,5 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
 };

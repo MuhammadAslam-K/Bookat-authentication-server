@@ -27,17 +27,24 @@ userRoute.get("/profile", userProfileController.getProfile)
 userRoute.post("/update/profile", userProfileController.updateProfile)
 
 // RIDE
-userRoute.post('/getdriver', rideController.getDriverData);
+userRoute.get('/details/driver', rideController.getDriverDetails);
+
 userRoute.post('/getridedata', rideController.getRideData);
 userRoute.post('/payment', rideController.payment);
 
-userRoute.get('/rideHistory', rideController.rides);
 userRoute.get('/currentRide', rideController.currentRide);
 
-// SCheduled Rides
-userRoute.get('/scheduleRideHistory', scheduledRideController.scheduleRideHistory);
-userRoute.get('/scheduledRides', scheduledRideController.scheduledRides);
 
+// SCHEDULED RIDES
+userRoute.get('/scheduledRides', scheduledRideController.scheduledRides);
 userRoute.post('/scheduleTheRide', scheduledRideController.scheduleRide);
+
+
+// CANCELLATION
+userRoute.post('/cancelride', scheduledRideController.cancelride);
+
+// HISTORY
+userRoute.get('/history', rideController.ridesHistory);
+
 
 export default userRoute

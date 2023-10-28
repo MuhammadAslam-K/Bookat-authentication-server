@@ -2,7 +2,15 @@ import { ObjectId } from "mongoose";
 import UserSchema from "../../entites/userEntites"
 
 
-export default {
+
+const userRepositoryGetQuery = {
+    getUserWithId: async (userId: ObjectId) => {
+        try {
+            return await UserSchema.findById(userId);
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
+    },
     getUser: async (field: string, data: string) => {
         try {
             const query: { [key: string]: string } = {};
@@ -13,11 +21,34 @@ export default {
         }
     },
 
-    getUserWithId: async (userId: ObjectId) => {
+    getAllUsers: async () => {
         try {
-            return await UserSchema.findById(userId)
+            return await UserSchema.find()
         } catch (error) {
             throw new Error((error as Error).message);
         }
     }
-}
+};
+
+export default userRepositoryGetQuery;
+
+
+// export default {
+//     getUser: async (field: string, data: string) => {
+//         try {
+//             const query: { [key: string]: string } = {};
+//             query[field] = data;
+//             return await UserSchema.find(query);
+//         } catch (error) {
+//             throw new Error((error as Error).message);
+//         }
+//     },
+
+//     getUserWithId: async (userId: ObjectId) => {
+//         try {
+//             return await UserSchema.findById(userId)
+//         } catch (error) {
+//             throw new Error((error as Error).message);
+//         }
+//     }
+// }

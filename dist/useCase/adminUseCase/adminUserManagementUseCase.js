@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/admin/adminRepositoryGetQuerys"));
 const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
+const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryGetQuery"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
 exports.default = {
     getUsers: async () => {
         try {
@@ -17,6 +19,18 @@ exports.default = {
     blockUser: async (userId) => {
         try {
             return await adminRepositoryUpdateQuery_1.default.blockUser(userId);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getRideHistoryWithUserId: async (userId) => {
+        try {
+            const [quickRides, scheduledRides] = await Promise.all([
+                rideRepositoryGetQuery_1.default.getRideWithUserId(userId),
+                scheduleRideGetQuery_1.default.getScheduledRidesByUserId(userId)
+            ]);
+            return { quickRides, scheduledRides };
         }
         catch (error) {
             throw new Error(error.message);

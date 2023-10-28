@@ -23,13 +23,15 @@ userRoute.post("/resetpassword", userNotificationController_1.default.resetpassw
 userRoute.get("/profile", userProfileController_1.default.getProfile);
 userRoute.post("/update/profile", userProfileController_1.default.updateProfile);
 // RIDE
-userRoute.post('/getdriver', rideController_1.default.getDriverData);
+userRoute.get('/details/driver', rideController_1.default.getDriverDetails);
 userRoute.post('/getridedata', rideController_1.default.getRideData);
 userRoute.post('/payment', rideController_1.default.payment);
-userRoute.get('/rideHistory', rideController_1.default.rides);
 userRoute.get('/currentRide', rideController_1.default.currentRide);
-// SCheduled Rides
-userRoute.get('/scheduleRideHistory', scheduledRideController_1.default.scheduleRideHistory);
+// SCHEDULED RIDES
 userRoute.get('/scheduledRides', scheduledRideController_1.default.scheduledRides);
 userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRide);
+// CANCELLATION
+userRoute.post('/cancelride', scheduledRideController_1.default.cancelride);
+// HISTORY
+userRoute.get('/history', rideController_1.default.ridesHistory);
 exports.default = userRoute;

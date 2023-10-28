@@ -13,9 +13,9 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    getRides: async (userId) => {
+    getRideWithUserId: async (userId) => {
         try {
-            return await rideEntites_1.default.find({ user_id: userId, status: "Completed" }).sort({ date: -1 });
+            return await rideEntites_1.default.find({ user_id: userId, status: { $in: ["Completed", "Cancelled"] } }).sort({ date: -1 });
         }
         catch (error) {
             throw new Error(error.message);
@@ -23,7 +23,7 @@ exports.default = {
     },
     getRideDetailsByDriverId: async (driverId) => {
         try {
-            return await rideEntites_1.default.find({ driver_id: driverId, status: "Completed" }).sort({ date: -1 });
+            return await rideEntites_1.default.find({ driver_id: driverId, status: { $in: ["Completed", "Cancelled"] } }).sort({ date: -1 });
         }
         catch (error) {
             throw new Error(error.message);
@@ -45,4 +45,33 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    getFeedbacksWithDriverId: async (driverId) => {
+        try {
+            const feedbacksAndRatings = await rideEntites_1.default.find({
+                driver_id: driverId,
+                feedback: { $ne: null },
+                rating: { $ne: null }
+            }).select('feedback rating');
+            return feedbacksAndRatings;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getRidesWithDriverId: async (driverId) => {
+        try {
+            return await rideEntites_1.default.find({ driver_id: driverId });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    getAllQuickRides: async () => {
+        try {
+            return await rideEntites_1.default.find();
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };

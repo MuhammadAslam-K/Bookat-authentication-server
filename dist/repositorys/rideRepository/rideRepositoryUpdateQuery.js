@@ -5,12 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const rideEntites_1 = __importDefault(require("../../entites/rideEntites"));
 exports.default = {
-    updatePaymentInfo: async (data) => {
+    updatePaymentInfo: async (data, adminAmount, driverAmount) => {
         try {
             return await rideEntites_1.default.findByIdAndUpdate(data.rideId, {
                 status: "Completed",
                 feedback: data.review,
                 rating: data.rating,
+                adminRevenu: adminAmount,
+                driverRevenu: driverAmount,
             }, { new: true });
         }
         catch (error) {

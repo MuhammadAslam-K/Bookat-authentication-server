@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
 import userRepositoryGetQuery from '../../repositorys/userRepository/userRepositoryGetQuery';
-import rideRepositorySaveQuery from '../../repositorys/rideRepository/rideRepositorySaveQuery';
+import rideRepositorySaveQuery, { rideData } from '../../repositorys/rideRepository/rideRepositorySaveQuery';
 import rideRepositoryGetQuery from '../../repositorys/rideRepository/rideRepositoryGetQuery';
 import driverRepositoryGetQuerys from '../../repositorys/driverRepository/driverRepositoryGetQuerys';
 import driverRepositoryUpdateQuerys from '../../repositorys/driverRepository/driverRepositoryUpdateQuerys';
@@ -15,8 +15,12 @@ export default {
         }
     },
 
-    saveNewRide: async (data: any) => {
+    saveNewRide: async (data: rideData) => {
         try {
+            const result = await driverRepositoryGetQuerys.findDriverWithId(data.driverId)
+            if (!result?.driver.driverVerified && !result?.vehicle.vehicleVerified) {
+                throw new Error("Driver is not verified")
+            }
             const response = await rideRepositorySaveQuery.saveRideInfo(data)
             const driver = await driverRepositoryUpdateQuerys.changeTheRideStatus(response.driver_id)
             return response._id
@@ -25,9 +29,13 @@ export default {
         }
     },
 
-    getRideWithDriverId: async (driverId: ObjectId) => {
+    getDriverRideHistory: async (driverId: string) => {
         try {
-            return await rideRepositoryGetQuery.getRideDetailsByDriverId(driverId)
+            const [quickRides, scheduledRides] = await Promise.all([
+                rideRepositoryGetQuery.getRideDetailsByDriverId(driverId),
+                scheduleRideGetQuery.getScheduledRidesWithDriverId(driverId)
+            ])
+            return { quickRides, scheduledRides }
         } catch (error) {
             throw new Error((error as Error).message)
         }

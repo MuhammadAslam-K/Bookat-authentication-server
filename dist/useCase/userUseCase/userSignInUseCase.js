@@ -26,7 +26,8 @@ exports.default = {
                         const token = encryptionDecryption_2.default.createToken(response[0]._id, "user", "5h");
                         const data = {
                             token: token,
-                            userId: response[0]._id
+                            userId: response[0]._id,
+                            mobile: response[0].mobile
                         };
                         return data;
                     }

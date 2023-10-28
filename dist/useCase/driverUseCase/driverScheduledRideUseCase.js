@@ -8,14 +8,13 @@ const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/d
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
 exports.default = {
-    getScheduledRideHistoryByDriverId: async (driverId) => {
-        try {
-            return await scheduleRideGetQuery_1.default.getScheduledRidesByDriverId(driverId);
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    },
+    // getScheduledRideHistoryByDriverId: async (driverId: ObjectId) => {
+    //     try {
+    //         return await scheduleRideGetQuery.getScheduledRidesByDriverId(driverId)
+    //     } catch (error) {
+    //         throw new Error((error as Error).message)
+    //     }
+    // },
     getNotApprovedScheduleRides: async () => {
         try {
             return await scheduleRideGetQuery_1.default.getNotApprovedScheduleRides();
@@ -24,11 +23,6 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    //     [1] data {
-    // [1]   rideId: '653b799431b780c6d72414fc',
-    // [1]   latitude: 13.0826802,
-    // [1]   longitude: 80.2707184
-    // [1] }
     driverAcceptScheduledRide: async (data, driverId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
@@ -36,6 +30,9 @@ exports.default = {
                 driverRepositoryGetQuerys_1.default.findDriverWithId(driverId)
             ]);
             if (rideInfo && driverInfo) {
+                if (!driverInfo.vehicle.vehicleVerified && !driverInfo.driver.driverVerified) {
+                    throw new Error("Your details are not still verified by the Admin");
+                }
                 const newRidePickupDate = new Date(rideInfo.pickUpDate);
                 const newRideDuration = parseFloat(rideInfo.duration);
                 const newRideEndingTime = new Date(newRidePickupDate.getTime() + (newRideDuration * 60 * 1000));

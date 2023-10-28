@@ -36,6 +36,10 @@ const adminSchema = new mongoose_1.Schema({
     password: {
         type: String,
     },
+    revenue: {
+        type: Number,
+        default: 0,
+    }
 });
 const AdminSchema = mongoose_1.default.model("admin", adminSchema);
 exports.default = AdminSchema;

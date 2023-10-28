@@ -46,7 +46,7 @@ export default {
         }
     },
 
-    updatePaymentInfo: async (data: { driverId: ObjectId, rideId: ObjectId, rating: string, review: string }) => {
+    updatePaymentInfo: async (data: { driverId: ObjectId, rideId: ObjectId, rating: string, review: string }, adminAmount: number, driverAmount: number) => {
         try {
             return await ScheduleRideSchema.findByIdAndUpdate(
                 data.rideId,
@@ -54,11 +54,25 @@ export default {
                     status: "Completed",
                     feedback: data.review,
                     rating: data.rating,
+                    adminRevenu: adminAmount,
+                    driverRevenu: driverAmount,
                 },
                 { new: true }
             )
         } catch (error) {
             throw new Error((error as Error).message)
+        }
+    },
+
+    cancelTheBookedRide: async (rideId: ObjectId) => {
+        try {
+            return await ScheduleRideSchema.findByIdAndUpdate(
+                rideId,
+                { status: "Cancelled" },
+                { new: true }
+            )
+        } catch (error) {
+            throw new Error((error as Error).message);
         }
     }
 }

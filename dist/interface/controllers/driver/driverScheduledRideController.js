@@ -5,14 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const driverScheduledRideUseCase_1 = __importDefault(require("../../../useCase/driverUseCase/driverScheduledRideUseCase"));
 exports.default = {
-    getscheduleRideHistory: async (req, res) => {
-        try {
-            res.json(await driverScheduledRideUseCase_1.default.getScheduledRideHistoryByDriverId(req.token.data));
-        }
-        catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
+    // getscheduleRideHistory: async (req: Request, res: Response) => {
+    //     try {
+    //         res.json(await driverScheduledRideUseCase.getScheduledRideHistoryByDriverId(req.token.data))
+    //     } catch (error) {
+    //         res.status(500).json({ error: (error as Error).message })
+    //     }
+    // },
     getScheduleRideNotification: async (req, res) => {
         try {
             res.json(await driverScheduledRideUseCase_1.default.getNotApprovedScheduleRides());

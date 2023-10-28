@@ -1,7 +1,7 @@
 import RideSchema from "../../entites/rideEntites"
 
 
-interface rideData {
+export interface rideData {
     driverId: any;
     userId: any;
     fromLocationLat: any;

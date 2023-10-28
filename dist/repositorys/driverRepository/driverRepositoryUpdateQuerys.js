@@ -40,8 +40,6 @@ exports.default = {
     },
     updateVehicleInfo: async (data, driverId) => {
         try {
-            console.log("data", data);
-            console.log("id:", driverId);
             return await driverEntites_1.default.findByIdAndUpdate(driverId, {
                 $set: {
                     'vehicleDocuments.registration.registrationId': data.registrationId,
@@ -86,7 +84,9 @@ exports.default = {
         try {
             await driverEntites_1.default.findByIdAndUpdate(driverId, {
                 $set: {
-                    ...data,
+                    name: data.name,
+                    email: data.email,
+                    mobile: data.mobile,
                     'aadhar.aadharId': data.aadharId,
                     'aadhar.aadharImage': data.aadharImageUrl,
                     'license.licenseId': data.licenseId,
@@ -100,15 +100,19 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    updateTotalRide: async (driverId) => {
+    updateTotalRideAndRevenu: async (driverId, driverAmount, rideId) => {
         try {
-            const driver = await driverEntites_1.default.findById(driverId);
-            if (driver) {
-                const count = driver.RideDetails.completedRides;
-                driver.RideDetails.completedRides = count + 1;
-                driver.isRiding = !driver.isRiding;
-                return await driver.save();
-            }
+            return await driverEntites_1.default.findByIdAndUpdate(driverId, {
+                $inc: {
+                    'RideDetails.completedRides': 1,
+                    'revenue': driverAmount,
+                },
+                $pull: {
+                    scheduledRides: {
+                        rideId: rideId,
+                    },
+                },
+            }, { new: true });
         }
         catch (error) {
             throw new Error(error.message);
@@ -143,4 +147,20 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    popUpTheScheduledRide: async (driverId, rideId) => {
+        try {
+            const filter = { _id: driverId };
+            const update = {
+                $pull: {
+                    scheduledRides: {
+                        rideId: rideId
+                    }
+                }
+            };
+            await driverEntites_1.default.updateOne(filter, update);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };

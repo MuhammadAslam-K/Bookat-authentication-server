@@ -12,6 +12,10 @@ const adminSchema: Schema = new Schema({
     password: {
         type: String,
     },
+    revenue: {
+        type: Number,
+        default: 0,
+    }
 })
 
 const AdminSchema = mongoose.model("admin", adminSchema)

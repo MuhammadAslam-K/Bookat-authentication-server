@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userEntites_1 = __importDefault(require("../../entites/userEntites"));
 const driverEntites_1 = __importDefault(require("../../entites/driverEntites"));
+const adminEntites_1 = __importDefault(require("../../entites/adminEntites"));
 exports.default = {
     blockUser: async (userId) => {
         try {
@@ -48,4 +49,17 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    addRevenu: async (amount) => {
+        try {
+            const admin = await adminEntites_1.default.findOne();
+            if (admin) {
+                const addRevenu = admin.revenue;
+                admin.revenue = addRevenu + amount;
+                return await admin.save();
+            }
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };

@@ -3,16 +3,17 @@ import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGet
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
 import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery"
+import { error } from "console"
 
 export default {
 
-    getScheduledRideHistoryByDriverId: async (driverId: ObjectId) => {
-        try {
-            return await scheduleRideGetQuery.getScheduledRidesByDriverId(driverId)
-        } catch (error) {
-            throw new Error((error as Error).message)
-        }
-    },
+    // getScheduledRideHistoryByDriverId: async (driverId: ObjectId) => {
+    //     try {
+    //         return await scheduleRideGetQuery.getScheduledRidesByDriverId(driverId)
+    //     } catch (error) {
+    //         throw new Error((error as Error).message)
+    //     }
+    // },
 
     getNotApprovedScheduleRides: async () => {
         try {
@@ -23,11 +24,6 @@ export default {
     },
 
 
-    //     [1] data {
-    // [1]   rideId: '653b799431b780c6d72414fc',
-    // [1]   latitude: 13.0826802,
-    // [1]   longitude: 80.2707184
-    // [1] }
     driverAcceptScheduledRide: async (data: { rideId: ObjectId, latitude: string, longitude: string }, driverId: ObjectId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
@@ -36,6 +32,11 @@ export default {
             ]);
 
             if (rideInfo && driverInfo) {
+
+                if (!driverInfo.vehicle.vehicleVerified && !driverInfo.driver.driverVerified) {
+                    throw new Error("Your details are not still verified by the Admin")
+                }
+
                 const newRidePickupDate = new Date(rideInfo.pickUpDate);
                 const newRideDuration = parseFloat(rideInfo.duration);
                 const newRideEndingTime = new Date(newRidePickupDate.getTime() + (newRideDuration * 60 * 1000));
