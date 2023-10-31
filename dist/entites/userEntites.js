@@ -1,5 +1,4 @@
 "use strict";
-// import mongoose, { Schema } from "mongoose";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -24,95 +23,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { Document } from "mongoose";
-// interface WalletTransaction {
-//     date: Date;
-//     details: string;
-//     amount: number;
-//     status: string;
-// }
-// interface Wallet {
-//     balance: number;
-//     transactions: WalletTransaction[];
-// }
-// interface RideDetails {
-//     completedRides: number;
-//     cancelledRides: number;
-// }
-// export interface User extends Document {
-//     name: string;
-//     mobile?: string;
-//     email: string;
-//     password?: string;
-//     refrel: string;
-//     block: boolean;
-//     joinedAt: Date;
-//     wallet: Wallet;
-//     RideDetails: RideDetails;
-// }
-// export default User;
-// const userSchema: Schema = new Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     mobile: {
-//         type: String,
-//     },
-//     email: {
-//         type: String,
-//         required: true
-//     },
-//     password: {
-//         type: String,
-//     },
-//     refrel: {
-//         type: String,
-//         required: true
-//     },
-//     block: {
-//         type: Boolean,
-//         default: false,
-//     },
-//     joinedAt: {
-//         type: Date,
-//         default: Date.now(),
-//     },
-//     wallet: {
-//         balance: {
-//             type: Number,
-//             default: 0,
-//         },
-//         transactions: [
-//             {
-//                 date: {
-//                     type: Date,
-//                 },
-//                 details: {
-//                     type: String,
-//                 },
-//                 amount: {
-//                     type: Number,
-//                 },
-//                 status: {
-//                     type: String,
-//                 },
-//             },
-//         ],
-//     },
-//     RideDetails: {
-//         completedRides: {
-//             default: 0,
-//             type: Number,
-//         },
-//         cancelledRides: {
-//             default: 0,
-//             type: Number,
-//         },
-//     },
-// })
-// const UserSchema = mongoose.model("user", userSchema)
-// export default UserSchema
 const mongoose_1 = __importStar(require("mongoose"));
 const userSchema = new mongoose_1.Schema({
     name: {

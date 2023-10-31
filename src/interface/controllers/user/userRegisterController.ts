@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import registration from "../../../useCase/userUseCase/userRegistrationUseCase"
-import twilio from "../../../services/twilio"
+
 
 export default {
     signup: async (req: Request, res: Response) => {

@@ -33,8 +33,9 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    rejectDriverInfo: async (email, reason) => {
+    rejectDriverInfo: async (email, id, reason) => {
         try {
+            await adminRepositoryUpdateQuery_1.default.rejectPersonalInfo(id);
             const data = {
                 to: email,
                 subject: "Admin Rejected Your Personal Information Please Resubmit it.",
@@ -46,8 +47,9 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    rejectVehicleInfo: async (email, reason) => {
+    rejectVehicleInfo: async (email, id, reason) => {
         try {
+            await adminRepositoryUpdateQuery_1.default.rejectVehicleInfo(id);
             const data = {
                 to: email,
                 subject: "Admin Rejected Your Vehicle Information Please Resubmit it.",

@@ -38,7 +38,7 @@ export default {
                     amount: 50,
                     status: "Credited"
                 }
-                const addAmount = await userRepositoryUpdateQuery.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id as ObjectId)
+                const addAmount = await userRepositoryUpdateQuery.addAmountInWalletWithUserId(walletDetails, checkRefrelCodeExists[0]._id as ObjectId)
 
                 const hashPassword = await encryptionDecryption.hashPassword(data.password)
                 data.password = hashPassword
@@ -50,7 +50,7 @@ export default {
                     status: "Credited"
                 }
                 const saveUser = await userRepositorySaveQuery.saveUser(data, refrelCode)
-                await userRepositoryUpdateQuery.addAmountInWallet(wallet, saveUser._id as ObjectId)
+                await userRepositoryUpdateQuery.addAmountInWalletWithUserId(wallet, saveUser._id as ObjectId)
                 return true
             }
             else {

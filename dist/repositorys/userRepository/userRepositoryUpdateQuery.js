@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userEntites_1 = __importDefault(require("../../entites/userEntites"));
 exports.default = {
-    addAmountInWallet: async (details, userId) => {
+    addAmountInWalletWithUserId: async (details, userId) => {
         try {
             return await userEntites_1.default.findByIdAndUpdate(userId, {
                 $push: {
@@ -33,7 +33,9 @@ exports.default = {
         try {
             return await userEntites_1.default.findByIdAndUpdate(userId, {
                 $set: {
-                    ...data,
+                    name: data.name,
+                    email: data.email,
+                    mobile: data.mobile,
                 }
             }, { new: true });
         }
@@ -43,7 +45,7 @@ exports.default = {
     },
     updateTotalRide: async (userId) => {
         try {
-            const result = await userEntites_1.default.findByIdAndUpdate(userId, { $inc: { 'RideDetails.completedRides': 1 } });
+            return await userEntites_1.default.findByIdAndUpdate(userId, { $inc: { 'RideDetails.completedRides': 1 } });
         }
         catch (error) {
             throw new Error(error.message);

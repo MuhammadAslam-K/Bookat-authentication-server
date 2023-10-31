@@ -82,11 +82,13 @@ exports.default = {
     },
     updateDriverProfile: async (data, driverId) => {
         try {
+            console.log(data);
             await driverEntites_1.default.findByIdAndUpdate(driverId, {
                 $set: {
                     name: data.name,
                     email: data.email,
                     mobile: data.mobile,
+                    driverImageUrl: data.driverImageUrl,
                     'aadhar.aadharId': data.aadharId,
                     'aadhar.aadharImage': data.aadharImageUrl,
                     'license.licenseId': data.licenseId,
@@ -162,5 +164,5 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
 };

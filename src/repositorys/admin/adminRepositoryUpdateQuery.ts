@@ -67,5 +67,31 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message);
         }
+    },
+
+    rejectPersonalInfo: async (id: ObjectId) => {
+        try {
+            await DriverSchema.findByIdAndUpdate(
+                id,
+                { 'driver.driverVerified': false },
+                { new: true }
+            )
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
+    },
+
+    rejectVehicleInfo: async (id: ObjectId) => {
+        try {
+            await DriverSchema.findByIdAndUpdate(
+                id,
+                { 'vehicle.vehicleVerified': false },
+                { new: true }
+            )
+        } catch (error) {
+            throw new Error((error as Error).message);
+
+        }
     }
 }

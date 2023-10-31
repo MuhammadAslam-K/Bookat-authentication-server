@@ -31,7 +31,7 @@ exports.default = {
     },
     rejectDriver: async (req, res) => {
         try {
-            res.json(await adminDriverManagementUsecase_1.default.rejectDriverInfo(req.body.email, req.body.reason));
+            res.json(await adminDriverManagementUsecase_1.default.rejectDriverInfo(req.body.email, req.body.id, req.body.reason));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
@@ -39,7 +39,7 @@ exports.default = {
     },
     rejectVehicle: async (req, res) => {
         try {
-            res.json(await adminDriverManagementUsecase_1.default.rejectVehicleInfo(req.body.email, req.body.reason));
+            res.json(await adminDriverManagementUsecase_1.default.rejectVehicleInfo(req.body.email, req.body.id, req.body.reason));
         }
         catch (error) {
             res.status(500).json({ error: error.message });
