@@ -61,5 +61,21 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    rejectPersonalInfo: async (id) => {
+        try {
+            await driverEntites_1.default.findByIdAndUpdate(id, { 'driver.driverVerified': false }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    rejectVehicleInfo: async (id) => {
+        try {
+            await driverEntites_1.default.findByIdAndUpdate(id, { 'vehicle.vehicleVerified': false }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };

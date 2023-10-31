@@ -4,6 +4,7 @@ import adminRepositoryUpdateQuery from "../../repositorys/admin/adminRepositoryU
 import nodeMailer from "../../services/nodeMailer"
 import rideRepositoryGetQuery from "../../repositorys/rideRepository/rideRepositoryGetQuery"
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
+import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
 
 export default {
     getDrivers: async () => {
@@ -30,8 +31,9 @@ export default {
         }
     },
 
-    rejectDriverInfo: async (email: string, reason: string) => {
+    rejectDriverInfo: async (email: string, id: ObjectId, reason: string) => {
         try {
+            await adminRepositoryUpdateQuery.rejectPersonalInfo(id)
             const data = {
                 to: email,
                 subject: "Admin Rejected Your Personal Information Please Resubmit it.",
@@ -44,8 +46,9 @@ export default {
         }
     },
 
-    rejectVehicleInfo: async (email: string, reason: string) => {
+    rejectVehicleInfo: async (email: string, id: ObjectId, reason: string) => {
         try {
+            await adminRepositoryUpdateQuery.rejectVehicleInfo(id)
             const data = {
                 to: email,
                 subject: "Admin Rejected Your Vehicle Information Please Resubmit it.",

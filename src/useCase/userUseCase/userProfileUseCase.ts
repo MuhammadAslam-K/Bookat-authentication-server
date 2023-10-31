@@ -23,36 +23,3 @@ export default {
         }
     },
 }
-
-
-
-
-
-
-// import { profileUpdate } from "../driverUseCase/driverProfileUseCase";
-// import userRepositoryUpdateQuery from "../../repositorys/userRepository/userRepositoryUpdateQuery";
-// import { IUser } from "../../entites/userEntites";
-// import { ObjectId } from "mongoose";
-// import userRepositoryGetQuery from "../../repositorys/userRepository/userRepositoryGetQuery";
-
-// interface UserRepository {
-//     getUserWithId: (userId: ObjectId) => Promise<IUser | null>;
-// }
-
-// interface UserProfileUseCase {
-//     getProfile: (userId: ObjectId) => Promise<IUser | null>;
-// }
-
-// const userProfileUseCase: UserProfileUseCase = {
-//     getProfile: async (userId: ObjectId) => {
-//         try {
-//             return await userRepositoryGetQuery.getUserWithId(userId);
-//         } catch (error) {
-//             throw new Error((error as Error).message);
-//         }
-//     },
-
-
-// };
-
-// export default userProfileUseCase;

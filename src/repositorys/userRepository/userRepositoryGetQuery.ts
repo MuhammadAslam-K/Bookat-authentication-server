@@ -11,6 +11,7 @@ const userRepositoryGetQuery = {
             throw new Error((error as Error).message);
         }
     },
+
     getUser: async (field: string, data: string) => {
         try {
             const query: { [key: string]: string } = {};

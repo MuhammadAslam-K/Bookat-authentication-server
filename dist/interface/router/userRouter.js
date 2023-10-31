@@ -11,6 +11,7 @@ const userProfileController_1 = __importDefault(require("../controllers/user/use
 const rideController_1 = __importDefault(require("../controllers/user/rideController"));
 const scheduledRideController_1 = __importDefault(require("../controllers/user/scheduledRideController"));
 const userRoute = express_1.default.Router();
+// AUTH
 userRoute.post("/signup", userRegisterController_1.default.signup);
 userRoute.post("/google/signUp", userRegisterController_1.default.googleSignup);
 userRoute.post("/check/userExists", userRegisterController_1.default.checkUserExists);
@@ -20,6 +21,7 @@ userRoute.post("/otp", userNotificationController_1.default.sendOtp);
 userRoute.post("/otp/verify", userNotificationController_1.default.verifySMS);
 userRoute.post("/resetPasswordLink", userNotificationController_1.default.resetPasswordLink);
 userRoute.post("/resetpassword", userNotificationController_1.default.resetpassword);
+// PROFILE
 userRoute.get("/profile", userProfileController_1.default.getProfile);
 userRoute.post("/update/profile", userProfileController_1.default.updateProfile);
 // RIDE
@@ -31,7 +33,7 @@ userRoute.get('/currentRide', rideController_1.default.currentRide);
 userRoute.get('/scheduledRides', scheduledRideController_1.default.scheduledRides);
 userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRide);
 // CANCELLATION
-userRoute.post('/cancelride', scheduledRideController_1.default.cancelride);
+userRoute.patch('/cancelride', scheduledRideController_1.default.cancelride);
 // HISTORY
 userRoute.get('/history', rideController_1.default.ridesHistory);
 exports.default = userRoute;

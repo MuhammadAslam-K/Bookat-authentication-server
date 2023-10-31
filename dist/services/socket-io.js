@@ -62,7 +62,7 @@ const setUpSocketIO = () => {
             driverId = data.driverId;
             driverVehicleType = data.vehicleType;
             const distance = (0, socket_ioHelper_1.calculateDistance)(parseFloat(userLat), parseFloat(userLon), userVehicleType, parseFloat(driverLatitude), parseFloat(driverLongitude), driverVehicleType);
-            console.log("distance :", distance, userVehicleType);
+            console.log("distance user and driver vehicle type :", distance, userVehicleType, driverVehicleType);
             if (distance >= -2 && !processedDriverIds.has(driverId)) {
                 const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount };
                 console.log("driver push data :", data);

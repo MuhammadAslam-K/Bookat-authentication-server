@@ -22,11 +22,11 @@ driver_router.post("/resetPasswordLink", driverNotificationController_1.default.
 driver_router.post("/resetpassword", driverNotificationController_1.default.resetpassword);
 // Driver Profile
 driver_router.get("/Profile", driverProfileController_1.default.getDriverProfile);
-driver_router.post("/update/profile", driverProfileController_1.default.updateDriverProfile);
-driver_router.post("/available", driverProfileController_1.default.driverAvailable);
+driver_router.patch("/update/profile", driverProfileController_1.default.updateDriverProfile);
+driver_router.patch("/available", driverProfileController_1.default.driverAvailable);
 // Driver Vehicle
 driver_router.get("/vehicle", driverVehicleController_1.default.getVehicleInfo);
-driver_router.post("/update/vehicle", driverVehicleController_1.default.updateVehicleInfo);
+driver_router.patch("/update/vehicle", driverVehicleController_1.default.updateVehicleInfo);
 // Ride
 driver_router.post("/getUser", driverRideController_1.default.getUserWithId);
 driver_router.get("/currentRide", driverRideController_1.default.currentRide);

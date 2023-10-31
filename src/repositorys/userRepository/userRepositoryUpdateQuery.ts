@@ -4,7 +4,7 @@ import { walletDetails } from "../../useCase/userUseCase/userRegistrationUseCase
 import { profileUpdate } from "../../useCase/driverUseCase/driverProfileUseCase"
 
 export default {
-    addAmountInWallet: async (details: walletDetails, userId: ObjectId) => {
+    addAmountInWalletWithUserId: async (details: walletDetails, userId: ObjectId) => {
         try {
             return await UserSchema.findByIdAndUpdate(
                 userId,
@@ -43,7 +43,9 @@ export default {
                 userId,
                 {
                     $set: {
-                        ...data,
+                        name: data.name,
+                        email: data.email,
+                        mobile: data.mobile,
                     }
                 },
                 { new: true }
@@ -55,10 +57,11 @@ export default {
 
     updateTotalRide: async (userId: ObjectId) => {
         try {
-            const result = await UserSchema.findByIdAndUpdate(
+            return await UserSchema.findByIdAndUpdate(
                 userId,
                 { $inc: { 'RideDetails.completedRides': 1 } }
             );
+
         } catch (error) {
             throw new Error((error as Error).message)
         }

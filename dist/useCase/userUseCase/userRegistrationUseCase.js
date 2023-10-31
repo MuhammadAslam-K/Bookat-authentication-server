@@ -19,7 +19,7 @@ exports.default = {
                     amount: 50,
                     status: "Credited"
                 };
-                const addAmount = await userRepositoryUpdateQuery_1.default.addAmountInWallet(walletDetails, checkRefrelCodeExists[0]._id);
+                const addAmount = await userRepositoryUpdateQuery_1.default.addAmountInWalletWithUserId(walletDetails, checkRefrelCodeExists[0]._id);
                 const hashPassword = await encryptionDecryption_1.default.hashPassword(data.password);
                 data.password = hashPassword;
                 const refrelCode = (0, refrelCode_1.refferalCode)();
@@ -30,7 +30,7 @@ exports.default = {
                     status: "Credited"
                 };
                 const saveUser = await userRepositorySaveQuery_1.default.saveUser(data, refrelCode);
-                await userRepositoryUpdateQuery_1.default.addAmountInWallet(wallet, saveUser._id);
+                await userRepositoryUpdateQuery_1.default.addAmountInWalletWithUserId(wallet, saveUser._id);
                 return true;
             }
             else {

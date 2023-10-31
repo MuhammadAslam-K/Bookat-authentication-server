@@ -23,12 +23,12 @@ driver_router.post("/resetpassword", driverNotificationController.resetpassword)
 
 // Driver Profile
 driver_router.get("/Profile", driverProfileController.getDriverProfile)
-driver_router.post("/update/profile", driverProfileController.updateDriverProfile)
-driver_router.post("/available", driverProfileController.driverAvailable)
+driver_router.patch("/update/profile", driverProfileController.updateDriverProfile)
+driver_router.patch("/available", driverProfileController.driverAvailable)
 
 // Driver Vehicle
 driver_router.get("/vehicle", driverVehicleController.getVehicleInfo)
-driver_router.post("/update/vehicle", driverVehicleController.updateVehicleInfo)
+driver_router.patch("/update/vehicle", driverVehicleController.updateVehicleInfo)
 
 // Ride
 driver_router.post("/getUser", driverRideController.getUserWithId)

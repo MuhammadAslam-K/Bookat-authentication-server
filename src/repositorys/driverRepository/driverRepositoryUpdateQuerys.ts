@@ -100,6 +100,7 @@ export default {
 
     updateDriverProfile: async (data: profileUpdate, driverId: ObjectId) => {
         try {
+            console.log(data)
             await DriverSchema.findByIdAndUpdate(
                 driverId,
                 {
@@ -107,6 +108,7 @@ export default {
                         name: data.name,
                         email: data.email,
                         mobile: data.mobile,
+                        driverImageUrl: data.driverImageUrl,
                         'aadhar.aadharId': data.aadharId,
                         'aadhar.aadharImage': data.aadharImageUrl,
                         'license.licenseId': data.licenseId,
@@ -191,5 +193,5 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message);
         }
-    }
+    },
 }

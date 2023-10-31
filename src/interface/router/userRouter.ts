@@ -9,6 +9,7 @@ import scheduledRideController from "../controllers/user/scheduledRideController
 
 const userRoute = Express.Router()
 
+// AUTH
 userRoute.post("/signup", signup.signup)
 userRoute.post("/google/signUp", signup.googleSignup)
 
@@ -23,6 +24,7 @@ userRoute.post("/otp/verify", userNotificationController.verifySMS)
 userRoute.post("/resetPasswordLink", userNotificationController.resetPasswordLink)
 userRoute.post("/resetpassword", userNotificationController.resetpassword)
 
+// PROFILE
 userRoute.get("/profile", userProfileController.getProfile)
 userRoute.post("/update/profile", userProfileController.updateProfile)
 
@@ -41,7 +43,7 @@ userRoute.post('/scheduleTheRide', scheduledRideController.scheduleRide);
 
 
 // CANCELLATION
-userRoute.post('/cancelride', scheduledRideController.cancelride);
+userRoute.patch('/cancelride', scheduledRideController.cancelride);
 
 // HISTORY
 userRoute.get('/history', rideController.ridesHistory);
