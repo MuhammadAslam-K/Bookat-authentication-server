@@ -27,12 +27,4 @@ export default {
             throw new Error((error as Error).message)
         }
     },
-
-    getSingleDriver: async (driverId: ObjectId) => {
-        try {
-            return await DriverSchema.findById(driverId)
-        } catch (error) {
-            throw new Error((error as Error).message)
-        }
-    },
 }

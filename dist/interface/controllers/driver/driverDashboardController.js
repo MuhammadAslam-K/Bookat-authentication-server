@@ -12,5 +12,13 @@ exports.default = {
         catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    },
+    getAllCabs: async (req, res) => {
+        try {
+            res.json(await driverDashboardUseCase_1.default.listAllCabs());
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
 };

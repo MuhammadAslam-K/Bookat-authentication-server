@@ -5,11 +5,8 @@ dotenv.config();
 
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID
-// const accountSid = "AC27fb374a44e424ecfde5a06eaba2dcbe"
 const authToken = process.env.TWILIO_AUTH_TOKEN
-// const authToken = "c941a2b0397c6559b625376082388bbb"
 const verifySid = process.env.TWILIO_VERIFY_SID
-// const verifySid = "VA36b0a90b67572c230c2b3798c0e8048b"
 const client = twilio(accountSid, authToken)
 
 export default {

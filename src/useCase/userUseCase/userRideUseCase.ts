@@ -7,13 +7,15 @@ import rideRepositoryUpdateQuery from "../../repositorys/rideRepository/rideRepo
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
 import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery"
 import adminRepositoryUpdateQuery from "../../repositorys/admin/adminRepositoryUpdateQuery"
+import { handleError } from "../../infrastructure/common/errorHandling"
+import cabrepositoryGetQuery from "../../repositorys/cabRepository/cabrepositoryGetQuery"
 
 export default {
     getDriverById: async (driverId: ObjectId) => {
         try {
             return await driverRepositoryGetQuerys.findDriverWithId(driverId)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -27,13 +29,12 @@ export default {
             const feedBacks = [...feedBacksOfQuickRide, ...feedBacksOfScheduledRides]
             return { driverData, feedBacks }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
-    getRideDetails: async (rideId: ObjectId) => {
+    getRideDetails: async (rideId: string) => {
         try {
-            console.log("rideId", rideId)
             const result = await rideRepositoryGetQuery.findRideWithId(rideId)
             if (!result) {
                 const scheduledRide = await scheduleRideGetQuery.getScheduledRidesById(rideId)
@@ -46,7 +47,7 @@ export default {
                 return result
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -71,7 +72,7 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -83,7 +84,7 @@ export default {
             ])
             return { quickRides, scheduledRides }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -102,9 +103,17 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
+
+    getAllcabs: async () => {
+        try {
+            return cabrepositoryGetQuery.getAllTheCabs()
+        } catch (error) {
+            handleError(error as Error)
+        }
+    }
 }
 
 

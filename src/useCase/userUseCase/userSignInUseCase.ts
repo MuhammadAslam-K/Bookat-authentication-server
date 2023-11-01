@@ -1,7 +1,8 @@
 import { ObjectId } from "mongoose"
 import userRepository from "../../repositorys/userRepository/userRepositoryGetQuery"
-import bcryptPassword from "../../services/encryptionDecryption"
-import encryptionDecryption from "../../services/encryptionDecryption"
+import bcryptPassword from "../../infrastructure/common/encryptionDecryption"
+import encryptionDecryption from "../../infrastructure/common/encryptionDecryption"
+import { handleError } from "../../infrastructure/common/errorHandling"
 
 
 export default {
@@ -35,8 +36,7 @@ export default {
                 throw new Error("user doesn't exists please signUp")
             }
         } catch (error) {
-            console.log("error at signin", error)
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
     checkuserExists: async (email: string) => {
@@ -57,7 +57,7 @@ export default {
                 throw new Error("user doesn't exists please signUp")
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

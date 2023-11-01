@@ -5,32 +5,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/admin/adminRepositoryGetQuerys"));
 const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
-const nodeMailer_1 = __importDefault(require("../../services/nodeMailer"));
+const nodeMailer_1 = __importDefault(require("../../infrastructure/email/nodeMailer"));
 const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryGetQuery"));
 const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
+const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 exports.default = {
     getDrivers: async () => {
         try {
             return await adminRepositoryGetQuerys_1.default.getAllDriver();
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     blockDriver: async (driverId) => {
         try {
+            // const driverId = new mongoose.Types.ObjectId(driver);
             return await adminRepositoryUpdateQuery_1.default.blockDriver(driverId);
         }
         catch (error) {
-            throw new Error(error.message);
+            console.log(error);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getSingleDriver: async (driverId) => {
         try {
-            return await adminRepositoryGetQuerys_1.default.getSingleDriver(driverId);
+            return driverRepositoryGetQuerys_1.default.findDriverWithId(driverId);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     rejectDriverInfo: async (email, id, reason) => {
@@ -44,7 +48,7 @@ exports.default = {
             return await nodeMailer_1.default.sendEmail(data);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     rejectVehicleInfo: async (email, id, reason) => {
@@ -58,7 +62,7 @@ exports.default = {
             return await nodeMailer_1.default.sendEmail(data);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     approveDriverInfo: async (driverId, email) => {
@@ -73,7 +77,7 @@ exports.default = {
             return true;
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     approveVehicleInfo: async (driverId, email) => {
@@ -88,7 +92,7 @@ exports.default = {
             return true;
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getDriverRideHistory: async (driverId) => {
@@ -100,7 +104,7 @@ exports.default = {
             return { quickRides, scheduleRides };
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

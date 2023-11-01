@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const twilio_1 = __importDefault(require("../../../services/twilio"));
+const twilio_1 = __importDefault(require("../../../infrastructure/sms/twilio"));
 const passwordRest_1 = __importDefault(require("../../../useCase/userUseCase/passwordRest"));
 exports.default = {
     sendOtp: async (req, res) => {

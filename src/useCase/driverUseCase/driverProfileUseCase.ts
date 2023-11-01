@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose"
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
+import { handleError } from "../../infrastructure/common/errorHandling"
 
 export interface profileUpdate {
     name: string,
@@ -20,7 +21,7 @@ export default {
         try {
             return (await driverRepositoryGetQuerys.findDriverWithId(driverId))
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -28,7 +29,7 @@ export default {
         try {
             return (await driverRepositoryUpdateQuerys.updateDriverProfile(data, driverId))
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

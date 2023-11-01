@@ -5,13 +5,14 @@ import rideRepositoryGetQuery from '../../repositorys/rideRepository/rideReposit
 import driverRepositoryGetQuerys from '../../repositorys/driverRepository/driverRepositoryGetQuerys';
 import driverRepositoryUpdateQuerys from '../../repositorys/driverRepository/driverRepositoryUpdateQuerys';
 import scheduleRideGetQuery from '../../repositorys/scheduleRide/scheduleRideGetQuery';
+import { handleError } from '../../infrastructure/common/errorHandling';
 
 export default {
-    getUser: async (userId: ObjectId) => {
+    getUser: async (userId: string) => {
         try {
             return (await userRepositoryGetQuery.getUserWithId(userId))
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -25,7 +26,7 @@ export default {
             const driver = await driverRepositoryUpdateQuerys.changeTheRideStatus(response.driver_id)
             return response._id
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -37,7 +38,7 @@ export default {
             ])
             return { quickRides, scheduledRides }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -76,7 +77,7 @@ export default {
             return false;
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -95,7 +96,7 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

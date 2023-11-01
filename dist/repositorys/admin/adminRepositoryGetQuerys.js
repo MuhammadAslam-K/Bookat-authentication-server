@@ -31,12 +31,4 @@ exports.default = {
             throw new Error(error.message);
         }
     },
-    getSingleDriver: async (driverId) => {
-        try {
-            return await driverEntites_1.default.findById(driverId);
-        }
-        catch (error) {
-            throw new Error(error.message);
-        }
-    },
 };

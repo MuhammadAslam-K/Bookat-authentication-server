@@ -16,7 +16,8 @@ export default {
 
     blockUser: async (req: Request, res: Response) => {
         try {
-            res.json(await adminUserManagementUseCase.blockUser(req.body.id))
+            const userId = req.query.id as string;
+            res.json(await adminUserManagementUseCase.blockUser(userId))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }

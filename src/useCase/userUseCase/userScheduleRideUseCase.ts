@@ -4,6 +4,7 @@ import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGet
 import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery";
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys";
 import userRepositoryUpdateQuery from "../../repositorys/userRepository/userRepositoryUpdateQuery";
+import { handleError } from "../../infrastructure/common/errorHandling";
 
 export interface scheduleRideBookingData {
     vehicle: string;
@@ -25,23 +26,15 @@ export default {
         try {
             return await scheduleRideSaveQuery.saveNewRide(data, userId)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
-
-    // getScheduleRideHistory: async (userId: ObjectId) => {
-    //     try {
-    //         return await scheduleRideGetQuery.getScheduledRidesByUserId(userId)
-    //     } catch (error) {
-    //         throw new Error((error as Error).message)
-    //     }
-    // },
 
     getScheduledRideOfUser: async (userId: ObjectId) => {
         try {
             return await scheduleRideGetQuery.getPendingScheduledRidesWithUserId(userId)
         } catch (error) {
-            throw new Error((error as Error).message);
+            handleError(error as Error);
 
         }
     },
@@ -55,7 +48,7 @@ export default {
             ]);
             return true
         } catch (error) {
-            throw new Error((error as Error).message);
+            handleError(error as Error);
         }
     }
 }

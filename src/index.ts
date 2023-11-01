@@ -9,7 +9,7 @@ import connect from './config/mongoDB';
 import jwtTokenAuth from './middlewares/jwtTokenAuth';
 import http from 'http'
 
-import { setUpSocketIO } from './services/socket-io';
+import { setUpSocketIO } from './infrastructure/socket/socket-io';
 
 dotenv.config();
 

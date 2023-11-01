@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import { ObjectId } from "mongodb"
 import UserSchema from '../../entites/userEntites';
 import DriverSchema from '../../entites/driverEntites';
 import AdminSchema from '../../entites/adminEntites';
@@ -6,7 +6,7 @@ import AdminSchema from '../../entites/adminEntites';
 
 
 export default {
-    blockUser: async (userId: ObjectId) => {
+    blockUser: async (userId: string) => {
         try {
             const user = await UserSchema.findById(userId)
             if (user) {
@@ -18,7 +18,7 @@ export default {
         }
     },
 
-    blockDriver: async (driverId: ObjectId) => {
+    blockDriver: async (driverId: string) => {
         try {
             const driver = await DriverSchema.findById(driverId)
             if (driver) {

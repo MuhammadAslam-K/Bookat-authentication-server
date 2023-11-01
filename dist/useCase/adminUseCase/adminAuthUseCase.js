@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
+const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/admin/adminRepositoryGetQuerys"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     signIn: async (data) => {
         try {
@@ -17,7 +18,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

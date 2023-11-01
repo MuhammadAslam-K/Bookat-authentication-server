@@ -21,7 +21,8 @@ exports.default = {
     },
     getRideData: async (req, res) => {
         try {
-            res.json(await userRideUseCase_1.default.getRideDetails(req.body.rideId));
+            const rideId = req.query.id;
+            res.json(await userRideUseCase_1.default.getRideDetails(rideId));
         }
         catch (error) {
             res.status(500).json({ error: error.message });

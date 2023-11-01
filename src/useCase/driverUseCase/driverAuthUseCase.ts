@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-import bcryptPassword from "../../services/encryptionDecryption";
+import bcryptPassword from "../../infrastructure/common/encryptionDecryption";
 import { refferalCode } from "../../utils/refrelCode";
 import { signupData } from "../userUseCase/userRegistrationUseCase"
 import { walletDetails } from "../userUseCase/userRegistrationUseCase";
@@ -7,7 +7,8 @@ import { walletDetails } from "../userUseCase/userRegistrationUseCase";
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys";
 import driverRepositorySaveQuerys from "../../repositorys/driverRepository/driverRepositorySaveQuerys";
-import encryptionDecryption from "../../services/encryptionDecryption";
+import encryptionDecryption from "../../infrastructure/common/encryptionDecryption";
+import { handleError } from "../../infrastructure/common/errorHandling";
 
 
 export default {
@@ -48,7 +49,7 @@ export default {
             }
         }
         catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -93,7 +94,7 @@ export default {
                 throw new Error("please create an account")
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -115,7 +116,7 @@ export default {
                 }
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

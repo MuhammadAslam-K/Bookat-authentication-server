@@ -3,12 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
+const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const refrelCode_1 = require("../../utils/refrelCode");
 const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 const driverRepositorySaveQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositorySaveQuerys"));
-const encryptionDecryption_2 = __importDefault(require("../../services/encryptionDecryption"));
+const encryptionDecryption_2 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     signup: async (data) => {
         try {
@@ -43,7 +44,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     login: async (data) => {
@@ -80,7 +81,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     checkDriverExists: async (data) => {
@@ -100,7 +101,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

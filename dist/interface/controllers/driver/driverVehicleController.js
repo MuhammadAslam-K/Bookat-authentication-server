@@ -15,7 +15,7 @@ exports.default = {
     },
     updateVehicleInfo: async (req, res) => {
         try {
-            res.json(await vehicleUsecase_1.default.updateVehicleInfo(req.token.data, req.body));
+            res.json(await vehicleUsecase_1.default.updateVehicleInfo(req.token.data, req.token.data, req.body));
         }
         catch (error) {
             res.status(500).json({ error: error.message });

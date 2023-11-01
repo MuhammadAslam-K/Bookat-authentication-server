@@ -1,6 +1,8 @@
 import { Schema } from "mongoose";
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys";
+import { handleError } from "../../infrastructure/common/errorHandling";
+import cabRepositoryUpdateQuery from "../../repositorys/cabRepository/cabRepositoryUpdateQuery";
 
 export interface driverInfo {
     aadharId: string,
@@ -42,7 +44,7 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -50,7 +52,10 @@ export default {
         try {
             const rcExists = await driverRepositoryGetQuerys.findVehicleWithRcNo(data.registrationId)
             if (!rcExists) {
-                return await driverRepositoryUpdateQuerys.updateVehicleInfo(data, driverId)
+                await Promise.all([
+                    cabRepositoryUpdateQuery.updateCabArray(data.vehicleType, driverId),
+                    driverRepositoryUpdateQuerys.updateVehicleInfo(data, driverId)
+                ])
 
             }
             else {
@@ -58,7 +63,7 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 

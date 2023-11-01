@@ -4,22 +4,15 @@ import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driver
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
 import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery"
 import { error } from "console"
+import { handleError } from "../../infrastructure/common/errorHandling"
 
 export default {
-
-    // getScheduledRideHistoryByDriverId: async (driverId: ObjectId) => {
-    //     try {
-    //         return await scheduleRideGetQuery.getScheduledRidesByDriverId(driverId)
-    //     } catch (error) {
-    //         throw new Error((error as Error).message)
-    //     }
-    // },
 
     getNotApprovedScheduleRides: async () => {
         try {
             return await scheduleRideGetQuery.getNotApprovedScheduleRides()
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -73,7 +66,7 @@ export default {
                 await scheduleRideUpdateQuery.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude);
             }
         } catch (error) {
-            throw new Error((error as Error).message);
+            handleError(error as Error);
         }
     },
 
@@ -81,8 +74,7 @@ export default {
         try {
             return await scheduleRideGetQuery.findPendingScheduledRidesWithDriverId(driverId)
         } catch (error) {
-            throw new Error((error as Error).message);
-
+            handleError(error as Error);
         }
     },
 
@@ -93,8 +85,7 @@ export default {
                 driverRepositoryUpdateQuerys.changeTheRideStatus(driverId)
             ]);
         } catch (error) {
-            throw new Error((error as Error).message);
-
+            handleError(error as Error);
         }
     }
 
