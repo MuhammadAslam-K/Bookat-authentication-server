@@ -30,5 +30,19 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message)
         }
-    }
+    },
+
+    updateFavouriteRide: async (rideId: string) => {
+        try {
+            const ride = await RideSchema.findById(rideId)
+            if (ride) {
+                ride.favourite = !ride.favourite
+                await ride.save()
+                return true
+            }
+            return false
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
 }

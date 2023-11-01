@@ -34,7 +34,7 @@ driver_router.get("/currentRide", driverRideController_1.default.currentRide);
 driver_router.get("/scheduleRidePending", driverScheduledRideController_1.default.schedulePendingRides);
 driver_router.get("/scheduleRideNotification", driverScheduledRideController_1.default.getScheduleRideNotification);
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController_1.default.confirmScheduledRide);
-driver_router.post("/startScheduledRide", driverScheduledRideController_1.default.startScheduledRide);
+driver_router.patch("/startScheduledRide", driverScheduledRideController_1.default.startScheduledRide);
 driver_router.post("/rideOtpVerify", driverNotificationController_1.default.verifyOTP);
 // DASHBOARD
 driver_router.get("/dashboard", driverDashboardController_1.default.dashboard);

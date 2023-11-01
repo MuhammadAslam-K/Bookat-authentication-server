@@ -37,7 +37,8 @@ export default {
 
     startScheduledRide: async (req: Request, res: Response) => {
         try {
-            res.json(await driverScheduledRideUseCase.startScheduledRide(req.body.rideId, req.token.data))
+            const rideId = req.query.id as string
+            res.json(await driverScheduledRideUseCase.startScheduledRide(rideId, req.token.data))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }

@@ -37,6 +37,9 @@ userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRid
 userRoute.post('/cancelride', scheduledRideController_1.default.cancelride);
 // HISTORY
 userRoute.get('/history', rideController_1.default.ridesHistory);
+userRoute.patch('/favourite', rideController_1.default.favouriteRide);
+userRoute.get('/favourite/quickRide', rideController_1.default.getQuickRideInfo);
+userRoute.post('/favourite/reScheduleRide', scheduledRideController_1.default.reScheduleTheRide);
 // CAB
 userRoute.get("/getCabs", userHomeController_1.default.getAllCabDetails);
 exports.default = userRoute;

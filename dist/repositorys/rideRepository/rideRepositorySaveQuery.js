@@ -26,6 +26,7 @@ exports.default = {
                 },
                 distance: data.rideDistance,
                 price: data.amount,
+                vehicleType: data.userVehicleType,
             });
             return await newRide.save();
         }

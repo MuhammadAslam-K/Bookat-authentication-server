@@ -67,6 +67,9 @@ const rideSchema = new mongoose_1.Schema({
     price: {
         type: Number,
     },
+    vehicleType: {
+        type: String,
+    },
     adminRevenu: {
         type: Number
     },
@@ -84,6 +87,10 @@ const rideSchema = new mongoose_1.Schema({
     status: {
         type: String,
         default: "Started"
+    },
+    favourite: {
+        type: Boolean,
+        default: false
     },
     feedback: {
         type: String

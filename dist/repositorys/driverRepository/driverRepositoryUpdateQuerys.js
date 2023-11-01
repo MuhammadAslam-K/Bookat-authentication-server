@@ -115,6 +115,7 @@ exports.default = {
                         rideId: rideId,
                     },
                 },
+                isRiding: false,
             }, { new: true });
         }
         catch (error) {

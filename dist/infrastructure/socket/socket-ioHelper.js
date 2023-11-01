@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.calculateDistance = void 0;
 const calculateDistance = (userLatitude, userLongitude, userVehicle, driverLatitude, driverLongitude, driverVehicle) => {
-    if (userVehicle == driverVehicle) {
+    if (userVehicle === driverVehicle) {
         const deg2rad = (deg) => deg * (Math.PI / 180);
         driverLatitude = deg2rad(driverLatitude);
         driverLongitude = deg2rad(driverLongitude);
@@ -16,6 +16,6 @@ const calculateDistance = (userLatitude, userLongitude, userVehicle, driverLatit
         const distance = radius * c;
         return distance;
     }
-    return -1;
+    return false;
 };
 exports.calculateDistance = calculateDistance;

@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose"
 import ScheduleRideSchema from "../../entites/scheduledRideEntites"
 
 export default {
-    driverAcceptedRide: async (driverId: ObjectId, rideId: ObjectId, latitude: string, longitude: string) => {
+    driverAcceptedRide: async (driverId: ObjectId, rideId: string, latitude: string, longitude: string) => {
         try {
             await ScheduleRideSchema.findByIdAndUpdate(
                 rideId,
@@ -33,7 +33,7 @@ export default {
         }
     },
 
-    startRide: async (rideId: ObjectId) => {
+    startRide: async (rideId: string) => {
         try {
             return await ScheduleRideSchema.findByIdAndUpdate(
                 rideId,
@@ -74,5 +74,19 @@ export default {
         } catch (error) {
             throw new Error((error as Error).message);
         }
-    }
+    },
+
+    updateFavouriteRide: async (rideId: string) => {
+        try {
+            const ride = await ScheduleRideSchema.findById(rideId)
+            if (ride) {
+                ride.favourite = !ride.favourite
+                await ride.save()
+                return true
+            }
+            return false
+        } catch (error) {
+            throw new Error((error as Error).message)
+        }
+    },
 }

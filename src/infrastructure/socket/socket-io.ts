@@ -87,14 +87,16 @@ export const setUpSocketIO = (): void => {
             );
 
             console.log("distance user and driver vehicle type :", distance, userVehicleType, driverVehicleType)
-            if (distance >= -2 && !processedDriverIds.has(driverId)) {
-                const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount }
-                console.log("driver push data :", data)
-                const available = await driverRideUseCase.checkAvailableDrivers(driverId, parseInt(rideDuration))
-                console.log("available for ride", available)
-                if (available) {
-                    nearbyDriver.push(data)
-                    processedDriverIds.add(driverId)
+            if (distance) {
+                if (distance >= -2 && !processedDriverIds.has(driverId)) {
+                    const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount }
+                    console.log("driver push data :", data)
+                    const available = await driverRideUseCase.checkAvailableDrivers(driverId, parseInt(rideDuration))
+                    console.log("available for ride", available)
+                    if (available) {
+                        nearbyDriver.push(data)
+                        processedDriverIds.add(driverId)
+                    }
                 }
             }
         });
@@ -129,6 +131,7 @@ export const setUpSocketIO = (): void => {
                 driverLatitude,
                 driverLongitude,
                 rideDistance,
+                userVehicleType,
                 amount,
                 userId,
                 driverId

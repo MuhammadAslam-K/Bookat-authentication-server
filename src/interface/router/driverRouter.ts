@@ -39,7 +39,7 @@ driver_router.get("/scheduleRidePending", driverScheduledRideController.schedule
 driver_router.get("/scheduleRideNotification", driverScheduledRideController.getScheduleRideNotification)
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController.confirmScheduledRide)
 
-driver_router.post("/startScheduledRide", driverScheduledRideController.startScheduledRide)
+driver_router.patch("/startScheduledRide", driverScheduledRideController.startScheduledRide)
 
 driver_router.post("/rideOtpVerify", driverNotificationController.verifyOTP)
 

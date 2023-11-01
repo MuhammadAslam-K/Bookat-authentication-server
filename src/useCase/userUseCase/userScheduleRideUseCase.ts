@@ -50,5 +50,18 @@ export default {
         } catch (error) {
             handleError(error as Error);
         }
+    },
+
+    reScheduleRideWithRideId: async (data: { rideId: string; selectedDateTime: string }) => {
+        try {
+            const result = await scheduleRideGetQuery.getScheduledRidesById(data.rideId)
+            if (result) {
+                result.pickUpDate = data.selectedDateTime
+                await scheduleRideSaveQuery.rescheduleTheRide(result)
+                return true
+            }
+        } catch (error) {
+            handleError(error as Error)
+        }
     }
 }

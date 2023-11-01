@@ -82,7 +82,11 @@ export default {
                 rideRepositoryGetQuery.getRideWithUserId(userId),
                 scheduleRideGetQuery.getScheduledRidesByUserId(userId)
             ])
-            return { quickRides, scheduledRides }
+            const favoriteQuickRides = quickRides.filter(ride => ride.favourite === true);
+            const favoritescheduledRides = scheduledRides.filter(ride => ride.favourite === true);
+            const favouriteRides = [...favoriteQuickRides, ...favoritescheduledRides]
+
+            return { quickRides, scheduledRides, favouriteRides }
         } catch (error) {
             handleError(error as Error)
         }
@@ -110,6 +114,30 @@ export default {
     getAllcabs: async () => {
         try {
             return cabrepositoryGetQuery.getAllTheCabs()
+        } catch (error) {
+            handleError(error as Error)
+        }
+    },
+
+    addFavouriteRide: async (rideId: string) => {
+        try {
+            const response = await rideRepositoryUpdateQuery.updateFavouriteRide(rideId)
+            if (!response) {
+                const scheduleRide = await scheduleRideUpdateQuery.updateFavouriteRide(rideId)
+            }
+            return true
+        } catch (error) {
+            handleError(error as Error)
+        }
+    },
+
+    getRideInfoWithID: async (rideId: string) => {
+        try {
+            const response = await rideRepositoryGetQuery.findRideWithId(rideId)
+            if (!response) {
+                return await scheduleRideGetQuery.getScheduledRidesById(rideId)
+            }
+            return response
         } catch (error) {
             handleError(error as Error)
         }
