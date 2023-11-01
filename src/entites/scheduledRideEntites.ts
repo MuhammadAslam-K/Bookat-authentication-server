@@ -74,6 +74,10 @@ const scheduleRideSchema: Schema = new Schema({
         type: Boolean,
         default: false,
     },
+    favourite: {
+        type: Boolean,
+        default: false
+    },
     status: {
         type: String,
         default: "Pending"

@@ -13,6 +13,7 @@ export interface rideData {
     driverLatitude: any;
     driverLongitude: any;
     rideDistance: any;
+    userVehicleType: string
     amount: any
 }
 
@@ -38,6 +39,7 @@ export default {
                 },
                 distance: data.rideDistance,
                 price: data.amount,
+                vehicleType: data.userVehicleType,
 
             })
             return await newRide.save()

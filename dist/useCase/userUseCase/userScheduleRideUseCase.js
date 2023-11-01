@@ -38,5 +38,18 @@ exports.default = {
         catch (error) {
             (0, errorHandling_1.handleError)(error);
         }
+    },
+    reScheduleRideWithRideId: async (data) => {
+        try {
+            const result = await scheduleRideGetQuery_1.default.getScheduledRidesById(data.rideId);
+            if (result) {
+                result.pickUpDate = data.selectedDateTime;
+                await scheduleRideSaveQuery_1.default.rescheduleTheRide(result);
+                return true;
+            }
+        }
+        catch (error) {
+            (0, errorHandling_1.handleError)(error);
+        }
     }
 };

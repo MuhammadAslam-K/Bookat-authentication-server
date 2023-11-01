@@ -52,4 +52,22 @@ exports.default = {
             res.status(500).json({ error: error.message });
         }
     },
+    favouriteRide: async (req, res) => {
+        try {
+            const rideId = req.query.id;
+            res.json(await userRideUseCase_1.default.addFavouriteRide(rideId));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    getQuickRideInfo: async (req, res) => {
+        try {
+            const rideId = req.query.id;
+            res.json(await userRideUseCase_1.default.getRideInfoWithID(rideId));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 };

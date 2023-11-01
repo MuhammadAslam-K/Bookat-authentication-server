@@ -94,6 +94,10 @@ const scheduleRideSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    favourite: {
+        type: Boolean,
+        default: false
+    },
     status: {
         type: String,
         default: "Pending"

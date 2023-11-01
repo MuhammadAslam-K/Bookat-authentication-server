@@ -139,6 +139,7 @@ export default {
                             rideId: rideId,
                         },
                     },
+                    isRiding: false,
                 },
                 { new: true }
             )
@@ -161,7 +162,7 @@ export default {
         }
     },
 
-    addScheduledRide: async (rideId: ObjectId, newRidePickupDate: Date, duration: string, driverId: ObjectId) => {
+    addScheduledRide: async (rideId: string, newRidePickupDate: Date, duration: string, driverId: ObjectId) => {
         try {
             const newScheduledRide = {
                 rideId: rideId,

@@ -63,14 +63,16 @@ const setUpSocketIO = () => {
             driverVehicleType = data.vehicleType;
             const distance = (0, socket_ioHelper_1.calculateDistance)(parseFloat(userLat), parseFloat(userLon), userVehicleType, parseFloat(driverLatitude), parseFloat(driverLongitude), driverVehicleType);
             console.log("distance user and driver vehicle type :", distance, userVehicleType, driverVehicleType);
-            if (distance >= -2 && !processedDriverIds.has(driverId)) {
-                const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount };
-                console.log("driver push data :", data);
-                const available = await driverRideUseCase_1.default.checkAvailableDrivers(driverId, parseInt(rideDuration));
-                console.log("available for ride", available);
-                if (available) {
-                    nearbyDriver.push(data);
-                    processedDriverIds.add(driverId);
+            if (distance) {
+                if (distance >= -2 && !processedDriverIds.has(driverId)) {
+                    const data = { distance, driverId, userId, rideDistance, userFromLocation, userToLocation, amount };
+                    console.log("driver push data :", data);
+                    const available = await driverRideUseCase_1.default.checkAvailableDrivers(driverId, parseInt(rideDuration));
+                    console.log("available for ride", available);
+                    if (available) {
+                        nearbyDriver.push(data);
+                        processedDriverIds.add(driverId);
+                    }
                 }
             }
         });
@@ -101,6 +103,7 @@ const setUpSocketIO = () => {
                 driverLatitude,
                 driverLongitude,
                 rideDistance,
+                userVehicleType,
                 amount,
                 userId,
                 driverId

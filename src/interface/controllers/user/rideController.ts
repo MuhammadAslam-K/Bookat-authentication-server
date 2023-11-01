@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import userRideUseCase from "../../../useCase/userUseCase/userRideUseCase"
 import { ObjectId } from "mongoose"
 import mongoose from "mongoose";
+import { handleError } from "../../../infrastructure/common/errorHandling";
 
 export default {
     getDriverDetails: async (req: Request, res: Response) => {
@@ -49,5 +50,23 @@ export default {
             res.status(500).json({ error: (error as Error).message })
         }
     },
+
+    favouriteRide: async (req: Request, res: Response) => {
+        try {
+            const rideId = req.query.id as string
+            res.json(await userRideUseCase.addFavouriteRide(rideId))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
+
+    getQuickRideInfo: async (req: Request, res: Response) => {
+        try {
+            const rideId = req.query.id as string
+            res.json(await userRideUseCase.getRideInfoWithID(rideId))
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    }
 
 }

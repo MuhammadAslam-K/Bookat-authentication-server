@@ -48,6 +48,10 @@ userRoute.post('/cancelride', scheduledRideController.cancelride);
 
 // HISTORY
 userRoute.get('/history', rideController.ridesHistory);
+userRoute.patch('/favourite', rideController.favouriteRide);
+
+userRoute.get('/favourite/quickRide', rideController.getQuickRideInfo);
+userRoute.post('/favourite/reScheduleRide', scheduledRideController.reScheduleTheRide);
 
 // CAB
 userRoute.get("/getCabs", userHomeController.getAllCabDetails)

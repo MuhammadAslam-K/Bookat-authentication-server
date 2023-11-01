@@ -17,7 +17,7 @@ export default {
     },
 
 
-    driverAcceptScheduledRide: async (data: { rideId: ObjectId, latitude: string, longitude: string }, driverId: ObjectId) => {
+    driverAcceptScheduledRide: async (data: { rideId: string, latitude: string, longitude: string }, driverId: ObjectId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
                 scheduleRideGetQuery.getScheduledRidesById(data.rideId),
@@ -78,7 +78,7 @@ export default {
         }
     },
 
-    startScheduledRide: async (rideId: ObjectId, driverId: ObjectId) => {
+    startScheduledRide: async (rideId: string, driverId: ObjectId) => {
         try {
             return await Promise.all([
                 scheduleRideUpdateQuery.startRide(rideId),

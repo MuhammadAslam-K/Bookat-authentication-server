@@ -87,7 +87,10 @@ exports.default = {
                 rideRepositoryGetQuery_1.default.getRideWithUserId(userId),
                 scheduleRideGetQuery_1.default.getScheduledRidesByUserId(userId)
             ]);
-            return { quickRides, scheduledRides };
+            const favoriteQuickRides = quickRides.filter(ride => ride.favourite === true);
+            const favoritescheduledRides = scheduledRides.filter(ride => ride.favourite === true);
+            const favouriteRides = [...favoriteQuickRides, ...favoritescheduledRides];
+            return { quickRides, scheduledRides, favouriteRides };
         }
         catch (error) {
             (0, errorHandling_1.handleError)(error);
@@ -116,6 +119,30 @@ exports.default = {
     getAllcabs: async () => {
         try {
             return cabrepositoryGetQuery_1.default.getAllTheCabs();
+        }
+        catch (error) {
+            (0, errorHandling_1.handleError)(error);
+        }
+    },
+    addFavouriteRide: async (rideId) => {
+        try {
+            const response = await rideRepositoryUpdateQuery_1.default.updateFavouriteRide(rideId);
+            if (!response) {
+                const scheduleRide = await scheduleRideUpdateQuery_1.default.updateFavouriteRide(rideId);
+            }
+            return true;
+        }
+        catch (error) {
+            (0, errorHandling_1.handleError)(error);
+        }
+    },
+    getRideInfoWithID: async (rideId) => {
+        try {
+            const response = await rideRepositoryGetQuery_1.default.findRideWithId(rideId);
+            if (!response) {
+                return await scheduleRideGetQuery_1.default.getScheduledRidesById(rideId);
+            }
+            return response;
         }
         catch (error) {
             (0, errorHandling_1.handleError)(error);

@@ -56,5 +56,19 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
-    }
+    },
+    updateFavouriteRide: async (rideId) => {
+        try {
+            const ride = await scheduledRideEntites_1.default.findById(rideId);
+            if (ride) {
+                ride.favourite = !ride.favourite;
+                await ride.save();
+                return true;
+            }
+            return false;
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    },
 };

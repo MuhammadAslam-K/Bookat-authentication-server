@@ -28,5 +28,13 @@ exports.default = {
         catch (error) {
             res.status(500).json({ error: error.message });
         }
+    },
+    reScheduleTheRide: async (req, res) => {
+        try {
+            res.json(await userScheduleRideUseCase_1.default.reScheduleRideWithRideId(req.body));
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     }
 };

@@ -17,7 +17,7 @@ export const calculateDistance = (
 
 ) => {
 
-    if (userVehicle == driverVehicle) {
+    if (userVehicle === driverVehicle) {
         const deg2rad = (deg: any) => deg * (Math.PI / 180);
         driverLatitude = deg2rad(driverLatitude);
         driverLongitude = deg2rad(driverLongitude);
@@ -35,5 +35,5 @@ export const calculateDistance = (
         const distance = radius * c;
         return distance
     }
-    return -1
+    return false
 };
