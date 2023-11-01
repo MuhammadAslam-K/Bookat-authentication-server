@@ -1,7 +1,8 @@
-import twilio from "../../services/twilio";
+import twilio from "../../infrastructure/sms/twilio";
 import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery";
 import rideRepositoryUpdateQuery from "../../repositorys/rideRepository/rideRepositoryUpdateQuery";
 import { ObjectId } from "mongoose";
+import { handleError } from "../../infrastructure/common/errorHandling";
 
 export default {
     verifyotp: async (data: { otp: string, mobile: string, rideId: ObjectId }) => {
@@ -17,7 +18,7 @@ export default {
                 }
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

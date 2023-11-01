@@ -1,25 +1,44 @@
 import { vehicleInfo } from './driverRegistrationUsecase';
-import { ObjectId } from "mongoose";
+import { Types, ObjectId, Schema } from "mongoose";
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys";
 import driverRepositoryUpdateQuerys from '../../repositorys/driverRepository/driverRepositoryUpdateQuerys';
-
-
-
+import { handleError } from '../../infrastructure/common/errorHandling';
+import cabrepositoryGetQuery from '../../repositorys/cabRepository/cabrepositoryGetQuery';
+import cabRepositoryUpdateQuery from '../../repositorys/cabRepository/cabRepositoryUpdateQuery';
 
 export default {
     getVehicleInfo: async (driverId: ObjectId) => {
         try {
-            return await driverRepositoryGetQuerys.getVehicleInfoWithDriverId(driverId)
+            const [cabs, vehicle] = await Promise.all([
+                cabrepositoryGetQuery.getAllTheCabs(),
+                driverRepositoryGetQuerys.getVehicleInfoWithDriverId(driverId)
+            ])
+            return { cabs, vehicle }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
-    updateVehicleInfo: async (driverId: ObjectId, data: vehicleInfo) => {
+    updateVehicleInfo: async (driverId: ObjectId, driverIdString1: string, data: vehicleInfo) => {
         try {
-            return await driverRepositoryUpdateQuerys.updateVehicleInfo(data, driverId)
+
+            const response = await driverRepositoryGetQuerys.findDriverWithId(driverId);
+            if (response) {
+                const existingVehicleType = response.vehicleDocuments.vehicleType;
+
+                if (existingVehicleType != data.vehicleType) {
+
+                    await Promise.all([
+                        cabRepositoryUpdateQuery.updateCabArray(data.vehicleType, driverId),
+                        cabRepositoryUpdateQuery.removeDriverId(existingVehicleType, driverId)
+                    ]);
+                }
+            }
+            return await driverRepositoryUpdateQuerys.updateVehicleInfo(data, driverId);
         } catch (error) {
-            throw new Error((error as Error).message)
+
+            console.log(error)
+            handleError(error as Error)
         }
     }
 }

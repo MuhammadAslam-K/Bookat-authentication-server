@@ -4,7 +4,7 @@ import UserSchema from "../../entites/userEntites"
 
 
 const userRepositoryGetQuery = {
-    getUserWithId: async (userId: ObjectId) => {
+    getUserWithId: async (userId: string) => {
         try {
             return await UserSchema.findById(userId);
         } catch (error) {

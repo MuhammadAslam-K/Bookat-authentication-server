@@ -10,6 +10,7 @@ const userNotificationController_1 = __importDefault(require("../controllers/use
 const userProfileController_1 = __importDefault(require("../controllers/user/userProfileController"));
 const rideController_1 = __importDefault(require("../controllers/user/rideController"));
 const scheduledRideController_1 = __importDefault(require("../controllers/user/scheduledRideController"));
+const userHomeController_1 = __importDefault(require("../controllers/user/userHomeController"));
 const userRoute = express_1.default.Router();
 // AUTH
 userRoute.post("/signup", userRegisterController_1.default.signup);
@@ -26,14 +27,16 @@ userRoute.get("/profile", userProfileController_1.default.getProfile);
 userRoute.post("/update/profile", userProfileController_1.default.updateProfile);
 // RIDE
 userRoute.get('/details/driver', rideController_1.default.getDriverDetails);
-userRoute.post('/getridedata', rideController_1.default.getRideData);
+userRoute.patch('/getridedata', rideController_1.default.getRideData);
 userRoute.post('/payment', rideController_1.default.payment);
 userRoute.get('/currentRide', rideController_1.default.currentRide);
 // SCHEDULED RIDES
 userRoute.get('/scheduledRides', scheduledRideController_1.default.scheduledRides);
 userRoute.post('/scheduleTheRide', scheduledRideController_1.default.scheduleRide);
 // CANCELLATION
-userRoute.patch('/cancelride', scheduledRideController_1.default.cancelride);
+userRoute.post('/cancelride', scheduledRideController_1.default.cancelride);
 // HISTORY
 userRoute.get('/history', rideController_1.default.ridesHistory);
+// CAB
+userRoute.get("/getCabs", userHomeController_1.default.getAllCabDetails);
 exports.default = userRoute;

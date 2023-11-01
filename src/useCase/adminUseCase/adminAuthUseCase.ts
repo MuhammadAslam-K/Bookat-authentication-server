@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose"
-import encryptionDecryption from "../../services/encryptionDecryption"
+import encryptionDecryption from "../../infrastructure/common/encryptionDecryption"
 import adminRepositoryGetQuerys from "../../repositorys/admin/adminRepositoryGetQuerys"
+import { handleError } from "../../infrastructure/common/errorHandling"
 
 export default {
     signIn: async (data: { email: string, password: string }) => {
@@ -13,7 +14,7 @@ export default {
                 throw new Error("Unautherised access")
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

@@ -3,10 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
-const nodeMailer_1 = __importDefault(require("../../services/nodeMailer"));
+const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
+const nodeMailer_1 = __importDefault(require("../../infrastructure/email/nodeMailer"));
 exports.default = {
     sendRestPasswordLink: async (email) => {
         try {
@@ -28,7 +29,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     resetPassword: async (data) => {
@@ -38,7 +39,7 @@ exports.default = {
             return driverRepositoryUpdateQuerys_1.default.updatePassword(decryptedEmail.payload, hashedPassword);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

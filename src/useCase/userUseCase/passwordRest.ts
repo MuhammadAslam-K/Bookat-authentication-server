@@ -1,7 +1,8 @@
+import { handleError } from "../../infrastructure/common/errorHandling"
 import userRepositoryGetQuery from "../../repositorys/userRepository/userRepositoryGetQuery"
 import userRepositoryUpdateQuery from "../../repositorys/userRepository/userRepositoryUpdateQuery"
-import encryptionDecryption from "../../services/encryptionDecryption"
-import nodeMailer from "../../services/nodeMailer"
+import encryptionDecryption from "../../infrastructure/common/encryptionDecryption"
+import nodeMailer from "../../infrastructure/email/nodeMailer"
 
 export default {
     sendRestPasswordLink: async (email: string) => {
@@ -27,7 +28,7 @@ export default {
                 throw new Error("Email does not Exists")
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -39,7 +40,7 @@ export default {
             return userRepositoryUpdateQuery.updatePassword(decryptedEmail.payload, hashedPassword)
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

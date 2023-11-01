@@ -4,7 +4,8 @@ import driverRideUseCase from "../../../useCase/driverUseCase/driverRideUseCase"
 export default {
     getUserWithId: async (req: Request, res: Response) => {
         try {
-            res.json(await driverRideUseCase.getUser(req.body.id))
+            const userId = req.query.id as string
+            res.json(await driverRideUseCase.getUser(userId))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }

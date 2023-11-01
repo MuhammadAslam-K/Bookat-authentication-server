@@ -1,3 +1,4 @@
+import { handleError } from "../../infrastructure/common/errorHandling";
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys";
 import rideRepositoryGetQuery from "../../repositorys/rideRepository/rideRepositoryGetQuery";
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery";
@@ -30,7 +31,7 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message);
+            handleError(error as Error)
 
         }
     }

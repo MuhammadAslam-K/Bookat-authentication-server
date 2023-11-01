@@ -13,7 +13,8 @@ export default {
 
     blockDriver: async (req: Request, res: Response) => {
         try {
-            res.json(await adminDriverManagementUsecase.blockDriver(req.body.id))
+            const driverId = req.query.id as string
+            res.json(await adminDriverManagementUsecase.blockDriver(driverId))
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
@@ -21,7 +22,9 @@ export default {
 
     getSingleDriver: async (req: Request, res: Response) => {
         try {
-            res.json(await adminDriverManagementUsecase.getSingleDriver(req.body.id))
+            if (typeof (req.query.id) === 'string') {
+                res.json(await adminDriverManagementUsecase.getSingleDriver(req.query.id))
+            }
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }

@@ -9,5 +9,13 @@ export default {
         } catch (error) {
             res.status(500).json({ error: (error as Error).message })
         }
-    }
+    },
+
+    getAllCabs: async (req: Request, res: Response) => {
+        try {
+            res.json(await driverDashboardUseCase.listAllCabs())
+        } catch (error) {
+            res.status(500).json({ error: (error as Error).message })
+        }
+    },
 }

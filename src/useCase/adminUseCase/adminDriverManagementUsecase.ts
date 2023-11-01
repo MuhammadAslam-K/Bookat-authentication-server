@@ -1,33 +1,38 @@
-import { ObjectId } from "mongoose"
+import mongoose from "mongoose"
+import { ObjectId } from "mongodb"
 import adminRepositoryGetQuerys from "../../repositorys/admin/adminRepositoryGetQuerys"
 import adminRepositoryUpdateQuery from "../../repositorys/admin/adminRepositoryUpdateQuery"
-import nodeMailer from "../../services/nodeMailer"
+import nodeMailer from "../../infrastructure/email/nodeMailer"
 import rideRepositoryGetQuery from "../../repositorys/rideRepository/rideRepositoryGetQuery"
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
+import { handleError } from "../../infrastructure/common/errorHandling"
+import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
 
 export default {
     getDrivers: async () => {
         try {
             return await adminRepositoryGetQuerys.getAllDriver()
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
-    blockDriver: async (driverId: ObjectId) => {
+    blockDriver: async (driverId: string) => {
         try {
+            // const driverId = new mongoose.Types.ObjectId(driver);
             return await adminRepositoryUpdateQuery.blockDriver(driverId)
         } catch (error) {
-            throw new Error((error as Error).message)
+            console.log(error)
+            handleError(error as Error)
         }
     },
 
-    getSingleDriver: async (driverId: ObjectId) => {
+    getSingleDriver: async (driverId: string) => {
         try {
-            return await adminRepositoryGetQuerys.getSingleDriver(driverId)
+            return driverRepositoryGetQuerys.findDriverWithId(driverId)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -42,7 +47,7 @@ export default {
 
             return await nodeMailer.sendEmail(data)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -56,7 +61,7 @@ export default {
             }
             return await nodeMailer.sendEmail(data)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -71,7 +76,7 @@ export default {
             await adminRepositoryUpdateQuery.approveDriverInfo(driverId)
             return true
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -86,7 +91,7 @@ export default {
             await adminRepositoryUpdateQuery.approveVehicleInfo(driverId)
             return true
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -99,7 +104,7 @@ export default {
             ])
             return { quickRides, scheduleRides }
         } catch (error) {
-            throw new Error((error as Error).message);
+            handleError(error as Error);
 
         }
     }

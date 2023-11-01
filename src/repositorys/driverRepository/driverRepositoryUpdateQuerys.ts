@@ -47,7 +47,7 @@ export default {
         }
     },
 
-    updateVehicleInfo: async (data: vehicleInfo, driverId: ObjectId) => {
+    updateVehicleInfo: async (data: vehicleInfo, driverId: ObjectId | string) => {
         try {
             return await DriverSchema.findByIdAndUpdate(
                 driverId,
@@ -67,6 +67,7 @@ export default {
                 { new: true }
             )
         } catch (error) {
+            console.log(error)
             throw new Error((error as Error).message)
         }
     },

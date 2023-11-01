@@ -1,7 +1,8 @@
+import { handleError } from "../../infrastructure/common/errorHandling"
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
 import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/driverRepositoryUpdateQuerys"
-import encryptionDecryption from "../../services/encryptionDecryption"
-import nodeMailer from "../../services/nodeMailer"
+import encryptionDecryption from "../../infrastructure/common/encryptionDecryption"
+import nodeMailer from "../../infrastructure/email/nodeMailer"
 
 export default {
     sendRestPasswordLink: async (email: string) => {
@@ -27,7 +28,7 @@ export default {
                 throw new Error("Email does not Exists")
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -40,7 +41,7 @@ export default {
             return driverRepositoryUpdateQuerys.updatePassword(decryptedEmail.payload, hashedPassword)
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

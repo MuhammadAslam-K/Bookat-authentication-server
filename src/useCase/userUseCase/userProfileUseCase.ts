@@ -3,6 +3,7 @@ import userRepositoryUpdateQuery from "../../repositorys/userRepository/userRepo
 import { ObjectId } from "mongoose";
 import userRepositoryGetQuery from "../../repositorys/userRepository/userRepositoryGetQuery";
 import { IUser } from "../../entites/userEntites";
+import { handleError } from "../../infrastructure/common/errorHandling";
 
 
 export default {
@@ -11,7 +12,7 @@ export default {
         try {
             return await userRepositoryUpdateQuery.updateUserProfile(data, userId);
         } catch (error) {
-            throw new Error((error as Error).message);
+            handleError(error as Error)
         }
     },
 
@@ -19,7 +20,7 @@ export default {
         try {
             return await userRepositoryGetQuery.getUserWithId(userID)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 }

@@ -10,7 +10,7 @@ import driverDashboardController from "../controllers/driver/driverDashboardCont
 
 const driver_router = Express.Router()
 
-
+// AUTH
 driver_router.post("/signup", driverAuthController.signup)
 driver_router.post("/login", driverAuthController.login)
 driver_router.post("/check/driverExists", driverAuthController.checkExists)
@@ -21,26 +21,25 @@ driver_router.post("/info/vehicle", jwtTokenAuth.validateToken, driverAuthContro
 driver_router.post("/resetPasswordLink", driverNotificationController.resetPasswordLink)
 driver_router.post("/resetpassword", driverNotificationController.resetpassword)
 
-// Driver Profile
+// Profile
 driver_router.get("/Profile", driverProfileController.getDriverProfile)
-driver_router.patch("/update/profile", driverProfileController.updateDriverProfile)
+driver_router.post("/update/profile", driverProfileController.updateDriverProfile)
 driver_router.patch("/available", driverProfileController.driverAvailable)
 
 // Driver Vehicle
 driver_router.get("/vehicle", driverVehicleController.getVehicleInfo)
-driver_router.patch("/update/vehicle", driverVehicleController.updateVehicleInfo)
+driver_router.post("/update/vehicle", driverVehicleController.updateVehicleInfo)
 
 // Ride
-driver_router.post("/getUser", driverRideController.getUserWithId)
+driver_router.patch("/getUser", driverRideController.getUserWithId)
 
 driver_router.get("/currentRide", driverRideController.currentRide)
 
 driver_router.get("/scheduleRidePending", driverScheduledRideController.schedulePendingRides)
-// driver_router.get("/scheduleRideHistory", driverScheduledRideController.getscheduleRideHistory)
 driver_router.get("/scheduleRideNotification", driverScheduledRideController.getScheduleRideNotification)
 driver_router.post("/scheduleRideConfirmation", driverScheduledRideController.confirmScheduledRide)
 
-driver_router.patch("/startScheduledRide", driverScheduledRideController.startScheduledRide)
+driver_router.post("/startScheduledRide", driverScheduledRideController.startScheduledRide)
 
 driver_router.post("/rideOtpVerify", driverNotificationController.verifyOTP)
 
@@ -49,5 +48,8 @@ driver_router.get("/dashboard", driverDashboardController.dashboard)
 
 // HISTORY
 driver_router.get("/history", driverRideController.getRideHistory)
+
+// CAB
+driver_router.get("/getCabs", driverDashboardController.getAllCabs)
 
 export default driver_router

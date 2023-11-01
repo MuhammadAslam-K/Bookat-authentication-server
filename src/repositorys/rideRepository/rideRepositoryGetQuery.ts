@@ -1,9 +1,9 @@
-import { ObjectId } from "mongoose"
+import { ObjectId } from "mongoose",
 import RideSchema from "../../entites/rideEntites"
 
 
 export default {
-    findRideWithId: async (rideId: ObjectId) => {
+    findRideWithId: async (rideId: string) => {
         try {
             return await RideSchema.findById(rideId)
         } catch (error) {

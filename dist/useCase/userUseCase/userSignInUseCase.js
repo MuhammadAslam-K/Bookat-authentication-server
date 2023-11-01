@@ -4,8 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
-const encryptionDecryption_2 = __importDefault(require("../../services/encryptionDecryption"));
+const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
+const encryptionDecryption_2 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     validateUser: async (data) => {
         try {
@@ -38,8 +39,7 @@ exports.default = {
             }
         }
         catch (error) {
-            console.log("error at signin", error);
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     checkuserExists: async (email) => {
@@ -61,7 +61,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

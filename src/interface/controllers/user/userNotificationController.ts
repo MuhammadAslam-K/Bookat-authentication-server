@@ -1,5 +1,5 @@
-import encryptionDecryption from "../../../services/encryptionDecryption";
-import twilio from "../../../services/twilio";
+import encryptionDecryption from "../../../infrastructure/common/encryptionDecryption";
+import twilio from "../../../infrastructure/sms/twilio";
 import { Request, Response } from "express"
 import passwordRest from "../../../useCase/userUseCase/passwordRest";
 

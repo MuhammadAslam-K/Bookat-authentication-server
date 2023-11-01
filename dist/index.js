@@ -35,7 +35,7 @@ const adminRouter_1 = __importDefault(require("./interface/router/adminRouter"))
 const mongoDB_1 = __importDefault(require("./config/mongoDB"));
 const jwtTokenAuth_1 = __importDefault(require("./middlewares/jwtTokenAuth"));
 const http_1 = __importDefault(require("http"));
-const socket_io_1 = require("./services/socket-io");
+const socket_io_1 = require("./infrastructure/socket/socket-io");
 dotenv.config();
 const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;

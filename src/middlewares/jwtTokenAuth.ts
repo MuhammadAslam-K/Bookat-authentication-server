@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import encryptionDecryption from '../services/encryptionDecryption';
+import encryptionDecryption from '../infrastructure/common/encryptionDecryption';
 
 export default {
 
@@ -19,6 +19,7 @@ export default {
                 "/resetPasswordLink",
                 "/resetpassword",
                 "/getridedata",
+                "/getCabs",
 
                 /**********  Driver **********/
                 "/driver/signup",

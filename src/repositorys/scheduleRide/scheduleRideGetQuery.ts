@@ -1,9 +1,10 @@
 import { ObjectId } from "mongoose";
+
 import ScheduleRideSchema from "../../entites/scheduledRideEntites";
 
 export default {
 
-    getScheduledRidesById: async (rideId: ObjectId) => {
+    getScheduledRidesById: async (rideId: string) => {
         try {
             return await ScheduleRideSchema.findById(rideId)
         } catch (error) {
@@ -14,20 +15,14 @@ export default {
     getScheduledRidesByUserId: async (userID: ObjectId) => {
         try {
             return await ScheduleRideSchema.find({
-                user_id: userID, status: { $in: ["Completed", "Cancelled"] }
+                user_id: userID,
+                status: { $in: ["Completed", "Cancelled"] }
             })
+                .sort({ pickUpDate: 1 })
         } catch (error) {
             throw new Error((error as Error).message);
         }
     },
-
-    // getScheduledRidesByDriverId: async (driverId: ObjectId) => {
-    //     try {
-    //         return await ScheduleRideSchema.find({ driver_id: driverId, status: "Completed" }).sort({ pickUpDate: 1 })
-    //     } catch (error) {
-    //         throw new Error((error as Error).message);
-    //     }
-    // },
 
     getNotApprovedScheduleRides: async () => {
         try {

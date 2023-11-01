@@ -6,6 +6,7 @@ import userNotificationController from "../controllers/user/userNotificationCont
 import userProfileController from "../controllers/user/userProfileController";
 import rideController from "../controllers/user/rideController";
 import scheduledRideController from "../controllers/user/scheduledRideController";
+import userHomeController from "../controllers/user/userHomeController";
 
 const userRoute = Express.Router()
 
@@ -31,7 +32,7 @@ userRoute.post("/update/profile", userProfileController.updateProfile)
 // RIDE
 userRoute.get('/details/driver', rideController.getDriverDetails);
 
-userRoute.post('/getridedata', rideController.getRideData);
+userRoute.patch('/getridedata', rideController.getRideData);
 userRoute.post('/payment', rideController.payment);
 
 userRoute.get('/currentRide', rideController.currentRide);
@@ -43,10 +44,13 @@ userRoute.post('/scheduleTheRide', scheduledRideController.scheduleRide);
 
 
 // CANCELLATION
-userRoute.patch('/cancelride', scheduledRideController.cancelride);
+userRoute.post('/cancelride', scheduledRideController.cancelride);
 
 // HISTORY
 userRoute.get('/history', rideController.ridesHistory);
+
+// CAB
+userRoute.get("/getCabs", userHomeController.getAllCabDetails)
 
 
 export default userRoute

@@ -7,20 +7,14 @@ const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/schedu
 const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
-    // getScheduledRideHistoryByDriverId: async (driverId: ObjectId) => {
-    //     try {
-    //         return await scheduleRideGetQuery.getScheduledRidesByDriverId(driverId)
-    //     } catch (error) {
-    //         throw new Error((error as Error).message)
-    //     }
-    // },
     getNotApprovedScheduleRides: async () => {
         try {
             return await scheduleRideGetQuery_1.default.getNotApprovedScheduleRides();
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     driverAcceptScheduledRide: async (data, driverId) => {
@@ -61,7 +55,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getPendingScheduledRides: async (driverId) => {
@@ -69,7 +63,7 @@ exports.default = {
             return await scheduleRideGetQuery_1.default.findPendingScheduledRidesWithDriverId(driverId);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     startScheduledRide: async (rideId, driverId) => {
@@ -80,7 +74,7 @@ exports.default = {
             ]);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

@@ -7,13 +7,14 @@ const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/ad
 const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
 const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryGetQuery"));
 const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     getUsers: async () => {
         try {
             return await adminRepositoryGetQuerys_1.default.getAllUsers();
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     blockUser: async (userId) => {
@@ -21,7 +22,7 @@ exports.default = {
             return await adminRepositoryUpdateQuery_1.default.blockUser(userId);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getRideHistoryWithUserId: async (userId) => {
@@ -33,7 +34,7 @@ exports.default = {
             return { quickRides, scheduledRides };
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

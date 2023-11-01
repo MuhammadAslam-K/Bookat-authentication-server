@@ -16,20 +16,15 @@ exports.default = {
     getScheduledRidesByUserId: async (userID) => {
         try {
             return await scheduledRideEntites_1.default.find({
-                user_id: userID, status: { $in: ["Completed", "Cancelled"] }
-            });
+                user_id: userID,
+                status: { $in: ["Completed", "Cancelled"] }
+            })
+                .sort({ pickUpDate: 1 });
         }
         catch (error) {
             throw new Error(error.message);
         }
     },
-    // getScheduledRidesByDriverId: async (driverId: ObjectId) => {
-    //     try {
-    //         return await ScheduleRideSchema.find({ driver_id: driverId, status: "Completed" }).sort({ pickUpDate: 1 })
-    //     } catch (error) {
-    //         throw new Error((error as Error).message);
-    //     }
-    // },
     getNotApprovedScheduleRides: async () => {
         try {
             return await scheduledRideEntites_1.default.find({ driverAccepted: "Pending" }).sort({ pickUpDate: 1 });

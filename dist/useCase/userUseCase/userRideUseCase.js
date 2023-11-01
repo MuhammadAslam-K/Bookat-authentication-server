@@ -11,13 +11,15 @@ const rideRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/r
 const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
 const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
 const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
+const cabrepositoryGetQuery_1 = __importDefault(require("../../repositorys/cabRepository/cabrepositoryGetQuery"));
 exports.default = {
     getDriverById: async (driverId) => {
         try {
             return await driverRepositoryGetQuerys_1.default.findDriverWithId(driverId);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getDriverDetailsAndFeedbacks: async (driverId) => {
@@ -31,12 +33,11 @@ exports.default = {
             return { driverData, feedBacks };
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getRideDetails: async (rideId) => {
         try {
-            console.log("rideId", rideId);
             const result = await rideRepositoryGetQuery_1.default.findRideWithId(rideId);
             if (!result) {
                 const scheduledRide = await scheduleRideGetQuery_1.default.getScheduledRidesById(rideId);
@@ -52,7 +53,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     payment: async (data, userId) => {
@@ -77,7 +78,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getUserRidesHistory: async (userId) => {
@@ -89,7 +90,7 @@ exports.default = {
             return { quickRides, scheduledRides };
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     getCurrentRide: async (userId) => {
@@ -109,7 +110,15 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
+    getAllcabs: async () => {
+        try {
+            return cabrepositoryGetQuery_1.default.getAllTheCabs();
+        }
+        catch (error) {
+            (0, errorHandling_1.handleError)(error);
+        }
+    }
 };

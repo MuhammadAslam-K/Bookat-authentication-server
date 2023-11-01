@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
 const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
 const userRepositorySaveQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositorySaveQuery"));
-const encryptionDecryption_1 = __importDefault(require("../../services/encryptionDecryption"));
+const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const refrelCode_1 = require("../../utils/refrelCode");
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     registerUser: async (data) => {
         try {
@@ -42,7 +43,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     googleSignUp: async (data) => {
@@ -58,7 +59,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     checkUserExists: async (data) => {
@@ -78,7 +79,7 @@ exports.default = {
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

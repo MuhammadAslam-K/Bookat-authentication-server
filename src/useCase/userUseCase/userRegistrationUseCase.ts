@@ -2,8 +2,9 @@ import { ObjectId } from 'mongoose';
 import userRepositoryGetQuery from "../../repositorys/userRepository/userRepositoryGetQuery"
 import userRepositoryUpdateQuery from '../../repositorys/userRepository/userRepositoryUpdateQuery';
 import userRepositorySaveQuery from '../../repositorys/userRepository/userRepositorySaveQuery';
-import encryptionDecryption from "../../services/encryptionDecryption";
+import encryptionDecryption from "../../infrastructure/common/encryptionDecryption";
 import { refferalCode } from "../../utils/refrelCode";
+import { handleError } from '../../infrastructure/common/errorHandling';
 
 export interface signupData {
     name: string,
@@ -63,7 +64,7 @@ export default {
 
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -81,7 +82,7 @@ export default {
             }
 
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -103,7 +104,7 @@ export default {
                 }
             }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }

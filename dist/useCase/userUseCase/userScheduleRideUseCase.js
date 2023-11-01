@@ -8,28 +8,22 @@ const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/schedu
 const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
 const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
+const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     scheduleRide: async (data, userId) => {
         try {
             return await scheduleRideSaveQuery_1.default.saveNewRide(data, userId);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
-    // getScheduleRideHistory: async (userId: ObjectId) => {
-    //     try {
-    //         return await scheduleRideGetQuery.getScheduledRidesByUserId(userId)
-    //     } catch (error) {
-    //         throw new Error((error as Error).message)
-    //     }
-    // },
     getScheduledRideOfUser: async (userId) => {
         try {
             return await scheduleRideGetQuery_1.default.getPendingScheduledRidesWithUserId(userId);
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     },
     cancelTheRide: async (data, userId) => {
@@ -42,7 +36,7 @@ exports.default = {
             return true;
         }
         catch (error) {
-            throw new Error(error.message);
+            (0, errorHandling_1.handleError)(error);
         }
     }
 };

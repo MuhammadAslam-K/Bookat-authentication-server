@@ -1,6 +1,6 @@
 import { Server as SocketIOServer, Socket } from "socket.io";
 import { calculateDistance } from "./socket-ioHelper";
-import driverRideUseCase from "../useCase/driverUseCase/driverRideUseCase";
+import driverRideUseCase from "../../useCase/driverUseCase/driverRideUseCase";
 import { ObjectId } from "mongoose";
 
 interface DriverData {

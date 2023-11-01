@@ -4,6 +4,7 @@ import adminRepositoryUpdateQuery from "../../repositorys/admin/adminRepositoryU
 import userRepositoryGetQuery from "../../repositorys/userRepository/userRepositoryGetQuery"
 import rideRepositoryGetQuery from "../../repositorys/rideRepository/rideRepositoryGetQuery"
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
+import { handleError } from "../../infrastructure/common/errorHandling"
 
 
 export default {
@@ -11,15 +12,15 @@ export default {
         try {
             return await adminRepositoryGetQuerys.getAllUsers()
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
-    blockUser: async (userId: ObjectId) => {
+    blockUser: async (userId: string) => {
         try {
             return await adminRepositoryUpdateQuery.blockUser(userId)
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     },
 
@@ -31,7 +32,7 @@ export default {
             ])
             return { quickRides, scheduledRides }
         } catch (error) {
-            throw new Error((error as Error).message)
+            handleError(error as Error)
         }
     }
 }
