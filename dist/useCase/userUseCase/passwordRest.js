@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
-const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
-const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
+const userRepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryGetQuery"));
+const userRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryUpdateQuery"));
 const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
-const nodeMailer_1 = __importDefault(require("../../infrastructure/email/nodeMailer"));
+const nodeMailer_1 = __importDefault(require("../../adapters/external-services/email/nodeMailer"));
 exports.default = {
     sendRestPasswordLink: async (email) => {
         try {

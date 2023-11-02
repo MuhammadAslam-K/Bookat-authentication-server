@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const nodemailer_1 = __importDefault(require("nodemailer"));
-const rideConfirm_email_template_1 = require("./template/rideConfirm-email-template");
+const rideConfirm_email_template_1 = require("../../adapters/external-services/email/template/rideConfirm-email-template");
 exports.default = {
     sendLink: async (data) => {
         try {

@@ -29,14 +29,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
-const userRouter_1 = __importDefault(require("./interface/router/userRouter"));
-const driverRouter_1 = __importDefault(require("./interface/router/driverRouter"));
-const adminRouter_1 = __importDefault(require("./interface/router/adminRouter"));
-const mongoDB_1 = __importDefault(require("./config/mongoDB"));
-const jwtTokenAuth_1 = __importDefault(require("./middlewares/jwtTokenAuth"));
-const reminderCronJob_1 = require("./infrastructure/crone-job/reminderCronJob");
+const userRouter_1 = __importDefault(require("./frameworks/express/router/userRouter"));
+const driverRouter_1 = __importDefault(require("./frameworks/express/router/driverRouter"));
+const adminRouter_1 = __importDefault(require("./frameworks/express/router/adminRouter"));
+const mongoDB_1 = __importDefault(require("./frameworks/database/mongoDB"));
+const jwtTokenAuth_1 = __importDefault(require("./frameworks/express/middlewares/jwtTokenAuth"));
 const http_1 = __importDefault(require("http"));
-const socket_io_1 = require("./infrastructure/socket/socket-io");
+const socket_io_1 = require("./frameworks/socket-io/socket-io");
 dotenv.config();
 const port = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
@@ -64,7 +63,7 @@ app.use('/admin', adminRouter_1.default);
 if (MONGO_URL) {
     (0, mongoDB_1.default)(MONGO_URL).then(() => {
         server.listen(port, () => console.log(`Server started at http://localhost:${port}`));
-        (0, reminderCronJob_1.startReminderCronJob)();
+        // startReminderCronJob()
     }).catch((err) => {
         console.error('MongoDB connection error:', err);
     });

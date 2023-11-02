@@ -4,13 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const userRegisterController_1 = __importDefault(require("../controllers/user/userRegisterController"));
-const userSignInController_1 = __importDefault(require("../controllers/user/userSignInController"));
-const userNotificationController_1 = __importDefault(require("../controllers/user/userNotificationController"));
-const userProfileController_1 = __importDefault(require("../controllers/user/userProfileController"));
-const rideController_1 = __importDefault(require("../controllers/user/rideController"));
-const scheduledRideController_1 = __importDefault(require("../controllers/user/scheduledRideController"));
-const userHomeController_1 = __importDefault(require("../controllers/user/userHomeController"));
+const userRegisterController_1 = __importDefault(require("../../adapters/controllers/user/userRegisterController"));
+const userSignInController_1 = __importDefault(require("../../adapters/controllers/user/userSignInController"));
+const userNotificationController_1 = __importDefault(require("../../adapters/controllers/user/userNotificationController"));
+const userProfileController_1 = __importDefault(require("../../adapters/controllers/user/userProfileController"));
+const rideController_1 = __importDefault(require("../../adapters/controllers/user/rideController"));
+const scheduledRideController_1 = __importDefault(require("../../adapters/controllers/user/scheduledRideController"));
+const userHomeController_1 = __importDefault(require("../../adapters/controllers/user/userHomeController"));
 const userRoute = express_1.default.Router();
 // AUTH
 userRoute.post("/signup", userRegisterController_1.default.signup);

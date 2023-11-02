@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.startReminderCronJob = void 0;
 const node_cron_1 = __importDefault(require("node-cron"));
-const scheduledRideEntites_1 = __importDefault(require("../../entites/scheduledRideEntites"));
-const nodeMailer_1 = __importDefault(require("../email/nodeMailer"));
+const scheduledRideEntites_1 = __importDefault(require("../../adapters/data-access/models/scheduledRideEntites"));
+const nodeMailer_1 = __importDefault(require("../../adapters/external-services/email/nodeMailer"));
 async function startReminderCronJob() {
     node_cron_1.default.schedule('*/10 * * * *', async () => {
         // Get current time

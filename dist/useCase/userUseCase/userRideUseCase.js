@@ -3,16 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
-const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryGetQuery"));
-const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
-const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
-const rideRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryUpdateQuery"));
-const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
-const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
-const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
+const driverRepositoryGetQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryGetQuerys"));
+const rideRepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/rideRepository/rideRepositoryGetQuery"));
+const userRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryUpdateQuery"));
+const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryUpdateQuerys"));
+const rideRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/rideRepository/rideRepositoryUpdateQuery"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideGetQuery"));
+const scheduleRideUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideUpdateQuery"));
+const adminRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/admin/adminRepositoryUpdateQuery"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
-const cabrepositoryGetQuery_1 = __importDefault(require("../../repositorys/cabRepository/cabrepositoryGetQuery"));
+const cabrepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/cabRepository/cabrepositoryGetQuery"));
 exports.default = {
     getDriverById: async (driverId) => {
         try {

@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
-const cabRepositorySaveQuery_1 = __importDefault(require("../../repositorys/cabRepository/cabRepositorySaveQuery"));
-const cabrepositoryGetQuery_1 = __importDefault(require("../../repositorys/cabRepository/cabrepositoryGetQuery"));
+const cabRepositorySaveQuery_1 = __importDefault(require("../../adapters/data-access/repositories/cabRepository/cabRepositorySaveQuery"));
+const cabrepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/cabRepository/cabrepositoryGetQuery"));
 const mongoose_1 = __importDefault(require("mongoose"));
 exports.default = {
     listAllTheCabs: async () => {

@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
-const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
-const userRepositorySaveQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositorySaveQuery"));
+const userRepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryGetQuery"));
+const userRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryUpdateQuery"));
+const userRepositorySaveQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositorySaveQuery"));
 const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const refrelCode_1 = require("../../utils/refrelCode");
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");

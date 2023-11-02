@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const adminAuthController_1 = __importDefault(require("../controllers/admin/adminAuthController"));
-const adminUserManagementController_1 = __importDefault(require("../controllers/admin/adminUserManagementController"));
-const adminDriverManagementController_1 = __importDefault(require("../controllers/admin/adminDriverManagementController"));
-const adminDashboardController_1 = __importDefault(require("../controllers/admin/adminDashboardController"));
-const adminCabController_1 = __importDefault(require("../controllers/cab/adminCabController"));
+const adminAuthController_1 = __importDefault(require("../../adapters/controllers/admin/adminAuthController"));
+const adminUserManagementController_1 = __importDefault(require("../../adapters/controllers/admin/adminUserManagementController"));
+const adminDriverManagementController_1 = __importDefault(require("../../adapters/controllers/admin/adminDriverManagementController"));
+const adminDashboardController_1 = __importDefault(require("../../adapters/controllers/admin/adminDashboardController"));
+const adminCabController_1 = __importDefault(require("../../adapters/controllers/cab/adminCabController"));
 const admin_router = express_1.default.Router();
 admin_router.post("/login", adminAuthController_1.default.signIn);
 // USER
