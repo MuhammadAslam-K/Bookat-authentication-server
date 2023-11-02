@@ -3,7 +3,7 @@ import adminAuthController from "../controllers/admin/adminAuthController";
 import adminUserManagementController from "../controllers/admin/adminUserManagementController";
 import adminDriverManagementController from "../controllers/admin/adminDriverManagementController";
 import adminDashboardController from "../controllers/admin/adminDashboardController";
-import AdminCabController from "../controllers/cab/AdminCabController";
+import AdminCabController from "../controllers/cab/adminCabController";
 
 const admin_router = Express.Router()
 

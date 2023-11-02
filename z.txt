@@ -1,0 +1,90 @@
+project-root-directory
+|-- src
+|   |-- adapters
+|   |   |-- controllers
+|   |   |   |-- UserController.ts
+|   |   |   |-- DriverController.ts
+|   |   |   |-- AdminController.ts
+|   |   |   |-- BookingController.ts
+|   |   |   |-- ...other controllers
+|   |   |
+|   |   |-- data-access
+|   |   |   |-- repositories
+|   |   |   |   |-- UserRepository.ts
+|   |   |   |   |-- DriverRepository.ts
+|   |   |   |   |-- AdminRepository.ts
+|   |   |   |   |-- BookingRepository.ts
+|   |   |   |   |-- ...other repositories
+|   |   |   |
+|   |   |   |-- models
+|   |   |   |   |-- User.ts
+|   |   |   |   |-- Driver.ts
+|   |   |   |   |-- Admin.ts
+|   |   |   |   |-- Booking.ts
+|   |   |   |   |-- ...other models
+|   |   |
+|   |   |-- external-services
+|   |   |   |-- EmailService.ts
+|   |   |   |-- SMSService.ts
+|   |   |   |-- ...other external services
+|   |   |
+|   |   |-- main.ts (Express server initialization)
+|   |   |
+|   |-- business
+|   |   |-- use-cases
+|   |   |   |-- UserUseCase.ts
+|   |   |   |-- DriverUseCase.ts
+|   |   |   |-- AdminUseCase.ts
+|   |   |   |-- BookingUseCase.ts
+|   |   |   |-- ...other use cases
+|   |   |
+|   |   |-- entities
+|   |   |   |-- UserEntity.ts
+|   |   |   |-- DriverEntity.ts
+|   |   |   |-- AdminEntity.ts
+|   |   |   |-- BookingEntity.ts
+|   |   |   |-- ...other entities
+|   |   |
+|   |   |-- interfaces
+|   |   |   |-- UserRepositoryInterface.ts
+|   |   |   |-- EmailServiceInterface.ts
+|   |   |   |-- SMSServiceInterface.ts
+|   |   |   |-- ...other interfaces
+|   |   |
+|   |   |-- errors
+|   |   |   |-- ...custom error classes
+|   |   |
+|   |-- frameworks
+|   |   |-- express
+|   |   |   |-- routes
+|   |   |   |   |-- userRoutes.ts
+|   |   |   |   |-- driverRoutes.ts
+|   |   |   |   |-- adminRoutes.ts
+|   |   |   |   |-- bookingRoutes.ts
+|   |   |   |   |-- ...other route files
+|   |   |   |
+|   |   |   |-- middlewares
+|   |   |   |   |-- JWTMiddleware.ts
+|   |   |   |   |-- ...Express middlewares
+|   |   |   |
+|   |   |   |-- ...other Express-related files
+|   |   |
+|   |   |-- database
+|   |   |   |-- mongoDB.ts
+|   |   |   |-- ...other database setup files
+|   |   |
+|   |   |-- socket-io
+|   |   |   |-- socketService.ts
+|   |   |   |-- ...other socket.io-related files
+|   |   |
+|   |   |-- email
+|   |   |   |-- nodeMailer.ts
+|   |   |   |-- ...other email-related files
+|   |   |
+|   |-- ...other framework-specific code
+|
+|-- node_modules
+|-- .env (environment variables)
+|-- tsconfig.json
+|-- package.json
+|-- ...other configuration files

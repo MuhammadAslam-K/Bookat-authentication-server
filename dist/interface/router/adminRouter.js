@@ -8,7 +8,7 @@ const adminAuthController_1 = __importDefault(require("../controllers/admin/admi
 const adminUserManagementController_1 = __importDefault(require("../controllers/admin/adminUserManagementController"));
 const adminDriverManagementController_1 = __importDefault(require("../controllers/admin/adminDriverManagementController"));
 const adminDashboardController_1 = __importDefault(require("../controllers/admin/adminDashboardController"));
-const AdminCabController_1 = __importDefault(require("../controllers/cab/AdminCabController"));
+const adminCabController_1 = __importDefault(require("../controllers/cab/adminCabController"));
 const admin_router = express_1.default.Router();
 admin_router.post("/login", adminAuthController_1.default.signIn);
 // USER
@@ -28,7 +28,7 @@ admin_router.get("/dashboard", adminDashboardController_1.default.dashboard);
 admin_router.post("/history/user", adminUserManagementController_1.default.getUserRideHistory);
 admin_router.post("/history/driver", adminDriverManagementController_1.default.getDriverRideHistory);
 // CAB
-admin_router.get("/cabs", AdminCabController_1.default.showCabs);
-admin_router.post("/cabs/add", AdminCabController_1.default.addNewCab);
-admin_router.get("/cabs/getById/:id", AdminCabController_1.default.getcar);
+admin_router.get("/cabs", adminCabController_1.default.showCabs);
+admin_router.post("/cabs/add", adminCabController_1.default.addNewCab);
+admin_router.get("/cabs/getById/:id", adminCabController_1.default.getcar);
 exports.default = admin_router;

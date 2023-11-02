@@ -4,14 +4,16 @@ import mongoose, { Document, Schema } from "mongoose";
 const scheduleRideSchema: Schema = new Schema({
 
     driver_id: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "driver",
     },
     driverAccepted: {
         type: String,
         default: "Pending",
     },
     user_id: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "user"
     },
     vehicleType: {
         type: String,

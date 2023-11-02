@@ -26,14 +26,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const scheduleRideSchema = new mongoose_1.Schema({
     driver_id: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "driver",
     },
     driverAccepted: {
         type: String,
         default: "Pending",
     },
     user_id: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "user"
     },
     vehicleType: {
         type: String,

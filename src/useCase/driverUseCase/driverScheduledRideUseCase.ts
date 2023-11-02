@@ -1,3 +1,4 @@
+import { rideConfirmEmailData } from './../../types/email';
 import { ObjectId } from "mongoose"
 import scheduleRideGetQuery from "../../repositorys/scheduleRide/scheduleRideGetQuery"
 import driverRepositoryGetQuerys from "../../repositorys/driverRepository/driverRepositoryGetQuerys"
@@ -5,6 +6,8 @@ import driverRepositoryUpdateQuerys from "../../repositorys/driverRepository/dri
 import scheduleRideUpdateQuery from "../../repositorys/scheduleRide/scheduleRideUpdateQuery"
 import { error } from "console"
 import { handleError } from "../../infrastructure/common/errorHandling"
+import { emailInfo } from "../../types/email"
+import nodeMailer from '../../infrastructure/email/nodeMailer';
 
 export default {
 
@@ -20,9 +23,10 @@ export default {
     driverAcceptScheduledRide: async (data: { rideId: string, latitude: string, longitude: string }, driverId: ObjectId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
-                scheduleRideGetQuery.getScheduledRidesById(data.rideId),
+                scheduleRideGetQuery.getScheduledRideWithIdAndUserData(data.rideId),
                 driverRepositoryGetQuerys.findDriverWithId(driverId)
             ]);
+
 
             if (rideInfo && driverInfo) {
 
@@ -58,12 +62,28 @@ export default {
                         throw new Error("You already have a ride that conflicts in duration.");
                     }
                 }
+                const pickupTimeWithoutTimeZone = rideInfo.pickUpDate.toString().replace(/\sGMT\+\d{4}/, '');
+                const emailInfo: emailInfo = {
+                    to: rideInfo.user_id.email,
+                    subject: "Ride Confirmed",
+                    message: "Your Ride has been confirmed by the driver"
+                }
+                const emailData: rideConfirmEmailData = {
+                    userName: rideInfo.user_id.name,
+                    pickUpLocation: rideInfo.pickupLocation,
+                    pickUpTime: pickupTimeWithoutTimeZone,
+                    dropOffLocation: rideInfo.dropoffLocation,
+                    driverName: driverInfo.name,
+                    vehicleType: driverInfo.vehicleDocuments.vehicleModel,
+                    vehicleNo: driverInfo.vehicleDocuments.registration.registrationId,
+                    amount: rideInfo.price
+                }
 
-                console.log("No conflicts detected. Driver can accept the ride.");
-                await driverRepositoryUpdateQuerys.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId);
-                // const latNum = parseInt(data.latitude)
-                // const longNum = parseInt(data.longitude)
-                await scheduleRideUpdateQuery.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude);
+                await Promise.all([
+                    driverRepositoryUpdateQuerys.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId),
+                    scheduleRideUpdateQuery.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude),
+                    nodeMailer.sendRideConfirmEmail(emailInfo, emailData)
+                ])
             }
         } catch (error) {
             handleError(error as Error);

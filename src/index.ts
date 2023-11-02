@@ -7,6 +7,7 @@ import driver_router from './interface/router/driverRouter';
 import admin_router from './interface/router/adminRouter';
 import connect from './config/mongoDB';
 import jwtTokenAuth from './middlewares/jwtTokenAuth';
+import { startReminderCronJob } from "./infrastructure/crone-job/reminderCronJob"
 import http from 'http'
 
 import { setUpSocketIO } from './infrastructure/socket/socket-io';
@@ -49,6 +50,7 @@ setUpSocketIO()
 if (MONGO_URL) {
     connect(MONGO_URL).then(() => {
         server.listen(port, () => console.log(`Server started at http://localhost:${port}`));
+        startReminderCronJob()
     }).catch((err) => {
         console.error('MongoDB connection error:', err);
     });

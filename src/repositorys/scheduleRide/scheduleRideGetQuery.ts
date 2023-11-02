@@ -94,6 +94,17 @@ export default {
             throw new Error((error as Error).message);
 
         }
+    },
+
+    getScheduledRideWithIdAndUserData: async (rideId: string) => {
+        try {
+            return await ScheduleRideSchema
+                .findById(rideId)
+                .populate('user_id')
+                .exec();
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
     }
 
 }

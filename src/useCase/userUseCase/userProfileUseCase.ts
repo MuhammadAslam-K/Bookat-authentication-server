@@ -16,7 +16,7 @@ export default {
         }
     },
 
-    getProfile: async (userID: ObjectId) => {
+    getProfile: async (userID: string) => {
         try {
             return await userRepositoryGetQuery.getUserWithId(userID)
         } catch (error) {
