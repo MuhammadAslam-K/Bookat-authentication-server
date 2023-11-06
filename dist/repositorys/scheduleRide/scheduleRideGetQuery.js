@@ -93,5 +93,16 @@ exports.default = {
         catch (error) {
             throw new Error(error.message);
         }
+    },
+    getScheduledRideWithIdAndUserData: async (rideId) => {
+        try {
+            return await scheduledRideEntites_1.default
+                .findById(rideId)
+                .populate('user_id')
+                .exec();
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 };

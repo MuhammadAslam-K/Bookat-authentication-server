@@ -4,14 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const driverAuthController_1 = __importDefault(require("../controllers/driver/driverAuthController"));
+const driverAuthController_1 = __importDefault(require("../../adapters/controllers/driver/driverAuthController"));
 const jwtTokenAuth_1 = __importDefault(require("../../middlewares/jwtTokenAuth"));
-const driverNotificationController_1 = __importDefault(require("../controllers/driver/driverNotificationController"));
-const driverProfileController_1 = __importDefault(require("../controllers/driver/driverProfileController"));
-const driverVehicleController_1 = __importDefault(require("../controllers/driver/driverVehicleController"));
-const driverRideController_1 = __importDefault(require("../controllers/driver/driverRideController"));
-const driverScheduledRideController_1 = __importDefault(require("../controllers/driver/driverScheduledRideController"));
-const driverDashboardController_1 = __importDefault(require("../controllers/driver/driverDashboardController"));
+const driverNotificationController_1 = __importDefault(require("../../adapters/controllers/driver/driverNotificationController"));
+const driverProfileController_1 = __importDefault(require("../../adapters/controllers/driver/driverProfileController"));
+const driverVehicleController_1 = __importDefault(require("../../adapters/controllers/driver/driverVehicleController"));
+const driverRideController_1 = __importDefault(require("../../adapters/controllers/driver/driverRideController"));
+const driverScheduledRideController_1 = __importDefault(require("../../adapters/controllers/driver/driverScheduledRideController"));
+const driverDashboardController_1 = __importDefault(require("../../adapters/controllers/driver/driverDashboardController"));
 const driver_router = express_1.default.Router();
 // AUTH
 driver_router.post("/signup", driverAuthController_1.default.signup);

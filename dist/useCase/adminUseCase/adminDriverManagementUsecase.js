@@ -3,13 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const adminRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/admin/adminRepositoryGetQuerys"));
-const adminRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/admin/adminRepositoryUpdateQuery"));
-const nodeMailer_1 = __importDefault(require("../../infrastructure/email/nodeMailer"));
-const rideRepositoryGetQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryGetQuery"));
-const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
+const adminRepositoryGetQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/admin/adminRepositoryGetQuerys"));
+const adminRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/admin/adminRepositoryUpdateQuery"));
+const nodeMailer_1 = __importDefault(require("../../adapters/external-services/email/nodeMailer"));
+const rideRepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/rideRepository/rideRepositoryGetQuery"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideGetQuery"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
-const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
+const driverRepositoryGetQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryGetQuerys"));
 exports.default = {
     getDrivers: async () => {
         try {

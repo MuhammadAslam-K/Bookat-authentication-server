@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userRepositoryGetQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryGetQuery"));
+const userRepositoryGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryGetQuery"));
 const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const encryptionDecryption_2 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");

@@ -5,9 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const encryptionDecryption_1 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const refrelCode_1 = require("../../utils/refrelCode");
-const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
-const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
-const driverRepositorySaveQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositorySaveQuerys"));
+const driverRepositoryGetQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryGetQuerys"));
+const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryUpdateQuerys"));
+const driverRepositorySaveQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositorySaveQuerys"));
 const encryptionDecryption_2 = __importDefault(require("../../infrastructure/common/encryptionDecryption"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {

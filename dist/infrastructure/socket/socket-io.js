@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setUpSocketIO = void 0;
 const socket_io_1 = require("socket.io");
 const socket_ioHelper_1 = require("./socket-ioHelper");
-const driverRideUseCase_1 = __importDefault(require("../../useCase/driverUseCase/driverRideUseCase"));
+const driverRideUseCase_1 = __importDefault(require("../../business/useCase/driverUseCase/driverRideUseCase"));
 // / / / / /USER / / / / /
 let userLat;
 let userLon;

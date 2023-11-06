@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
-const driverRepositoryGetQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryGetQuerys"));
-const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
-const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideGetQuery"));
+const driverRepositoryGetQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryGetQuerys"));
+const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryUpdateQuerys"));
+const scheduleRideUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideUpdateQuery"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
+const nodeMailer_1 = __importDefault(require("../../adapters/external-services/email/nodeMailer"));
 exports.default = {
     getNotApprovedScheduleRides: async () => {
         try {
@@ -20,7 +21,7 @@ exports.default = {
     driverAcceptScheduledRide: async (data, driverId) => {
         try {
             const [rideInfo, driverInfo] = await Promise.all([
-                scheduleRideGetQuery_1.default.getScheduledRidesById(data.rideId),
+                scheduleRideGetQuery_1.default.getScheduledRideWithIdAndUserData(data.rideId),
                 driverRepositoryGetQuerys_1.default.findDriverWithId(driverId)
             ]);
             if (rideInfo && driverInfo) {
@@ -47,11 +48,27 @@ exports.default = {
                         throw new Error("You already have a ride that conflicts in duration.");
                     }
                 }
-                console.log("No conflicts detected. Driver can accept the ride.");
-                await driverRepositoryUpdateQuerys_1.default.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId);
-                // const latNum = parseInt(data.latitude)
-                // const longNum = parseInt(data.longitude)
-                await scheduleRideUpdateQuery_1.default.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude);
+                const pickupTimeWithoutTimeZone = rideInfo.pickUpDate.toString().replace(/\sGMT\+\d{4}/, '');
+                const emailInfo = {
+                    to: rideInfo.user_id.email,
+                    subject: "Ride Confirmed",
+                    message: "Your Ride has been confirmed by the driver"
+                };
+                const emailData = {
+                    userName: rideInfo.user_id.name,
+                    pickUpLocation: rideInfo.pickupLocation,
+                    pickUpTime: pickupTimeWithoutTimeZone,
+                    dropOffLocation: rideInfo.dropoffLocation,
+                    driverName: driverInfo.name,
+                    vehicleType: driverInfo.vehicleDocuments.vehicleModel,
+                    vehicleNo: driverInfo.vehicleDocuments.registration.registrationId,
+                    amount: rideInfo.price
+                };
+                await Promise.all([
+                    driverRepositoryUpdateQuerys_1.default.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId),
+                    scheduleRideUpdateQuery_1.default.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude),
+                    nodeMailer_1.default.sendRideConfirmEmail(emailInfo, emailData)
+                ]);
             }
         }
         catch (error) {

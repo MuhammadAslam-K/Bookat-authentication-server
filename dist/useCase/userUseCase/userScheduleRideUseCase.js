@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const scheduleRideSaveQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideSaveQuery"));
-const scheduleRideGetQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideGetQuery"));
-const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
-const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../repositorys/driverRepository/driverRepositoryUpdateQuerys"));
-const userRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/userRepository/userRepositoryUpdateQuery"));
+const scheduleRideSaveQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideSaveQuery"));
+const scheduleRideGetQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideGetQuery"));
+const scheduleRideUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideUpdateQuery"));
+const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../adapters/data-access/repositories/driverRepository/driverRepositoryUpdateQuerys"));
+const userRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/userRepository/userRepositoryUpdateQuery"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     scheduleRide: async (data, userId) => {

@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const twilio_1 = __importDefault(require("../../infrastructure/sms/twilio"));
-const scheduleRideUpdateQuery_1 = __importDefault(require("../../repositorys/scheduleRide/scheduleRideUpdateQuery"));
-const rideRepositoryUpdateQuery_1 = __importDefault(require("../../repositorys/rideRepository/rideRepositoryUpdateQuery"));
+const twilio_1 = __importDefault(require("../../adapters/external-services/sms/twilio"));
+const scheduleRideUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/scheduleRide/scheduleRideUpdateQuery"));
+const rideRepositoryUpdateQuery_1 = __importDefault(require("../../adapters/data-access/repositories/rideRepository/rideRepositoryUpdateQuery"));
 const errorHandling_1 = require("../../infrastructure/common/errorHandling");
 exports.default = {
     verifyotp: async (data) => {
