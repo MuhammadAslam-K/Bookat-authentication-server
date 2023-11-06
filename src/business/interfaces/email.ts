@@ -1,16 +1,15 @@
 export interface rideConfirmEmailData {
-    userName: string;
-    pickUpLocation: string;
-    pickUpTime: string;
-    dropOffLocation: string;
-    driverName: string;
-    vehicleType: string;
-    vehicleNo: string;
-    amount: string
+    userName: string | undefined;
+    pickUpLocation: any;
+    dropOffLocation: any;
+    driverName: any;
+    vehicleType: any;
+    vehicleNo: any;
+    amount: any;
 }
 
 export interface emailInfo {
-    to: string;
+    to: string | undefined;
     subject: string;
     message: string;
 }

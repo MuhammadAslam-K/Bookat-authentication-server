@@ -9,6 +9,7 @@ import scheduleRideUpdateQuery from "../../../adapters/data-access/repositories/
 import adminRepositoryUpdateQuery from "../../../adapters/data-access/repositories/admin/adminRepositoryUpdateQuery"
 import { handleError } from "../../errors/errorHandling"
 import cabrepositoryGetQuery from "../../../adapters/data-access/repositories/cabRepository/cabrepositoryGetQuery"
+import nodeMailer from "../../../adapters/external-services/email/nodeMailer"
 
 export default {
     getDriverById: async (driverId: ObjectId) => {
@@ -56,27 +57,45 @@ export default {
             const priceInt = parseInt(data.price)
             const adminAmount = priceInt * 0.1
             const driverAmount = priceInt * 0.9;
-            await Promise.all([
+            const [user, driver, admin] = await Promise.all([
                 userRepositoryUpdateQuery.updateTotalRide(userId),
                 driverRepositoryUpdateQuerys.updateTotalRideAndRevenu(data.driverId, driverAmount, data.rideId),
                 adminRepositoryUpdateQuery.addRevenu(adminAmount)
             ]);
             const result = await rideRepositoryUpdateQuery.updatePaymentInfo(data, adminAmount, driverAmount)
+            let scheduledRide
             if (!result) {
-                const scheduledRide = await scheduleRideUpdateQuery.updatePaymentInfo(data, adminAmount, driverAmount)
-                if (scheduledRide) {
-                    return scheduledRide
-                } else {
+                scheduledRide = await scheduleRideUpdateQuery.updatePaymentInfo(data, adminAmount, driverAmount)
+                if (!scheduledRide) {
                     return null
                 }
             }
+
+            const emailInfo = {
+                to: user?.email,
+                subject: "Payment Successful",
+                message: "Your Payment has been successful"
+            }
+
+            const emailData = {
+                userName: user?.name,
+                pickUpLocation: result ? result.pickupLocation : scheduledRide?.pickupLocation,
+                dropOffLocation: result ? result.dropoffLocation : scheduledRide?.dropoffLocation,
+                driverName: driver?.name,
+                vehicleType: driver?.vehicleDocuments.vehicleModel,
+                vehicleNo: driver?.vehicleDocuments.registration.registrationId,
+                amount: result ? result.price : scheduledRide?.price
+            }
+            const emalResult = await nodeMailer.sendRideConfirmEmail(emailInfo, emailData)
+            console.log(emalResult)
+
 
         } catch (error) {
             handleError(error as Error)
         }
     },
 
-    getUserRidesHistory: async (userId: ObjectId) => {
+    getUserRidesHistory: async (userId: string) => {
         try {
             const [quickRides, scheduledRides] = await Promise.all([
                 rideRepositoryGetQuery.getRideWithUserId(userId),

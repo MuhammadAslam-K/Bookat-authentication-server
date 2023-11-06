@@ -8,7 +8,6 @@ const driverRepositoryGetQuerys_1 = __importDefault(require("../../../adapters/d
 const driverRepositoryUpdateQuerys_1 = __importDefault(require("../../../adapters/data-access/repositories/driverRepository/driverRepositoryUpdateQuerys"));
 const scheduleRideUpdateQuery_1 = __importDefault(require("../../../adapters/data-access/repositories/scheduleRide/scheduleRideUpdateQuery"));
 const errorHandling_1 = require("../../errors/errorHandling");
-const nodeMailer_1 = __importDefault(require("../../../adapters/external-services/email/nodeMailer"));
 exports.default = {
     getNotApprovedScheduleRides: async () => {
         try {
@@ -48,26 +47,9 @@ exports.default = {
                         throw new Error("You already have a ride that conflicts in duration.");
                     }
                 }
-                const pickupTimeWithoutTimeZone = rideInfo.pickUpDate.toString().replace(/\sGMT\+\d{4}/, '');
-                const emailInfo = {
-                    to: rideInfo.user_id.email,
-                    subject: "Ride Confirmed",
-                    message: "Your Ride has been confirmed by the driver"
-                };
-                const emailData = {
-                    userName: rideInfo.user_id.name,
-                    pickUpLocation: rideInfo.pickupLocation,
-                    pickUpTime: pickupTimeWithoutTimeZone,
-                    dropOffLocation: rideInfo.dropoffLocation,
-                    driverName: driverInfo.name,
-                    vehicleType: driverInfo.vehicleDocuments.vehicleModel,
-                    vehicleNo: driverInfo.vehicleDocuments.registration.registrationId,
-                    amount: rideInfo.price
-                };
                 await Promise.all([
                     driverRepositoryUpdateQuerys_1.default.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId),
                     scheduleRideUpdateQuery_1.default.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude),
-                    nodeMailer_1.default.sendRideConfirmEmail(emailInfo, emailData)
                 ]);
             }
         }

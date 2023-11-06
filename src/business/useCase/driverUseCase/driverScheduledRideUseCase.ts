@@ -62,27 +62,10 @@ export default {
                         throw new Error("You already have a ride that conflicts in duration.");
                     }
                 }
-                const pickupTimeWithoutTimeZone = rideInfo.pickUpDate.toString().replace(/\sGMT\+\d{4}/, '');
-                const emailInfo: emailInfo = {
-                    to: rideInfo.user_id.email,
-                    subject: "Ride Confirmed",
-                    message: "Your Ride has been confirmed by the driver"
-                }
-                const emailData: rideConfirmEmailData = {
-                    userName: rideInfo.user_id.name,
-                    pickUpLocation: rideInfo.pickupLocation,
-                    pickUpTime: pickupTimeWithoutTimeZone,
-                    dropOffLocation: rideInfo.dropoffLocation,
-                    driverName: driverInfo.name,
-                    vehicleType: driverInfo.vehicleDocuments.vehicleModel,
-                    vehicleNo: driverInfo.vehicleDocuments.registration.registrationId,
-                    amount: rideInfo.price
-                }
 
                 await Promise.all([
                     driverRepositoryUpdateQuerys.addScheduledRide(data.rideId, newRidePickupDate, rideInfo.duration, driverId),
                     scheduleRideUpdateQuery.driverAcceptedRide(driverId, data.rideId, data.latitude, data.longitude),
-                    nodeMailer.sendRideConfirmEmail(emailInfo, emailData)
                 ])
             }
         } catch (error) {

@@ -13,6 +13,7 @@ const scheduleRideUpdateQuery_1 = __importDefault(require("../../../adapters/dat
 const adminRepositoryUpdateQuery_1 = __importDefault(require("../../../adapters/data-access/repositories/admin/adminRepositoryUpdateQuery"));
 const errorHandling_1 = require("../../errors/errorHandling");
 const cabrepositoryGetQuery_1 = __importDefault(require("../../../adapters/data-access/repositories/cabRepository/cabrepositoryGetQuery"));
+const nodeMailer_1 = __importDefault(require("../../../adapters/external-services/email/nodeMailer"));
 exports.default = {
     getDriverById: async (driverId) => {
         try {
@@ -61,21 +62,35 @@ exports.default = {
             const priceInt = parseInt(data.price);
             const adminAmount = priceInt * 0.1;
             const driverAmount = priceInt * 0.9;
-            await Promise.all([
+            const [user, driver, admin] = await Promise.all([
                 userRepositoryUpdateQuery_1.default.updateTotalRide(userId),
                 driverRepositoryUpdateQuerys_1.default.updateTotalRideAndRevenu(data.driverId, driverAmount, data.rideId),
                 adminRepositoryUpdateQuery_1.default.addRevenu(adminAmount)
             ]);
             const result = await rideRepositoryUpdateQuery_1.default.updatePaymentInfo(data, adminAmount, driverAmount);
+            let scheduledRide;
             if (!result) {
-                const scheduledRide = await scheduleRideUpdateQuery_1.default.updatePaymentInfo(data, adminAmount, driverAmount);
-                if (scheduledRide) {
-                    return scheduledRide;
-                }
-                else {
+                scheduledRide = await scheduleRideUpdateQuery_1.default.updatePaymentInfo(data, adminAmount, driverAmount);
+                if (!scheduledRide) {
                     return null;
                 }
             }
+            const emailInfo = {
+                to: user?.email,
+                subject: "Payment Successful",
+                message: "Your Payment has been successful"
+            };
+            const emailData = {
+                userName: user?.name,
+                pickUpLocation: result ? result.pickupLocation : scheduledRide?.pickupLocation,
+                dropOffLocation: result ? result.dropoffLocation : scheduledRide?.dropoffLocation,
+                driverName: driver?.name,
+                vehicleType: driver?.vehicleDocuments.vehicleModel,
+                vehicleNo: driver?.vehicleDocuments.registration.registrationId,
+                amount: result ? result.price : scheduledRide?.price
+            };
+            const emalResult = await nodeMailer_1.default.sendRideConfirmEmail(emailInfo, emailData);
+            console.log(emalResult);
         }
         catch (error) {
             (0, errorHandling_1.handleError)(error);
