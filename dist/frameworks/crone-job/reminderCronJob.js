@@ -9,13 +9,9 @@ const scheduledRide_model_1 = __importDefault(require("../../adapters/data-acces
 const nodeMailer_1 = __importDefault(require("../../adapters/external-services/email/nodeMailer"));
 async function startReminderCronJob() {
     node_cron_1.default.schedule('*/10 * * * *', async () => {
-        // Get current time
         const currentTime = new Date();
-        // Calculate pickup time 10 minutes before
         const pickupTime = new Date(currentTime.getTime() + 10 * 60000);
-        // Find users whose pickup time is 10 minutes away
         const rides = await scheduledRide_model_1.default.find({ pickUpDate: { $lte: pickupTime } }).populate("user_id");
-        console.log(1);
         for (const data of rides) {
             console.log(data);
             const info = {

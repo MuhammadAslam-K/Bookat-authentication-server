@@ -52,11 +52,12 @@ export default {
         }
     },
 
-    payment: async (data: { driverId: ObjectId, rideId: ObjectId, rating: string, review: string, price: string }, userId: ObjectId) => {
+    payment: async (data: { driverId: ObjectId, rideId: ObjectId, price: string }, userId: ObjectId) => {
         try {
             const priceInt = parseInt(data.price)
             const adminAmount = priceInt * 0.1
             const driverAmount = priceInt * 0.9;
+
             const [user, driver, admin] = await Promise.all([
                 userRepositoryUpdateQuery.updateTotalRide(userId),
                 driverRepositoryUpdateQuerys.updateTotalRideAndRevenu(data.driverId, driverAmount, data.rideId),
@@ -157,6 +158,22 @@ export default {
                 return await scheduleRideGetQuery.getScheduledRidesById(rideId)
             }
             return response
+        } catch (error) {
+            handleError(error as Error)
+        }
+    },
+
+
+    submitReview: async (data: { rideId: string, review: string, rating: string }) => {
+        try {
+            const result = await rideRepositoryUpdateQuery.submitReview(data)
+            if (!result) {
+                await scheduleRideUpdateQuery.submitReview(data)
+                return true
+            }
+            else {
+                return true
+            }
         } catch (error) {
             handleError(error as Error)
         }

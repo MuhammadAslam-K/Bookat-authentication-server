@@ -39,8 +39,6 @@ exports.default = {
         try {
             return await scheduledRide_model_1.default.findByIdAndUpdate(data.rideId, {
                 status: "Completed",
-                feedback: data.review,
-                rating: data.rating,
                 adminRevenu: adminAmount,
                 driverRevenu: driverAmount,
             }, { new: true });
@@ -71,4 +69,15 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    submitReview: async (data) => {
+        try {
+            return await scheduledRide_model_1.default.findByIdAndUpdate(data.rideId, {
+                feedback: data.review,
+                rating: data.rating
+            }, { new: true });
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
+    }
 };

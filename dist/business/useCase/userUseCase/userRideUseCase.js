@@ -162,5 +162,20 @@ exports.default = {
         catch (error) {
             (0, errorHandling_1.handleError)(error);
         }
+    },
+    submitReview: async (data) => {
+        try {
+            const result = await rideRepositoryUpdateQuery_1.default.submitReview(data);
+            if (!result) {
+                await scheduleRideUpdateQuery_1.default.submitReview(data);
+                return true;
+            }
+            else {
+                return true;
+            }
+        }
+        catch (error) {
+            (0, errorHandling_1.handleError)(error);
+        }
     }
 };

@@ -34,6 +34,7 @@ const driverRouter_1 = __importDefault(require("../frameworks/express/router/dri
 const adminRouter_1 = __importDefault(require("../frameworks/express/router/adminRouter"));
 const mongoDB_1 = __importDefault(require("../frameworks/database/mongoDB"));
 const jwtTokenAuth_1 = __importDefault(require("../frameworks/express/middlewares/jwtTokenAuth"));
+const reminderCronJob_1 = require("../frameworks/crone-job/reminderCronJob");
 const http_1 = __importDefault(require("http"));
 const socket_io_1 = require("../frameworks/socket-io/socket-io");
 dotenv.config();
@@ -63,7 +64,7 @@ app.use('/admin', adminRouter_1.default);
 if (MONGO_URL) {
     (0, mongoDB_1.default)(MONGO_URL).then(() => {
         server.listen(port, () => console.log(`Server started at http://localhost:${port}`));
-        // startReminderCronJob()
+        (0, reminderCronJob_1.startReminderCronJob)();
     }).catch((err) => {
         console.error('MongoDB connection error:', err);
     });
