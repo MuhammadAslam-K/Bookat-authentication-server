@@ -30,6 +30,7 @@ userRoute.post("/update/profile", userProfileController_1.default.updateProfile)
 userRoute.get('/details/driver', rideController_1.default.getDriverDetails);
 userRoute.patch('/getridedata', rideController_1.default.getRideData);
 userRoute.post('/payment', booking_controller_1.default.payment);
+userRoute.post('/review', booking_controller_1.default.review);
 userRoute.get('/currentRide', rideController_1.default.currentRide);
 // SCHEDULED RIDES
 userRoute.get('/scheduledRides', scheduledRideController_1.default.scheduledRides);

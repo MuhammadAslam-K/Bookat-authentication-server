@@ -5,15 +5,14 @@ import nodeMailer from "../../adapters/external-services/email/nodeMailer";
 
 export async function startReminderCronJob() {
     cron.schedule('*/10 * * * *', async () => {
-        // Get current time
+
         const currentTime = new Date();
 
-        // Calculate pickup time 10 minutes before
+
         const pickupTime = new Date(currentTime.getTime() + 10 * 60000);
 
-        // Find users whose pickup time is 10 minutes away
+
         const rides = await ScheduleRideSchema.find({ pickUpDate: { $lte: pickupTime } }).populate("user_id");
-        console.log(1);
 
         for (const data of rides) {
             console.log(data);

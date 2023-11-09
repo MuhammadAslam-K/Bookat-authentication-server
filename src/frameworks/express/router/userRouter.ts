@@ -35,6 +35,7 @@ userRoute.get('/details/driver', rideController.getDriverDetails);
 
 userRoute.patch('/getridedata', rideController.getRideData);
 userRoute.post('/payment', bookingController.payment);
+userRoute.post('/review', bookingController.review);
 
 userRoute.get('/currentRide', rideController.currentRide);
 

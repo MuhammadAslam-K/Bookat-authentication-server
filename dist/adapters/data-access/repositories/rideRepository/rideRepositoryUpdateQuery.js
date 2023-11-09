@@ -4,13 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const quickRide_model_1 = __importDefault(require("../../models/quickRide-model"));
+const errorHandling_1 = require("../../../../business/errors/errorHandling");
 exports.default = {
     updatePaymentInfo: async (data, adminAmount, driverAmount) => {
         try {
             return await quickRide_model_1.default.findByIdAndUpdate(data.rideId, {
                 status: "Completed",
-                feedback: data.review,
-                rating: data.rating,
                 adminRevenu: adminAmount,
                 driverRevenu: driverAmount,
             }, { new: true });
@@ -41,4 +40,15 @@ exports.default = {
             throw new Error(error.message);
         }
     },
+    submitReview: async (data) => {
+        try {
+            return await quickRide_model_1.default.findByIdAndUpdate(data.rideId, {
+                feedback: data.review,
+                rating: data.rating
+            }, { new: true });
+        }
+        catch (error) {
+            (0, errorHandling_1.handleError)(error);
+        }
+    }
 };

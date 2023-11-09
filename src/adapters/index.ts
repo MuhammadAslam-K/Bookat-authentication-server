@@ -50,7 +50,7 @@ setUpSocketIO()
 if (MONGO_URL) {
     connect(MONGO_URL).then(() => {
         server.listen(port, () => console.log(`Server started at http://localhost:${port}`));
-        // startReminderCronJob()
+        startReminderCronJob()
     }).catch((err) => {
         console.error('MongoDB connection error:', err);
     });

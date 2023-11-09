@@ -1,15 +1,14 @@
 import { ObjectId } from "mongoose"
 import RideSchema from "../../models/quickRide-model";
+import { handleError } from "../../../../business/errors/errorHandling";
 
 export default {
-    updatePaymentInfo: async (data: { driverId: ObjectId, rideId: ObjectId, rating: string, review: string }, adminAmount: number, driverAmount: number) => {
+    updatePaymentInfo: async (data: { driverId: ObjectId, rideId: ObjectId }, adminAmount: number, driverAmount: number) => {
         try {
             return await RideSchema.findByIdAndUpdate(
                 data.rideId,
                 {
                     status: "Completed",
-                    feedback: data.review,
-                    rating: data.rating,
                     adminRevenu: adminAmount,
                     driverRevenu: driverAmount,
                 },
@@ -45,4 +44,20 @@ export default {
             throw new Error((error as Error).message)
         }
     },
+
+
+    submitReview: async (data: { rideId: string, review: string, rating: string }) => {
+        try {
+            return await RideSchema.findByIdAndUpdate(
+                data.rideId,
+                {
+                    feedback: data.review,
+                    rating: data.rating
+                },
+                { new: true }
+            )
+        } catch (error) {
+            handleError(error as Error)
+        }
+    }
 }
