@@ -2,6 +2,7 @@ import { Server as SocketIOServer, Socket } from "socket.io";
 import { calculateDistance } from "./socket-ioHelper";
 import driverRideUseCase from "../../business/useCase/driverUseCase/driverRideUseCase";
 import { ObjectId } from "mongoose";
+import chatUseCase from "../../business/useCase/chat-useCase/chat-useCase";
 
 interface DriverData {
     latitude: string;
@@ -180,7 +181,24 @@ export const setUpSocketIO = (): void => {
         socket.on("locationUpdateFromDriver", (data) => {
             console.log("locationUpdateFromDriver data", data)
             io.emit("driverLoacationUpdateToUser", data)
+
+
         })
+
+        // CHAT
+        socket.on("join-chat", async (data) => {
+            console.log("join-chat", data)
+            const result = await chatUseCase.getChatByRideId(data)
+            io.emit("chat-message", result)
+        })
+
+        socket.on("update-chat-message", async (data) => {
+            console.log("update-chat-message", data)
+            await chatUseCase.saveChat(data)
+        })
+
+
+
     });
 
     io.on('error', (error) => {

@@ -41,15 +41,20 @@ exports.default = {
             }
             const token = authorizationHeader.replace('Bearer ', '');
             const decodedToken = encryptionDecryption_1.default.decryptdata(token);
-            if (decodedToken.role === 'admin') {
-                req.token = decodedToken;
-                next();
+            const userRouteSegment = '/';
+            const driverRouteSegment = '/driver';
+            const adminRouteSegment = '/admin';
+            let validRole = false;
+            if (requestedRoute.startsWith(userRouteSegment) && decodedToken.role === 'user') {
+                validRole = true;
             }
-            else if (decodedToken.role === 'user') {
-                req.token = decodedToken;
-                next();
+            else if (requestedRoute.startsWith(driverRouteSegment) && decodedToken.role === 'driver') {
+                validRole = true;
             }
-            else if (decodedToken.role === 'driver') {
+            else if (requestedRoute.startsWith(adminRouteSegment) && decodedToken.role === 'admin') {
+                validRole = true;
+            }
+            if (validRole) {
                 req.token = decodedToken;
                 next();
             }

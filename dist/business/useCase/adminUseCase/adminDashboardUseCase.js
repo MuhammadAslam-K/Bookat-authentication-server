@@ -22,13 +22,16 @@ exports.default = {
             const totalQuickRidesCount = totalQuickRides.length;
             const totalScheduledRidesCount = totalScheduledRides.length;
             const totalRidesCount = totalQuickRidesCount + totalScheduledRidesCount;
-            // const totalRides = totalQuickRides.concat(totalScheduledRides)
             return {
                 totalUsersCount,
                 totalDriversCount,
                 totalQuickRidesCount,
                 totalScheduledRidesCount,
                 totalRidesCount,
+                totalUsers,
+                totalDrivers,
+                totalQuickRides,
+                totalScheduledRides
             };
         }
         catch (error) {

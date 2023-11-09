@@ -17,7 +17,13 @@ export default {
             ])
             const quickRidesCount = quickRides.length
             const scheduledRidesCount = scheduledRides.length
-            return { driverData, quickRides, scheduledRides, quickRidesCount, scheduledRidesCount }
+            return {
+                driverData,
+                quickRides,
+                scheduledRides,
+                quickRidesCount,
+                scheduledRidesCount
+            }
         } catch (error) {
             handleError(error as Error)
         }
