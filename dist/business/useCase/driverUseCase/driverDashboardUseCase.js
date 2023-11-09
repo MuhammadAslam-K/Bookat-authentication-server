@@ -18,7 +18,13 @@ exports.default = {
             ]);
             const quickRidesCount = quickRides.length;
             const scheduledRidesCount = scheduledRides.length;
-            return { driverData, quickRides, scheduledRides, quickRidesCount, scheduledRidesCount };
+            return {
+                driverData,
+                quickRides,
+                scheduledRides,
+                quickRidesCount,
+                scheduledRidesCount
+            };
         }
         catch (error) {
             (0, errorHandling_1.handleError)(error);

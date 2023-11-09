@@ -7,6 +7,7 @@ exports.setUpSocketIO = void 0;
 const socket_io_1 = require("socket.io");
 const socket_ioHelper_1 = require("./socket-ioHelper");
 const driverRideUseCase_1 = __importDefault(require("../../business/useCase/driverUseCase/driverRideUseCase"));
+const chat_useCase_1 = __importDefault(require("../../business/useCase/chat-useCase/chat-useCase"));
 // / / / / /USER / / / / /
 let userLat;
 let userLon;
@@ -144,6 +145,16 @@ const setUpSocketIO = () => {
         socket.on("locationUpdateFromDriver", (data) => {
             console.log("locationUpdateFromDriver data", data);
             io.emit("driverLoacationUpdateToUser", data);
+        });
+        // CHAT
+        socket.on("join-chat", async (data) => {
+            console.log("join-chat", data);
+            const result = await chat_useCase_1.default.getChatByRideId(data);
+            io.emit("chat-message", result);
+        });
+        socket.on("update-chat-message", async (data) => {
+            console.log("update-chat-message", data);
+            await chat_useCase_1.default.saveChat(data);
         });
     });
     io.on('error', (error) => {

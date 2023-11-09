@@ -49,18 +49,24 @@ export default {
             const decodedToken = encryptionDecryption.decryptdata(token)
 
 
-            if (decodedToken.role === 'admin') {
-                req.token = decodedToken;
-                next();
-            } else if (decodedToken.role === 'user') {
+            const userRouteSegment = '/'
+            const driverRouteSegment = '/driver'
+            const adminRouteSegment = '/admin'
 
-                req.token = decodedToken;
-                next();
-            } else if (decodedToken.role === 'driver') {
-                req.token = decodedToken;
-                next();
+            let validRole = false
+
+            if (requestedRoute.startsWith(userRouteSegment) && decodedToken.role === 'user') {
+                validRole = true
+            } else if (requestedRoute.startsWith(driverRouteSegment) && decodedToken.role === 'driver') {
+                validRole = true
+            } else if (requestedRoute.startsWith(adminRouteSegment) && decodedToken.role === 'admin') {
+                validRole = true
             }
-            else {
+
+            if (validRole) {
+                req.token = decodedToken;
+                next();
+            } else {
                 return res.status(401).json({ error: 'Unauthorized' });
             }
 
